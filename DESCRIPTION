@@ -1,0 +1,16 @@
+Package: quasardb
+Type: Package
+Title: R API for quasardb database
+Version: 0.0.0.9000
+Date: 2018-05-16
+Author: quasardb SAS, Marek Kurdej
+Maintainer: Marek Kurdej <marek@quasardb.net>
+Description: The 'quasardb' package provides R API for quasardb timeseries database.
+ See doc.quasardb.net for documentation.
+License: GPL (>= 2)
+Imports: Rcpp (>= 0.12.16)
+LinkingTo: Rcpp
+URL: https://doc.quasardb.net, https://github.com/bureau14/qdb-api-r
+BugReports: https://support.quasardb.net/, https://github.com/bureau14/qdb-api-r/issues
+MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
+RoxygenNote: 6.0.1
