@@ -18,6 +18,16 @@ To perform a clean build:
 R INSTALL --preclean --no-multiarch --with-keep.source quasardb
 ```
 
+To check the extension:
+```r
+devtools::check(pkg = "quasardb")
+```
+
+To test the extension:
+```r
+devtools::test()
+```
+
 ## Usage
 
 Load the library:
