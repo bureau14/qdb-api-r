@@ -59,5 +59,5 @@ Get underlying C API version:
 
 ``` r
 qdb_version()
-#> [1] "quasardb 2.5"
+#> [1] "quasardb 2.5.0"
 ```
