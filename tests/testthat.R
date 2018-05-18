@@ -1,4 +1,4 @@
 library(testthat)
 library(quasardb)
 
-test_check("quasardb")
+test_check("quasardb", wrap = TRUE)
