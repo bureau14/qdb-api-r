@@ -11,7 +11,7 @@ License: GPL (>= 2)
 Imports: Rcpp (>= 0.12.16)
 LinkingTo: Rcpp
 URL: https://doc.quasardb.net, https://github.com/bureau14/qdb-api-r
-BugReports: https://support.quasardb.net/, https://github.com/bureau14/qdb-api-r/issues
+BugReports: https://support.quasardb.net/
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
 RoxygenNote: 6.0.1
 Suggests: testthat
