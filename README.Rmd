@@ -1,25 +1,40 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-quasardb
-========
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# quasardb
 
 The quasardb package is the official R API for [quasardb](https://www.quasardb.net) timeseries database.
 
-Installation
-------------
+## Installation
 
 <!-- TODO:
 Get the released version from CRAN:
-
-```r
+```{r eval = FALSE}
 install.packages("quasardb")
 ```
 -->
+
 You can install quasardb from [GitHub](https://github.com/bureau14/qdb-api-r) with:
 
-``` r
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("bureau14/qdb-api-r")
+```
+
+```{r include = FALSE}
+# default values
+knitr::opts_chunk$set(message = TRUE)
 ```
 
 ### quasardb C API
@@ -29,29 +44,25 @@ To build the R API, you will need the C API. It can either be installed on the m
 ### Building the extension from source
 
 To perform a clean build:
-
-``` bash
+```{bash eval = FALSE}
 R INSTALL --preclean --no-multiarch --with-keep.source .
 ```
 
 To check the extension:
-
-``` r
+```{r eval = FALSE}
 devtools::check(pkg = ".")
 ```
 
 To test the extension:
-
-``` r
+```{r eval = FALSE}
 devtools::test()
 ```
 
-Usage
------
+## Usage
 
 Get underlying C API version:
 
-``` r
+```{r example}
 library(quasardb)
 #quasardb::qdb_version()
 ```
