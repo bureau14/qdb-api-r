@@ -5,7 +5,3 @@ qdb_version <- function() {
     .Call('_quasardb_qdb_version', PACKAGE = 'quasardb')
 }
 
-rcpp_hello_world <- function() {
-    .Call('_quasardb_rcpp_hello_world', PACKAGE = 'quasardb')
-}
-
