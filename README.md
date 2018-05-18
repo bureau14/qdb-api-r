@@ -9,7 +9,7 @@ Installation
 ------------
 
 <!-- TODO:
-Get the released version from CRAN:
+You can install the released version from CRAN with:
 
 ```r
 install.packages("quasardb")
@@ -28,6 +28,8 @@ To build the R API, you will need the C API. It can either be installed on the m
 
 ### Building the extension from source
 
+*NOTE: Commands to be executed from when source directory is the current working directory.*
+
 To perform a clean build:
 
 ``` bash
@@ -37,7 +39,7 @@ R INSTALL --preclean --no-multiarch --with-keep.source .
 To check the extension:
 
 ``` r
-devtools::check(pkg = ".")
+devtools::check()
 ```
 
 To test the extension:
@@ -49,9 +51,13 @@ devtools::test()
 Usage
 -----
 
+``` r
+library(quasardb)
+```
+
 Get underlying C API version:
 
 ``` r
-library(quasardb)
 qdb_version()
+#> [1] "quasardb 2.5"
 ```

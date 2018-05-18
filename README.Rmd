@@ -34,7 +34,7 @@ devtools::install_github("bureau14/qdb-api-r")
 
 ```{r include = FALSE}
 # default values
-knitr::opts_chunk$set(message = TRUE)
+knitr::opts_chunk$set(message = TRUE, warning = TRUE)
 ```
 
 ### quasardb C API
@@ -43,6 +43,8 @@ To build the R API, you will need the C API. It can either be installed on the m
 
 ### Building the extension from source
 
+*NOTE: Commands to be executed from when source directory is the current working directory.*
+
 To perform a clean build:
 ```{bash eval = FALSE}
 R INSTALL --preclean --no-multiarch --with-keep.source .
@@ -50,7 +52,7 @@ R INSTALL --preclean --no-multiarch --with-keep.source .
 
 To check the extension:
 ```{r eval = FALSE}
-devtools::check(pkg = ".")
+devtools::check()
 ```
 
 To test the extension:
@@ -60,9 +62,12 @@ devtools::test()
 
 ## Usage
 
+```{r message = FALSE, warning = FALSE}
+library(quasardb)
+```
+
 Get underlying C API version:
 
-```{r example, eval = FALSE}
-library(quasardb)
+```{r example}
 qdb_version()
 ```
