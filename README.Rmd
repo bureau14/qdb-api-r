@@ -19,8 +19,8 @@ The quasardb package is the official R API for [quasardb](https://www.quasardb.n
 ## Installation
 
 <!-- TODO:
-Get the released version from CRAN:
-```{r eval = FALSE}
+You can install the released version from CRAN with:
+```{r installation, eval = FALSE}
 install.packages("quasardb")
 ```
 -->
@@ -62,7 +62,7 @@ devtools::test()
 
 Get underlying C API version:
 
-```{r example}
+```{r example, eval = FALSE}
 library(quasardb)
-#quasardb::qdb_version()
+qdb_version()
 ```

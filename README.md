@@ -53,5 +53,5 @@ Get underlying C API version:
 
 ``` r
 library(quasardb)
-#quasardb::qdb_version()
+qdb_version()
 ```
