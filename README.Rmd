@@ -71,3 +71,7 @@ Get underlying C API version:
 ```{r example}
 qdb_version()
 ```
+
+## TODO
+
+ - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/)
