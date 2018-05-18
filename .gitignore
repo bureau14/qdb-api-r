@@ -4,3 +4,6 @@
 .Rhistory
 .RData
 quasardb_*.tar.gz
+*.log
+*.out
+/src-*/
