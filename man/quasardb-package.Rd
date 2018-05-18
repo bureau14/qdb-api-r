@@ -1,6 +1,7 @@
 \name{quasardb-package}
 \alias{quasardb-package}
 \alias{quasardb}
+\alias{qdb-api-r}
 \docType{package}
 \title{
   R API for quasardb database
