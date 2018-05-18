@@ -5,6 +5,16 @@
 
 using namespace Rcpp;
 
+// qdb_version
+std::string qdb_version();
+RcppExport SEXP _quasardb_qdb_version() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(qdb_version());
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_hello_world
 List rcpp_hello_world();
 RcppExport SEXP _quasardb_rcpp_hello_world() {
@@ -17,6 +27,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_quasardb_qdb_version", (DL_FUNC) &_quasardb_qdb_version, 0},
     {"_quasardb_rcpp_hello_world", (DL_FUNC) &_quasardb_rcpp_hello_world, 0},
     {NULL, NULL, 0}
 };
