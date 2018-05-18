@@ -4,4 +4,5 @@
 quasardb_*.tar.gz
 *.log
 *.out
+/qdb/
 /src-*/
