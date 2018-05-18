@@ -1,6 +1,6 @@
 ^cran-comments\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^qdb$
 ^README\.Rmd$
 ^README-.*\.png$
+^inst/bin$

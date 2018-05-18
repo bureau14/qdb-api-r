@@ -39,7 +39,7 @@ knitr::opts_chunk$set(message = TRUE, warning = TRUE)
 
 ### quasardb C API
 
-To build the R API, you will need the C API. It can either be installed on the machine (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `qdb` directory. You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
+To build the R API, you will need the C API. It can either be installed on the machine (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` directory. You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
 
 ### Building the extension from source
 
