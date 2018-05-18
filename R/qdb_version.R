@@ -1,6 +1,6 @@
 #' @useDynLib quasardb
 #' @exportPattern "^[[:alpha:]]+"
-#' @importFrom Rcpp evalCpp
+#' @importFrom Rcpp sourceCpp
 
 qdb_version <- function() {
   return('quasardb 2.5')
