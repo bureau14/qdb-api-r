@@ -14,3 +14,4 @@ URL: https://doc.quasardb.net, https://github.com/bureau14/qdb-api-r
 BugReports: https://support.quasardb.net/, https://github.com/bureau14/qdb-api-r/issues
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
 RoxygenNote: 6.0.1
+Suggests: testthat
