@@ -15,3 +15,4 @@ BugReports: https://support.quasardb.net/
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
 RoxygenNote: 6.0.1
 Suggests: testthat
+NeedsCompilation: yes
