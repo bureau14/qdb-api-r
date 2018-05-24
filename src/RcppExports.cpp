@@ -5,6 +5,38 @@
 
 using namespace Rcpp;
 
+// _qdb_build
+std::string _qdb_build();
+RcppExport SEXP _quasardb__qdb_build() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(_qdb_build());
+    return rcpp_result_gen;
+END_RCPP
+}
+// _qdb_connect
+RcppExport SEXP /*qdb_handle_t*/ _qdb_connect(const std::string& uri);
+RcppExport SEXP _quasardb__qdb_connect(SEXP uriSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::string& >::type uri(uriSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_connect(uri));
+    return rcpp_result_gen;
+END_RCPP
+}
+// _qdb_error
+std::string _qdb_error(int ierr);
+RcppExport SEXP _quasardb__qdb_error(SEXP ierrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type ierr(ierrSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_error(ierr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // _qdb_version
 std::string _qdb_version();
 RcppExport SEXP _quasardb__qdb_version() {
@@ -17,6 +49,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_quasardb__qdb_build", (DL_FUNC) &_quasardb__qdb_build, 0},
+    {"_quasardb__qdb_connect", (DL_FUNC) &_quasardb__qdb_connect, 1},
+    {"_quasardb__qdb_error", (DL_FUNC) &_quasardb__qdb_error, 1},
     {"_quasardb__qdb_version", (DL_FUNC) &_quasardb__qdb_version, 0},
     {NULL, NULL, 0}
 };

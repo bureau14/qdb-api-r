@@ -2,7 +2,26 @@ PKG_CXXFLAGS= -I ../inst/include
 PKG_LIBS= -L ../inst/bin -L ../inst/lib -lqdb_api
 
 #ifeq "$(WIN)" "64"
-#PKG_LIBS = value for 64-bit Windows
+#	PKG_LIBS = value for 64-bit Windows
 #else
-#PKG_LIBS = value for 32-bit Windows
+#	PKG_LIBS = value for 32-bit Windows
 #endif
+
+.PHONY: all
+
+# Add to RPATH only if RPATH is not set yet.
+all: $(SHLIB)
+	if command -v otool ; then \
+		if ! otool -l -v $(SHLIB) | grep -A 2 LC_RPATH ; then \
+			if command -v install_name_tool ; then \
+				pwd ;\
+				mkdir -p ../libs ;\
+				cp ../inst/lib/*.dylib ../inst/libs ;\
+				install_name_tool -add_rpath "@loader_path" $(SHLIB) ;\
+				install_name_tool -add_rpath "@loader_path/../inst/lib" $(SHLIB) ;\
+				install_name_tool -add_rpath "@loader_path/../lib" $(SHLIB) ;\
+			fi ;\
+		otool -l -v $(SHLIB) | grep -A 2 -E -e 'LC_RPATH|LC_LOAD_DYLIB' ;\
+		otool -L -v $(SHLIB) ;\
+		fi ;\
+	fi

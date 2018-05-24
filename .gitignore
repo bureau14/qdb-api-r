@@ -6,3 +6,8 @@ quasardb_*.tar.gz
 *.out
 /inst/
 /src-*/
+*.a
+*.dll
+*.dylib
+*.lib
+*.so

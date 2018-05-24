@@ -14,6 +14,10 @@ knitr::opts_chunk$set(
 
 # quasardb
 
+:warning:**WARNING**: Early stage development version. Use at your own risk.
+
+:information_source:**NOTE**: Only :apple:macOS is currently supported.
+
 The quasardb package is the official R API for [quasardb](https://www.quasardb.net) timeseries database.
 
 ## Installation
@@ -43,16 +47,29 @@ To build the R API, you will need the C API. It can either be installed on the m
 
 ### Building the extension from source
 
-*NOTE: Commands to be executed from when source directory is the current working directory.*
-
 To perform a clean build:
-```{bash eval = FALSE}
-R INSTALL --preclean --no-multiarch --with-keep.source .
+```{r eval = FALSE}
+devtools::build(binary = TRUE)
+```
+
+To update documentation and auto-generated files:
+```{r eval = FALSE}
+devtools::document()
+```
+
+Only update the documentation in man, but don't regenerate R files:
+```{r eval = FALSE}
+roxygen2::roxygenize()
 ```
 
 To check the extension:
 ```{r eval = FALSE}
-devtools::check()
+devtools::check(check_version = TRUE)
+```
+
+You may wish to skip tests using:
+```{r eval = FALSE}
+devtools::check(check_version = TRUE, args = "--no-tests")
 ```
 
 To test the extension:
@@ -68,10 +85,22 @@ library(quasardb)
 
 Get underlying C API version:
 
-```{r example}
+```{r example-version}
 qdb_version()
 ```
 
+Get underlying C API build id:
+```{r example-build, eval = FALSE}
+qdb_build()
+```
+
+Connect to a quasardb cluster at default URI:
+```{r example-connect-default, eval = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+```
+
+
 ## TODO
 
+ - Add a default parameter to `qdb_connect`.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/)
