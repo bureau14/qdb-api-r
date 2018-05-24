@@ -16,5 +16,5 @@ SystemRequirements: quasardb libraries (qdb_api) version 2.5.0 or later;
 BugReports: https://support.quasardb.net/
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
 RoxygenNote: 6.0.1
-Suggests: testthat
+Suggests: testthat, processx
 NeedsCompilation: yes
