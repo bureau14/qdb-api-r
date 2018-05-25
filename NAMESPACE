@@ -3,6 +3,7 @@
 export(qdb_build)
 export(qdb_connect)
 export(qdb_error)
+export(qdb_query_find)
 export(qdb_version)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp,sourceCpp)
