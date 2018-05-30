@@ -99,8 +99,22 @@ Connect to a quasardb cluster at default URI:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 ```
 
+Get all entry keys matching given find query:
+```{r example-query_find, eval = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+# Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
+keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+```
+
+Execute a select query:
+```{r example-query, eval = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+# Get all entries tagged with 'my-tag' being timeseries.
+result <-
+  qdb_query(handle, "select count(*) from my_ts in range(2017, +1y)")
+```
 
 ## TODO
 
  - Add a default parameter to `qdb_connect`.
- - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/)
+ - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

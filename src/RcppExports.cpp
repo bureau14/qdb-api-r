@@ -50,6 +50,29 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// _qdb_query
+Rcpp::List _qdb_query(qdb_handle_t handle, const std::string& query);
+RcppExport SEXP _quasardb__qdb_query(SEXP handleSEXP, SEXP querySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type query(querySEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_query(handle, query));
+    return rcpp_result_gen;
+END_RCPP
+}
+// _qdb_ts_create
+void _qdb_ts_create(qdb_handle_t handle, const std::string& name);
+RcppExport SEXP _quasardb__qdb_ts_create(SEXP handleSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type name(nameSEXP);
+    _qdb_ts_create(handle, name);
+    return R_NilValue;
+END_RCPP
+}
 // _qdb_version
 std::string _qdb_version();
 RcppExport SEXP _quasardb__qdb_version() {
@@ -66,6 +89,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_quasardb__qdb_connect", (DL_FUNC) &_quasardb__qdb_connect, 1},
     {"_quasardb__qdb_error", (DL_FUNC) &_quasardb__qdb_error, 1},
     {"_quasardb__qdb_query_find", (DL_FUNC) &_quasardb__qdb_query_find, 2},
+    {"_quasardb__qdb_query", (DL_FUNC) &_quasardb__qdb_query, 2},
+    {"_quasardb__qdb_ts_create", (DL_FUNC) &_quasardb__qdb_ts_create, 2},
     {"_quasardb__qdb_version", (DL_FUNC) &_quasardb__qdb_version, 0},
     {NULL, NULL, 0}
 };

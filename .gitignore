@@ -11,3 +11,4 @@ quasardb_*.tar.gz
 *.dylib
 *.lib
 *.so
+.Rprofile
