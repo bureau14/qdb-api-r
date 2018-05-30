@@ -3,6 +3,9 @@
 #include <RcppCommon.h>
 #include <Rcpp/XPtr.h>
 #include <qdb/client.h>
+#include <qdb/ts.h>
+
+RCPP_EXPOSED_ENUM_NODECL(qdb_ts_column_type_t);
 
 // Wrap qdb_close. We need a function returning void.
 inline void handle_close(qdb_handle_t handle)

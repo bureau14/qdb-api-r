@@ -99,8 +99,16 @@ Connect to a quasardb cluster at default URI:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 ```
 
+Create a timeseries:
+```{r example-ts_create, eval = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+# Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
+qdb_ts_create(handle, name = "timeseries1",
+     columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
+```
+
 Get all entry keys matching given find query:
-```{r example-query_find, eval = FALSE}
+```{r example-find, eval = FALSE}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")

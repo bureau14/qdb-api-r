@@ -93,9 +93,10 @@ qdb_query <- function(handle, query) {
 #'
 #' @examples
 #' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_ts_create(handle, name = "ts")
-qdb_ts_create <- function(handle, name) {
-    invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name))
+#' qdb_ts_create(handle, name = "ts",
+#'     columns = c("col1" = ColumnType$Blob, "col2" = ColumnType$Double))
+qdb_ts_create <- function(handle, name, columns) {
+    invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name, columns))
 }
 
 #' @backref src/version.cpp

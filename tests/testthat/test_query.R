@@ -10,9 +10,14 @@ test_that("returns alias not found when timeseries doesn't exist", {
 
 test_that("returns empty result on existing but empty timeseries", {
   alias <- "timeseriesL13"
+  column_name <- "my_column"
+  columns <- c(ColumnType$Double)
+  names(columns) <- c(column_name)
 
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle, alias)
+  qdb_ts_create(handle,
+                name = alias,
+                columns = columns)
   results <-
     qdb_query(handle, sprintf("SELECT * FROM %s IN RANGE(2017, +1y)", alias))
 
@@ -25,9 +30,14 @@ test_that("returns empty result on existing but empty timeseries", {
 
 test_that("returns count result on existing but empty timeseries", {
   alias <- "timeseriesL25"
+  column_name <- "my_column"
+  columns <- c(ColumnType$Double)
+  names(columns) <- c(column_name)
 
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle, alias)
+  qdb_ts_create(handle,
+                name = alias,
+                columns = columns)
   results <-
     qdb_query(handle,
               sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017, +1y)", alias))
@@ -91,7 +101,7 @@ test_that("returns count result on existing but empty timeseries", {
       paste(names(table), collapse = ", ")
     )
   )
-  expect_equal(columns, c("timestamp", "count(column)"))
+  expect_equal(columns, c("timestamp", sprintf("count(%s)", column_name)))
 
   # Check data
   expect(
@@ -105,7 +115,7 @@ test_that("returns count result on existing but empty timeseries", {
   data <- table$data
   print(data)
   expect(is.data.frame(data), failure_message = "data should be a data.frame")
-  expect_equal(colnames(data), c("timestamp", "count(column)"))
+  expect_equal(colnames(data), c("timestamp", sprintf("count(%s)", column_name)))
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 2))
 
@@ -120,5 +130,5 @@ test_that("returns count result on existing but empty timeseries", {
                  sec = 0,
                  tz = "UTC"
                ))
-  expect_equal(data[["count(column)"]], 0)
+  expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
 })

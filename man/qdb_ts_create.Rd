@@ -4,7 +4,7 @@
 \alias{qdb_ts_create}
 \title{Create a timeseries.}
 \usage{
-qdb_ts_create(handle, name)
+qdb_ts_create(handle, name, columns)
 }
 \arguments{
 \item{handle}{A valid cluster opened using qdb_connect.}
@@ -13,5 +13,6 @@ qdb_ts_create(handle, name)
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_ts_create(handle, name = "ts")
+qdb_ts_create(handle, name = "ts",
+    columns = c("col1" = ColumnType$Blob, "col2" = ColumnType$Double))
 }
