@@ -28,7 +28,7 @@ test_that("returns empty result on existing but empty timeseries", {
   expect_equal(results$tables_count, 0)
 })
 
-test_that("returns count result on existing but empty timeseries", {
+test_that("returns count result on empty 1-column timeseries", {
   alias <- "timeseriesL25"
   column_name <- "my_column"
   columns <- c(ColumnType$Double)
@@ -113,7 +113,6 @@ test_that("returns count result on existing but empty timeseries", {
   )
 
   data <- table$data
-  print(data)
   expect(is.data.frame(data), failure_message = "data should be a data.frame")
   expect_equal(colnames(data), c("timestamp", sprintf("count(%s)", column_name)))
   expect_equal(rownames(data), c("1"))
@@ -131,4 +130,57 @@ test_that("returns count result on existing but empty timeseries", {
                  tz = "UTC"
                ))
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
+})
+
+test_that("returns count result on empty multi-column timeseries", {
+  alias <- "timeseriesL137"
+  columns <-
+    c(
+      'col1' = ColumnType$Blob,
+      'col2' = ColumnType$Double,
+      'col3' = ColumnType$Integer,
+      'col4' = ColumnType$Timestamp
+    )
+  expected_column_names <-
+    c("timestamp", sprintf("count(%s)", names(columns)))
+
+  handle <- qdb_connect(qdbd$uri)
+  qdb_ts_create(handle,
+                name = alias,
+                columns = columns)
+  results <-
+    qdb_query(handle,
+              sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias))
+
+  expect_equal(results$scanned_rows_count, 0)
+  expect_equal(results$tables_count, 1)
+
+  tables <- results$tables
+  table <- tables[[alias]]
+
+  expect_equal(table$columns_count, 1 + length(columns))
+  expect_equal(table$rows_count, 1)
+
+  actual_columns <- table$columns
+
+  expect_equal(actual_columns, expected_column_names)
+
+  data <- table$data
+  expect(is.data.frame(data), failure_message = "data should be a data.frame")
+  expect_equal(colnames(data), expected_column_names)
+  expect_equal(rownames(data), c("1"))
+  expect_equal(dim(data), c(1, 5))
+
+  expect_equal(attr(data$timestamp, "tzone"), "UTC")
+  expect_equal(data$timestamp,
+               ISOdatetime(
+                 2018,
+                 2,
+                 3,
+                 hour = 0,
+                 min = 0,
+                 sec = 0,
+                 tz = "UTC"
+               ))
+  expect_equal(unlist(data[, c(2:length(data))]), rep(0L, length(columns)), check.names = FALSE)
 })
