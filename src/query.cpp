@@ -55,7 +55,7 @@ Rcpp::IntegerVector transform_count_points(
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_count);
-        column[row_index] = point.payload.count;
+        column[row_index] = point.payload.count.value;
     }
 
     return column;
