@@ -8,7 +8,9 @@ Maintainer: Marek Kurdej <marek@quasardb.net>
 Description: The 'quasardb' package provides R API for quasardb timeseries database.
  See doc.quasardb.net for documentation.
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.12.16)
+Imports:
+    Rcpp (>= 0.12.16),
+    nanotime
 LinkingTo: Rcpp
 URL: https://doc.quasardb.net, https://github.com/bureau14/qdb-api-r
 SystemRequirements: quasardb libraries (qdb_api) version 2.5.0 or later;

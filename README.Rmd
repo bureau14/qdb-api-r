@@ -124,5 +124,6 @@ result <-
 
 ## TODO
 
+ - Make compliant with other OSes: Linux, Windows, FreeBSD.
  - Add a default parameter to `qdb_connect`.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

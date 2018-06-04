@@ -77,25 +77,40 @@ Rcpp::IntegerVector transform_int64_points(
     return column;
 }
 
-Rcpp::DatetimeVector transform_timestamp_points(
+// See:
+// http://gallery.rcpp.org/articles/creating-integer64-and-nanotime-vectors/
+Rcpp::NumericVector transform_timestamp_points(
     qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::DatetimeVector column(rows_count);
+    Rcpp::NumericVector column(rows_count);
     for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_timestamp);
-        // The type underlying POSIXct is double in seconds.
-        // See: http://gallery.rcpp.org/articles/parsing-datetimes/
+        // The type underlying nanotime type is integer64 in nanoseconds.
         const auto & timestamp = point.payload.timestamp.value;
-        column[row_index]      = static_cast<double>(timestamp.tv_sec)
-                            + static_cast<double>(timestamp.tv_nsec) / 1e9;
+        const std::int64_t total_nsec =
+            timestamp.tv_sec * 1'000'000'000LL + timestamp.tv_nsec;
+        // We use this trick to avoid reinterpret_cast<double>(int64_t) and UB.
+        // Generated assembly code should be the same.
+#if 1
+        std::memcpy(&column[row_index], &total_nsec, sizeof(double));
+#else
+        // Equivalent code would be:
+        column[row_index] = *reinterpret_cast<const double *>(&total_nsec);
+#endif
     }
 
+    Rcpp::CharacterVector cl = Rcpp::CharacterVector::create("nanotime");
+    cl.attr("package")       = "nanotime";
+    column.attr(".S3Class")  = "integer64";
+    column.attr("class")     = cl;
+    SET_S4_OBJECT(column);
+
     // quasardb returns timestamps in UTC time zone.
-    column.attr("tzone") = "UTC";
+    // column.attr("tzone") = "UTC";
 
     return column;
 }
