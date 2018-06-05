@@ -134,10 +134,17 @@ result$tables[["timeseries1"]]$data
 #> 1 2017-01-01T00:00:00.000000000+00:00              0              0
 ```
 
+Remove an entry:
+
+``` r
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_remove(handle, name = "timeseries1")
+```
+
 TODO
 ----
 
--   Add `qdb_remove`, `qdb_ts_insert`, `qdb_attach_tag`.
+-   Add `qdb_ts_insert` (only stub is currently implemented), `qdb_attach_tag`.
 -   Make compliant with other OSes: Linux, FreeBSD.
 -   Add a default parameter to `qdb_connect`.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
