@@ -99,6 +99,22 @@ qdb_ts_create <- function(handle, name, columns) {
     invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name, columns))
 }
 
+#' @backref src/ts_insert.cpp
+#' @title Insert data into double column of an existing timeseries.
+#'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param name Timeseries name.
+#' @param column Column name.
+#'
+#' @export
+#'
+#' @examples
+#' handle <- qdb_connect("qdb://127.0.0.1:2836")
+#' qdb_ts_insert.double(handle, "timeseries", "column", points)
+qdb_ts_insert.double <- function(handle, name, column) {
+    invisible(.Call('_quasardb__qdb_ts_double_insert', PACKAGE = 'quasardb', handle, name, column))
+}
+
 #' @backref src/version.cpp
 #' @title Return quasardb API version
 #'

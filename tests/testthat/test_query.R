@@ -1,4 +1,11 @@
-context("qdb_query")
+context("query")
+
+test_that("stops when handle is null", {
+  expect_error(results <-
+                 qdb_query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+               ,
+               regexp = 'type=NULL')
+})
 
 test_that("returns alias not found when timeseries doesn't exist", {
   handle <- qdb_connect(qdbd$uri)
@@ -9,8 +16,8 @@ test_that("returns alias not found when timeseries doesn't exist", {
 })
 
 test_that("returns empty result on existing but empty timeseries", {
-  alias <- "timeseriesL13"
-  column_name <- "my_column"
+  alias <- generate_alias("timeseries")
+  column_name <- generate_alias("column")
   columns <- c(ColumnType$Double)
   names(columns) <- c(column_name)
 
@@ -29,8 +36,8 @@ test_that("returns empty result on existing but empty timeseries", {
 })
 
 test_that("returns count result on empty 1-column timeseries", {
-  alias <- "timeseriesL25"
-  column_name <- "my_column"
+  alias <- generate_alias("timeseries")
+  column_name <- generate_alias("column")
   columns <- c(ColumnType$Double)
   names(columns) <- c(column_name)
 
@@ -54,6 +61,7 @@ test_that("returns count result on empty 1-column timeseries", {
   expect("tables" %in% names(results), failure_message = "query result should contain tables")
 
   tables <- results$tables
+  expect_equal(length(tables), 1)
 
   expect(
     alias %in% names(tables),
@@ -92,7 +100,6 @@ test_that("returns count result on empty 1-column timeseries", {
       paste(names(table), collapse = ", ")
     )
   )
-  columns <- table$columns
 
   expect(
     "columns" %in% names(table),
@@ -101,7 +108,8 @@ test_that("returns count result on empty 1-column timeseries", {
       paste(names(table), collapse = ", ")
     )
   )
-  expect_equal(columns, c("timestamp", sprintf("count(%s)", column_name)))
+  actual_columns <- table$columns
+  expect_equal(actual_columns, c("timestamp", sprintf("count(%s)", column_name)))
 
   # Check data
   expect(
@@ -119,19 +127,24 @@ test_that("returns count result on empty 1-column timeseries", {
   expect_equal(dim(data), c(1, 2))
 
   #expect_equal(attr(data$timestamp, "tzone"), "UTC")
-  expect_equal(format(data$timestamp, "%FT%H:%M:%E9S"),
+  expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
                "2017-01-01T00:00:00.000000000")
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
 })
 
 test_that("returns count result on empty multi-column timeseries", {
-  alias <- "timeseriesL137"
+  alias <- generate_alias("timeseries")
   columns <-
+    c(ColumnType$Blob,
+      ColumnType$Double,
+      ColumnType$Integer,
+      ColumnType$Timestamp)
+  names(columns) <-
     c(
-      'col1' = ColumnType$Blob,
-      'col2' = ColumnType$Double,
-      'col3' = ColumnType$Integer,
-      'col4' = ColumnType$Timestamp
+      generate_alias('col'),
+      generate_alias('col'),
+      generate_alias('col'),
+      generate_alias('col')
     )
   expected_column_names <-
     c("timestamp", sprintf("count(%s)", names(columns)))
@@ -163,7 +176,7 @@ test_that("returns count result on empty multi-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 5))
 
-  expect_equal(format(data$timestamp, "%FT%H:%M:%E9S"),
+  expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
                "2018-02-03T00:00:00.000000000")
   expect_equal(unlist(data[, c(2:length(data))]), rep(0L, length(columns)), check.names = FALSE)
 })
