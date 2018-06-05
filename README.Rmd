@@ -108,6 +108,12 @@ Connect to a quasardb cluster at default URI:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 ```
 
+```{r example-remove-if-exists, include=FALSE}
+# Remove the example entry, but ignore any error.
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+tryCatch(qdb_remove(handle, name = "timeseries1"), error = function (err) {})
+```
+
 Create a timeseries:
 ```{r example-ts_create}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
@@ -134,9 +140,15 @@ result$scanned_rows_count
 result$tables[["timeseries1"]]$data
 ```
 
+Remove an entry:
+```{r example-remove}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_remove(handle, name = "timeseries1")
+```
+
 ## TODO
 
- - Add `qdb_remove`, `qdb_ts_insert`, `qdb_attach_tag`.
+ - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_attach_tag`.
  - Make compliant with other OSes: Linux, FreeBSD.
  - Add a default parameter to `qdb_connect`.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
