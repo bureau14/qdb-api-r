@@ -4,11 +4,13 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r knitr-options, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "README-",
+  message = FALSE,
+  warning = TRUE
 )
 ```
 
@@ -16,7 +18,7 @@ knitr::opts_chunk$set(
 
 :warning:**WARNING**: Early stage development version. Use at your own risk.
 
-:information_source:**NOTE**: Only :apple:macOS is currently supported.
+:information_source:**NOTE**: Only :apple:macOS and Windows are currently supported.
 
 The quasardb package is the official R API for [quasardb](https://www.quasardb.net) timeseries database.
 
@@ -36,50 +38,57 @@ You can install quasardb from [GitHub](https://github.com/bureau14/qdb-api-r) wi
 devtools::install_github("bureau14/qdb-api-r")
 ```
 
-```{r include = FALSE}
-# default values
-knitr::opts_chunk$set(message = TRUE, warning = TRUE)
-```
-
 ### quasardb C API
 
-To build the R API, you will need the C API. It can either be installed on the machine (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` directory. You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
+To build the R API, you will need the C API.
+It can either be installed on the machine system-wide
+(e.g. on UNIX in `/usr/lib` or `/usr/local/lib`)
+or you can unpack the C API archive in `inst` directory.
+On Windows, you need to verify additionally that the `qdb_api.dll` is in the
+`PATH` environment variable.
+
+You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
 
 ### Building the extension from source
 
 To perform a clean build:
-```{r eval = FALSE}
+```{r build-extension, eval = FALSE}
 devtools::build(binary = TRUE)
 ```
 
 To update documentation and auto-generated files:
-```{r eval = FALSE}
+```{r document-extension, eval = FALSE}
 devtools::document()
 ```
 
 Only update the documentation in man, but don't regenerate R files:
-```{r eval = FALSE}
+```{r roxygenize-extension, eval = FALSE}
 roxygen2::roxygenize()
 ```
 
 To check the extension:
-```{r eval = FALSE}
+```{r check-extension, eval = FALSE}
 devtools::check(check_version = TRUE)
 ```
 
 You may wish to skip tests using:
-```{r eval = FALSE}
+```{r check-extension-without-tests, eval = FALSE}
 devtools::check(check_version = TRUE, args = "--no-tests")
 ```
 
 To test the extension:
-```{r eval = FALSE}
+```{r test-extension, eval = FALSE}
 devtools::test()
 ```
 
 ## Usage
 
-```{r message = FALSE, warning = FALSE}
+<!-- TODO:
+To regenerate the readme with knitr, run `qdbd --transient --security=false`.
+Let automatise this!
+-->
+
+```{r load-quasardb-extension}
 library(quasardb)
 ```
 
@@ -90,17 +99,17 @@ qdb_version()
 ```
 
 Get underlying C API build id:
-```{r example-build, eval = FALSE}
+```{r example-build,}
 qdb_build()
 ```
 
 Connect to a quasardb cluster at default URI:
-```{r example-connect-default, eval = FALSE}
+```{r example-connect-default}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 ```
 
 Create a timeseries:
-```{r example-ts_create, eval = FALSE}
+```{r example-ts_create}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 qdb_ts_create(handle, name = "timeseries1",
@@ -108,22 +117,26 @@ qdb_ts_create(handle, name = "timeseries1",
 ```
 
 Get all entry keys matching given find query:
-```{r example-find, eval = FALSE}
+```{r example-find}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys
 ```
 
 Execute a select query:
-```{r example-query, eval = FALSE}
+```{r example-query}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
-# Get all entries tagged with 'my-tag' being timeseries.
+# Get number of elements in each column of the timeseries in year 2017.
 result <-
-  qdb_query(handle, "select count(*) from my_ts in range(2017, +1y)")
+  qdb_query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
+result$scanned_rows_count
+result$tables[["timeseries1"]]$data
 ```
 
 ## TODO
 
- - Make compliant with other OSes: Linux, Windows, FreeBSD.
+ - Add `qdb_remove`, `qdb_ts_insert`, `qdb_attach_tag`.
+ - Make compliant with other OSes: Linux, FreeBSD.
  - Add a default parameter to `qdb_connect`.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

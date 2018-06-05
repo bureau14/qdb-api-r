@@ -4,6 +4,9 @@ run_qdbd <- function(root) {
   qdbd_path <- file.path(root, "bin", "qdbd")
   if (!file.exists(qdbd_path)) {
     qdbd_path <- file.path(root, "inst", "bin", "qdbd")
+    if (.Platform[["OS.type"]] == "windows") {
+      qdbd_path <- paste(qdbd_path, ".exe", sep = "")
+    }
   }
   print(qdbd_path)
   qdbd_path <- normalizePath(qdbd_path)
