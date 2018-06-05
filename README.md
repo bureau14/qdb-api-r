@@ -5,7 +5,7 @@ quasardb
 
 :warning:**WARNING**: Early stage development version. Use at your own risk.
 
-:information\_source:**NOTE**: Only :apple:macOS is currently supported.
+:information\_source:**NOTE**: Only :apple:macOS and Windows are currently supported.
 
 The quasardb package is the official R API for [quasardb](https://www.quasardb.net) timeseries database.
 
@@ -28,7 +28,9 @@ devtools::install_github("bureau14/qdb-api-r")
 
 ### quasardb C API
 
-To build the R API, you will need the C API. It can either be installed on the machine (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` directory. You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
+To build the R API, you will need the C API. It can either be installed on the machine system-wide (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` directory. On Windows, you need to verify additionally that the `qdb_api.dll` is in the `PATH` environment variable.
+
+You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
 
 ### Building the extension from source
 
@@ -71,6 +73,10 @@ devtools::test()
 Usage
 -----
 
+<!-- TODO:
+To regenerate the readme with knitr, run `qdbd --transient --security=false`.
+Let automatise this!
+-->
 ``` r
 library(quasardb)
 ```
@@ -79,13 +85,14 @@ Get underlying C API version:
 
 ``` r
 qdb_version()
-#> [1] "quasardb 2.5.0"
+#> [1] "2.6.0"
 ```
 
 Get underlying C API build id:
 
 ``` r
 qdb_build()
+#> [1] "1b437b2 2018-06-01 07:14:42 +0000"
 ```
 
 Connect to a quasardb cluster at default URI:
@@ -109,20 +116,28 @@ Get all entry keys matching given find query:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys
+#> character(0)
 ```
 
 Execute a select query:
 
 ``` r
 handle <- qdb_connect("qdb://127.0.0.1:2836")
-# Get all entries tagged with 'my-tag' being timeseries.
+# Get number of elements in each column of the timeseries in year 2017.
 result <-
-  qdb_query(handle, "select count(*) from my_ts in range(2017, +1y)")
+  qdb_query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
+result$scanned_rows_count
+#> [1] 0
+result$tables[["timeseries1"]]$data
+#>                             timestamp count(column1) count(column2)
+#> 1 2017-01-01T00:00:00.000000000+00:00              0              0
 ```
 
 TODO
 ----
 
--   Make compliant with other OSes: Linux, Windows, FreeBSD.
+-   Add `qdb_remove`, `qdb_ts_insert`, `qdb_attach_tag`.
+-   Make compliant with other OSes: Linux, FreeBSD.
 -   Add a default parameter to `qdb_connect`.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
