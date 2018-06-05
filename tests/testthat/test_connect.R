@@ -1,4 +1,4 @@
-context("qdb_connect")
+context("connect")
 
 test_that("returns invalid argument when URI is invalid", {
   expect_error(handle <- qdb_connect("invalid URI")
