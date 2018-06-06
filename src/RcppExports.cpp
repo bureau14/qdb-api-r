@@ -73,6 +73,18 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// _qdb_show
+Rcpp::IntegerVector _qdb_show(qdb_handle_t handle, const std::string& name);
+RcppExport SEXP _quasardb__qdb_show(SEXP handleSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_show(handle, name));
+    return rcpp_result_gen;
+END_RCPP
+}
 // _qdb_ts_create
 void _qdb_ts_create(qdb_handle_t handle, const std::string& name, const Rcpp::IntegerVector& columns);
 RcppExport SEXP _quasardb__qdb_ts_create(SEXP handleSEXP, SEXP nameSEXP, SEXP columnsSEXP) {
@@ -115,6 +127,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_quasardb__qdb_query_find", (DL_FUNC) &_quasardb__qdb_query_find, 2},
     {"_quasardb__qdb_query", (DL_FUNC) &_quasardb__qdb_query, 2},
     {"_quasardb__qdb_remove", (DL_FUNC) &_quasardb__qdb_remove, 2},
+    {"_quasardb__qdb_show", (DL_FUNC) &_quasardb__qdb_show, 2},
     {"_quasardb__qdb_ts_create", (DL_FUNC) &_quasardb__qdb_ts_create, 3},
     {"_quasardb__qdb_ts_double_insert", (DL_FUNC) &_quasardb__qdb_ts_double_insert, 3},
     {"_quasardb__qdb_version", (DL_FUNC) &_quasardb__qdb_version, 0},

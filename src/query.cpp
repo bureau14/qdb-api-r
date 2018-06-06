@@ -165,7 +165,7 @@ Rcpp::DataFrame transform_rows(qdb_point_result_t ** rows,
     }
     df.attr("row.names") = row_names;
 
-    df.attr("names") = columns;
+    df.names() = columns;
     df.attr("class") = "data.frame";
 
     return df;

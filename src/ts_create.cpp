@@ -19,9 +19,6 @@ void _qdb_ts_create(qdb_handle_t handle,
     const std::string & name,
     const Rcpp::IntegerVector & columns)
 {
-    // const std::string & column_name,
-    // qdb_ts_column_type_t column_type)
-
     if (!handle)
     {
         Rcpp::stop("invalid handle");
@@ -32,7 +29,7 @@ void _qdb_ts_create(qdb_handle_t handle,
         Rcpp::stop("columns should have at least one element");
     }
 
-    SEXP names_attr = columns.attr("names");
+    SEXP names_attr = columns.names();
     if (Rf_isNull(names_attr))
     {
         Rcpp::stop("columns should have all elements named");

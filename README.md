@@ -77,6 +77,8 @@ Usage
 To regenerate the readme with knitr, run `qdbd --transient --security=false`.
 Let automatise this!
 -->
+Load library:
+
 ``` r
 library(quasardb)
 ```
@@ -88,7 +90,7 @@ qdb_version()
 #> [1] "2.6.0"
 ```
 
-Get underlying C API build id:
+Get underlying C API build id and date:
 
 ``` r
 qdb_build()
@@ -107,6 +109,21 @@ Create a timeseries:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_ts_create(handle, name = "timeseries1",
      columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
+```
+
+Show information about the columns of a timeseries:
+
+``` r
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+columns <- qdb_show(handle, name = "timeseries1")
+columns
+#> column1 column2 
+#>       1       0
+sapply(columns, function(ct) {
+  names(which(ct == ColumnType))
+})
+#>  column1  column2 
+#>   "Blob" "Double"
 ```
 
 Get all entry keys matching given find query:

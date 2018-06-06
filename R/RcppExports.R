@@ -98,6 +98,21 @@ qdb_remove <- function(handle, name) {
     invisible(.Call('_quasardb__qdb_remove', PACKAGE = 'quasardb', handle, name))
 }
 
+#' @backref src/show.cpp
+#' @title List columns of a timeseries.
+#'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param name A name of the timeseries.
+#'
+#' @export
+#'
+#' @examples
+#' handle <- qdb_connect("qdb://127.0.0.1:2836")
+#' columns <- qdb_show(handle, name = "ts")
+qdb_show <- function(handle, name) {
+    .Call('_quasardb__qdb_show', PACKAGE = 'quasardb', handle, name)
+}
+
 #' @backref src/ts_create.cpp
 #' @title Create a timeseries.
 #'
