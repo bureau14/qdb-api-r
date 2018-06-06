@@ -55,6 +55,14 @@ test_that("returns count result on empty 1-column timeseries", {
   expect_equal(results$scanned_rows_count, 0)
 
   expect("tables_count" %in% names(results), failure_message = "query result should contain tables_count")
+
+  current_version <-
+    numeric_version(sub("[^.0-9]*$", "", qdb_version()))
+  skip_if(
+    current_version < numeric_version("2.6.0"),
+    "queries with count before 2.6.0 may give incorrect results"
+  )
+
   expect_equal(results$tables_count, 1)
 
   # Check tables
@@ -158,6 +166,14 @@ test_that("returns count result on empty multi-column timeseries", {
               sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias))
 
   expect_equal(results$scanned_rows_count, 0)
+
+  current_version <-
+    numeric_version(sub("[^.0-9]*$", "", qdb_version()))
+  skip_if(
+    current_version < numeric_version("2.6.0"),
+    "queries with count before 2.6.0 may give incorrect results"
+  )
+
   expect_equal(results$tables_count, 1)
 
   tables <- results$tables
