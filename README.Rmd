@@ -88,6 +88,7 @@ To regenerate the readme with knitr, run `qdbd --transient --security=false`.
 Let automatise this!
 -->
 
+Load library:
 ```{r load-quasardb-extension}
 library(quasardb)
 ```
@@ -98,7 +99,7 @@ Get underlying C API version:
 qdb_version()
 ```
 
-Get underlying C API build id:
+Get underlying C API build id and date:
 ```{r example-build,}
 qdb_build()
 ```
@@ -119,6 +120,16 @@ Create a timeseries:
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_ts_create(handle, name = "timeseries1",
      columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
+```
+
+Show information about the columns of a timeseries:
+```{r show}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+columns <- qdb_show(handle, name = "timeseries1")
+columns
+sapply(columns, function(ct) {
+  names(which(ct == ColumnType))
+})
 ```
 
 Get all entry keys matching given find query:
