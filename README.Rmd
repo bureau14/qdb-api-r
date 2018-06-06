@@ -127,6 +127,12 @@ qdb_ts_create(handle, name = "timeseries1",
      columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
 ```
 
+```{r example-ts_create2, include = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_ts_create(handle, name = "timeseries2",
+     columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
+```
+
 Show information about the columns of a timeseries:
 ```{r show}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
@@ -137,10 +143,38 @@ sapply(columns, function(ct) {
 })
 ```
 
+Add a tag to an entry:
+```{r attach_tags-single}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_attach_tags(handle, entry = "timeseries1", tags = "my_tag")
+```
+
+```{r attach_tags-single2, include = FALSE}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_attach_tags(handle, entry = "timeseries2", tags = "my_tag")
+```
+
+Add many tags at once:
+```{r attach_tags-many}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_attach_tags(handle,
+                entry = "timeseries1",
+                tags = c("my_tag1", "my_tag2", "my_tag3"))
+```
+
 Get all entry keys matching given find query:
 ```{r example-find}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
+keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys
+```
+
+Untag an entry:
+```{r example-detach_tags}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+qdb_detach_tags(handle, entry = "timeseries2", tag = "my_tag")
+# Now, timeseries2 is no more on the list.
 keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
 keys
 ```
@@ -163,6 +197,6 @@ qdb_remove(handle, name = "timeseries1")
 
 ## TODO
 
- - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_attach_tag`.
+ - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`, `qdb_get_tags`, `qdb_get_tagged`.
  - Make compliant with other OSes: Linux, FreeBSD.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

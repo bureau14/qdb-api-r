@@ -1,12 +1,6 @@
 PKG_CXXFLAGS= --std=c++14 -Werror -I ../inst/include
 PKG_LIBS= -L ../inst/bin -L ../inst/lib -lqdb_api
 
-#ifeq "$(WIN)" "64"
-#	PKG_LIBS = value for 64-bit Windows
-#else
-#	PKG_LIBS = value for 32-bit Windows
-#endif
-
 .PHONY: all
 
 # Add to RPATH only if RPATH is not set yet.

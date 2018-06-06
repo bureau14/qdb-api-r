@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// _qdb_attach_tags
+void _qdb_attach_tags(qdb_handle_t handle, const std::string& entry, const std::vector<std::string>& tags);
+RcppExport SEXP _quasardb__qdb_attach_tags(SEXP handleSEXP, SEXP entrySEXP, SEXP tagsSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type entry(entrySEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::string>& >::type tags(tagsSEXP);
+    _qdb_attach_tags(handle, entry, tags);
+    return R_NilValue;
+END_RCPP
+}
 // _qdb_build
 std::string _qdb_build();
 RcppExport SEXP _quasardb__qdb_build() {
@@ -25,6 +37,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const std::string& >::type uri(uriSEXP);
     rcpp_result_gen = Rcpp::wrap(_qdb_connect(uri));
     return rcpp_result_gen;
+END_RCPP
+}
+// _qdb_detach_tags
+void _qdb_detach_tags(qdb_handle_t handle, const std::string& entry, const std::vector<std::string>& tags);
+RcppExport SEXP _quasardb__qdb_detach_tags(SEXP handleSEXP, SEXP entrySEXP, SEXP tagsSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type entry(entrySEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::string>& >::type tags(tagsSEXP);
+    _qdb_detach_tags(handle, entry, tags);
+    return R_NilValue;
 END_RCPP
 }
 // _qdb_error
@@ -121,8 +145,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_quasardb__qdb_attach_tags", (DL_FUNC) &_quasardb__qdb_attach_tags, 3},
     {"_quasardb__qdb_build", (DL_FUNC) &_quasardb__qdb_build, 0},
     {"_quasardb__qdb_connect", (DL_FUNC) &_quasardb__qdb_connect, 1},
+    {"_quasardb__qdb_detach_tags", (DL_FUNC) &_quasardb__qdb_detach_tags, 3},
     {"_quasardb__qdb_error", (DL_FUNC) &_quasardb__qdb_error, 1},
     {"_quasardb__qdb_query_find", (DL_FUNC) &_quasardb__qdb_query_find, 2},
     {"_quasardb__qdb_query", (DL_FUNC) &_quasardb__qdb_query, 2},
