@@ -13,7 +13,7 @@ Imports:
     nanotime
 LinkingTo: Rcpp
 URL: https://doc.quasardb.net, https://github.com/bureau14/qdb-api-r
-SystemRequirements: quasardb libraries (qdb_api) version 2.5.0 or later;
+SystemRequirements: quasardb libraries (qdb_api) version 2.6.0 or later;
  previous 2.x versions may work partially as well.
 BugReports: https://support.quasardb.net/
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
