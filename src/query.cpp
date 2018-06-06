@@ -45,22 +45,6 @@ Rcpp::StringVector transform_blob_points(
     return column;
 }
 
-Rcpp::IntegerVector transform_count_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
-{
-    assert(rows);
-
-    Rcpp::IntegerVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
-    {
-        const auto & point = rows[row_index][column_index];
-        assert(point.type == qdb_query_result_count);
-        column[row_index] = point.payload.count;
-    }
-
-    return column;
-}
-
 Rcpp::DoubleVector transform_double_points(
     qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
 {
@@ -134,11 +118,6 @@ Rcpp::DataFrame transform_rows(qdb_point_result_t ** rows,
         {
         case qdb_query_result_blob:
             df.push_back(transform_blob_points(rows, rows_count, column_index));
-            break;
-
-        case qdb_query_result_count:
-            df.push_back(
-                transform_count_points(rows, rows_count, column_index));
             break;
 
         case qdb_query_result_double:
