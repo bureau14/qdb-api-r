@@ -8,7 +8,7 @@ Connect to a quasardb cluster described with the given URI and returns a
   handle to it. The URI must be in a form \code{"qdb://<ip or
   hostname>:<port>[, ...]"}.}
 \usage{
-qdb_connect(uri)
+qdb_connect(uri = "qdb://127.0.0.1:2836")
 }
 \arguments{
 \item{uri}{Cluster URI, e.g.: \code{"qdb://127.0.0.1:2836"},

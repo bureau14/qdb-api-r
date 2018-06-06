@@ -97,7 +97,13 @@ qdb_build()
 #> [1] "1b437b2 2018-06-01 07:14:42 +0000"
 ```
 
-Connect to a quasardb cluster at default URI:
+Connect to a quasardb cluster at a default URI `qdb://127.0.0.1:2836`:
+
+``` r
+handle <- qdb_connect()
+```
+
+Connect to a quasardb cluster at a user-provided URI:
 
 ``` r
 handle <- qdb_connect("qdb://127.0.0.1:2836")
@@ -162,5 +168,4 @@ TODO
 
 -   Add `qdb_ts_insert` (only stub is currently implemented), `qdb_attach_tag`.
 -   Make compliant with other OSes: Linux, FreeBSD.
--   Add a default parameter to `qdb_connect`.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
