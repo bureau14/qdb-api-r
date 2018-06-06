@@ -178,5 +178,5 @@ test_that("returns count result on empty multi-column timeseries", {
 
   expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
                "2018-02-03T00:00:00.000000000")
-  expect_equal(unlist(data[, c(2:length(data))]), rep(0L, length(columns)), check.names = FALSE)
+  expect_equal(unlist(data[, 2:length(data)]), rep(0L, length(columns)), check.names = FALSE)
 })

@@ -31,7 +31,7 @@ qdb_build <- function() {
 #'
 #' @examples
 #' handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_connect <- function(uri) {
+qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
     .Call('_quasardb__qdb_connect', PACKAGE = 'quasardb', uri)
 }
 
