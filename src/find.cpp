@@ -3,7 +3,16 @@
 #include <Rcpp.h>
 
 //' @backref src/find.cpp
-//' @title Execute a query to find matching entries.
+//' @title Execute a find query.
+//'
+//' @description
+//' Execute a query to find matching entries.
+//' A find query should be composed of at least one `tag='some_tag'` part.
+//' It may also limit the type of entries through the use of `type=?`.
+//' The type may be one of: `blob`, `deque`, `int` (or `integer`), `stream`,
+//' `tag` or `ts`.
+//' Logical operations `and` and `or` as well as negation `not` may be used as
+//' well.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param query A query to execute.

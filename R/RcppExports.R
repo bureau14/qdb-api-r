@@ -4,16 +4,14 @@
 #' @backref src/attach_tags.cpp
 #' @title Attach tags to an entry.
 #'
+#' @description
 #' Attach one or many tags to an existing entry.
-#'
-#' @description Tagging is a simple but powerful system that can be used to
-#' make huge quantities of data manageable.
-#' See details, examples and more at
-#' https://doc.quasardb.net/master/concepts/tags.html.
 #'
 #' When attaching tags, no error will be raised if the entry has been tagged
 #' with at least one tag (i.e. when this entry had not already been tagged
 #' with all given tags).
+#'
+#' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param entry An alias (key) of an entry.
@@ -30,9 +28,10 @@ qdb_attach_tags <- function(handle, entry, tags) {
 #' @backref src/build.cpp
 #' @title Return quasardb API build information.
 #'
+#' @description
 #' Return build information of the underlying quasardb C API.
 #'
-#' @description Build information may be useful when a problem or a bug has
+#' Build information may be useful when a problem or a bug has
 #' been encountered to precisely describe the version of the API used.
 #'
 #' @return API build information
@@ -47,9 +46,10 @@ qdb_build <- function() {
 #' @backref src/connect.cpp
 #' @title Connect to a quasardb cluster.
 #'
+#' @description
 #' Connect to a quasardb cluster described with the given URI and returns a
-#'   handle to it. The URI must be in a form \code{"qdb://<ip or
-#'   hostname>:<port>[, ...]"}.
+#' handle to it.
+#' The URI must be in a form \code{"qdb://<ip or hostname>:<port>[, ...]"}.
 #'
 #' @param uri Cluster URI, e.g.: \code{"qdb://127.0.0.1:2836"},
 #'   \code{"qdb://10.0.1.1:2836,10.0.1.2:2837,my.database.com:2838"}.
@@ -65,18 +65,17 @@ qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
 }
 
 #' @backref src/Detach_tags.cpp
+#'
 #' @title Detach tags from an entry.
 #'
+#' @description 
 #' Detach one or many tags from an existing entry.
-#'
-#' @description Tagging is a simple but powerful system that can be used to
-#' make huge quantities of data manageable.
-#' See details, examples and more at
-#' https://doc.quasardb.net/master/concepts/tags.html.
 #'
 #' When detaching tags, no error will be raised if the entry has been untagged
 #' from at least one tag (i.e. when this entry had no tags amongst the given
 #' ones).
+#' 
+#' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param entry An alias (key) of an entry.
@@ -95,6 +94,7 @@ qdb_detach_tags <- function(handle, entry, tags) {
 #' @backref src/error.cpp
 #' @title Return error description.
 #'
+#' @description
 #' Return error description string for a given error code.
 #'
 #' @param code Error code.
@@ -109,7 +109,16 @@ qdb_error <- function(code) {
 }
 
 #' @backref src/find.cpp
-#' @title Execute a query to find matching entries.
+#' @title Execute a find query.
+#'
+#' @description
+#' Execute a query to find matching entries.
+#' A find query should be composed of at least one `tag='some_tag'` part.
+#' It may also limit the type of entries through the use of `type=?`.
+#' The type may be one of: `blob`, `deque`, `int` (or `integer`), `stream`,
+#' `tag` or `ts`.
+#' Logical operations `and` and `or` as well as negation `not` may be used as
+#' well.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param query A query to execute.
@@ -125,7 +134,10 @@ qdb_find <- function(handle, query) {
 }
 
 #' @backref src/get_tagged.cpp
-#' @title Return all entries tagged by a tag.
+#' @title Get tagged entries.
+#'
+#' @description
+#' Return keys of all the entries tagged by the given tag.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param tag An alias (key) of a tag.
@@ -141,7 +153,10 @@ qdb_get_tagged <- function(handle, tag) {
 }
 
 #' @backref src/get_tags.cpp
-#' @title Return all tags of an entry.
+#' @title Get tags.
+#'
+#' @description
+#' Return all tags of an entry.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name An alias (key) of an entry.
@@ -158,12 +173,11 @@ qdb_get_tags <- function(handle, name) {
 
 #' @backref src/query.cpp
 #' @title Execute a query.
-#' 
+#'
+#' @description
 #' Execute a select query using SQL-like syntax.
 #' 
-#' @description You can find more details about the possible queries,
-#' the query language syntax, as well as examples and more at
-#' https://doc.quasardb.net/master/api/queries.html.
+#' @seealso \url{https://doc.quasardb.net/master/api/queries.html.}
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param query A query to execute.
@@ -180,6 +194,9 @@ qdb_query <- function(handle, query) {
 
 #' @backref src/remove.cpp
 #' @title Remove an entry.
+#' 
+#' @description
+#' Remove an existing entry from the database.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name Timeseries name.
@@ -194,7 +211,10 @@ qdb_remove <- function(handle, name) {
 }
 
 #' @backref src/show.cpp
-#' @title List columns of a timeseries.
+#' @title Describe a timeseries.
+#'
+#' @description
+#' List columns, their names and types, of a timeseries.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name A name of the timeseries.
@@ -210,6 +230,9 @@ qdb_show <- function(handle, name) {
 
 #' @backref src/ts_create.cpp
 #' @title Create a timeseries.
+#' 
+#' @description
+#' Create a timeseries with given columns.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name A name of the to-be-created timeseries.
@@ -226,7 +249,11 @@ qdb_ts_create <- function(handle, name, columns) {
 }
 
 #' @backref src/ts_insert.cpp
-#' @title Insert data into double column of an existing timeseries.
+#'
+#' @title Insert floating-point data.
+#'
+#' @description
+#' Insert floating-point data into double column of an existing timeseries.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name Timeseries name.
@@ -244,9 +271,10 @@ qdb_ts_insert.double <- function(handle, name, column) {
 #' @backref src/version.cpp
 #' @title Return quasardb API version
 #'
+#' @description
 #' Return version of the underlying quasardb C API.
 #'
-#' @description Version information may be useful when a problem or a bug has
+#' Version information may be useful when a problem or a bug has
 #' been encountered to precisely describe the version of the API used.
 #'
 #' @return API version

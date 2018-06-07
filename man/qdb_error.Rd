@@ -2,9 +2,7 @@
 % Please edit documentation in src/error.cpp
 \name{qdb_error}
 \alias{qdb_error}
-\title{Return error description.
-
-Return error description string for a given error code.}
+\title{Return error description.}
 \usage{
 qdb_error(code)
 }
@@ -13,6 +11,9 @@ qdb_error(code)
 }
 \value{
 Error description string.
+}
+\description{
+Return error description string for a given error code.
 }
 \examples{
 qdb_error(code = 0)

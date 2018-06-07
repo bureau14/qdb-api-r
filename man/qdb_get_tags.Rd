@@ -2,7 +2,7 @@
 % Please edit documentation in src/get_tags.cpp
 \name{qdb_get_tags}
 \alias{qdb_get_tags}
-\title{Return all tags of an entry.}
+\title{Get tags.}
 \usage{
 qdb_get_tags(handle, name)
 }
@@ -13,6 +13,9 @@ qdb_get_tags(handle, name)
 }
 \value{
 List of tags.
+}
+\description{
+Return all tags of an entry.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

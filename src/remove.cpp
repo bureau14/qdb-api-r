@@ -3,6 +3,9 @@
 
 //' @backref src/remove.cpp
 //' @title Remove an entry.
+//' 
+//' @description
+//' Remove an existing entry from the database.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name Timeseries name.

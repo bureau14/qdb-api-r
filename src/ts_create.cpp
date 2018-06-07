@@ -4,6 +4,9 @@
 
 //' @backref src/ts_create.cpp
 //' @title Create a timeseries.
+//' 
+//' @description
+//' Create a timeseries with given columns.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name A name of the to-be-created timeseries.

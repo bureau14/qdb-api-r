@@ -4,6 +4,7 @@
 //' @backref src/error.cpp
 //' @title Return error description.
 //'
+//' @description
 //' Return error description string for a given error code.
 //'
 //' @param code Error code.

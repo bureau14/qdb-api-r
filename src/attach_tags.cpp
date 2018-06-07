@@ -5,16 +5,14 @@
 //' @backref src/attach_tags.cpp
 //' @title Attach tags to an entry.
 //'
+//' @description
 //' Attach one or many tags to an existing entry.
-//'
-//' @description Tagging is a simple but powerful system that can be used to
-//' make huge quantities of data manageable.
-//' See details, examples and more at
-//' https://doc.quasardb.net/master/concepts/tags.html.
 //'
 //' When attaching tags, no error will be raised if the entry has been tagged
 //' with at least one tag (i.e. when this entry had not already been tagged
 //' with all given tags).
+//'
+//' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param entry An alias (key) of an entry.

@@ -3,7 +3,10 @@
 #include <Rcpp.h>
 
 //' @backref src/get_tags.cpp
-//' @title Return all tags of an entry.
+//' @title Get tags.
+//'
+//' @description
+//' Return all tags of an entry.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name An alias (key) of an entry.

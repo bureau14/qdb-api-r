@@ -4,9 +4,10 @@
 //' @backref src/connect.cpp
 //' @title Connect to a quasardb cluster.
 //'
+//' @description
 //' Connect to a quasardb cluster described with the given URI and returns a
-//'   handle to it. The URI must be in a form \code{"qdb://<ip or
-//'   hostname>:<port>[, ...]"}.
+//' handle to it.
+//' The URI must be in a form \code{"qdb://<ip or hostname>:<port>[, ...]"}.
 //'
 //' @param uri Cluster URI, e.g.: \code{"qdb://127.0.0.1:2836"},
 //'   \code{"qdb://10.0.1.1:2836,10.0.1.2:2837,my.database.com:2838"}.

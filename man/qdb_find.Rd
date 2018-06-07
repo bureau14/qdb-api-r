@@ -2,7 +2,7 @@
 % Please edit documentation in src/find.cpp
 \name{qdb_find}
 \alias{qdb_find}
-\title{Execute a query to find matching entries.}
+\title{Execute a find query.}
 \usage{
 qdb_find(handle, query)
 }
@@ -13,6 +13,15 @@ qdb_find(handle, query)
 }
 \value{
 List of matching entry aliases/keys.
+}
+\description{
+Execute a query to find matching entries.
+A find query should be composed of at least one `tag='some_tag'` part.
+It may also limit the type of entries through the use of `type=?`.
+The type may be one of: `blob`, `deque`, `int` (or `integer`), `stream`,
+`tag` or `ts`.
+Logical operations `and` and `or` as well as negation `not` may be used as
+well.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

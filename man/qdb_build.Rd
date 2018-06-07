@@ -2,9 +2,7 @@
 % Please edit documentation in src/build.cpp
 \name{qdb_build}
 \alias{qdb_build}
-\title{Return quasardb API build information.
-
-Return build information of the underlying quasardb C API.}
+\title{Return quasardb API build information.}
 \usage{
 qdb_build()
 }
@@ -12,6 +10,8 @@ qdb_build()
 API build information
 }
 \description{
+Return build information of the underlying quasardb C API.
+
 Build information may be useful when a problem or a bug has
 been encountered to precisely describe the version of the API used.
 }

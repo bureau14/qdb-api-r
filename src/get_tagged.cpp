@@ -3,7 +3,10 @@
 #include <Rcpp.h>
 
 //' @backref src/get_tagged.cpp
-//' @title Return all entries tagged by a tag.
+//' @title Get tagged entries.
+//'
+//' @description
+//' Return keys of all the entries tagged by the given tag.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param tag An alias (key) of a tag.

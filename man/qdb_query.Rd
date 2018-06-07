@@ -2,9 +2,7 @@
 % Please edit documentation in src/query.cpp
 \name{qdb_query}
 \alias{qdb_query}
-\title{Execute a query.
-
-Execute a select query using SQL-like syntax.}
+\title{Execute a query.}
 \usage{
 qdb_query(handle, query)
 }
@@ -17,11 +15,12 @@ qdb_query(handle, query)
 A data frame with results of the query.
 }
 \description{
-You can find more details about the possible queries,
-the query language syntax, as well as examples and more at
-https://doc.quasardb.net/master/api/queries.html.
+Execute a select query using SQL-like syntax.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+}
+\seealso{
+\url{https://doc.quasardb.net/master/api/queries.html.}
 }

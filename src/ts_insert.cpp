@@ -3,7 +3,11 @@
 #include <Rcpp.h>
 
 //' @backref src/ts_insert.cpp
-//' @title Insert data into double column of an existing timeseries.
+//'
+//' @title Insert floating-point data.
+//'
+//' @description
+//' Insert floating-point data into double column of an existing timeseries.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name Timeseries name.

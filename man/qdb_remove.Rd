@@ -11,6 +11,9 @@ qdb_remove(handle, name)
 
 \item{name}{Timeseries name.}
 }
+\description{
+Remove an existing entry from the database.
+}
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_remove(handle, "timeseries")

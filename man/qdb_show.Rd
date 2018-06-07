@@ -2,7 +2,7 @@
 % Please edit documentation in src/show.cpp
 \name{qdb_show}
 \alias{qdb_show}
-\title{List columns of a timeseries.}
+\title{Describe a timeseries.}
 \usage{
 qdb_show(handle, name)
 }
@@ -10,6 +10,9 @@ qdb_show(handle, name)
 \item{handle}{A valid cluster opened using qdb_connect.}
 
 \item{name}{A name of the timeseries.}
+}
+\description{
+List columns, their names and types, of a timeseries.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

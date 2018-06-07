@@ -2,9 +2,7 @@
 % Please edit documentation in src/Detach_tags.cpp
 \name{qdb_detach_tags}
 \alias{qdb_detach_tags}
-\title{Detach tags from an entry.
-
-Detach one or many tags from an existing entry.}
+\title{Detach tags from an entry.}
 \usage{
 qdb_detach_tags(handle, entry, tags)
 }
@@ -16,10 +14,7 @@ qdb_detach_tags(handle, entry, tags)
 \item{tags}{A vector of tag names to attach.}
 }
 \description{
-Tagging is a simple but powerful system that can be used to
-make huge quantities of data manageable.
-See details, examples and more at
-https://doc.quasardb.net/master/concepts/tags.html.
+Detach one or many tags from an existing entry.
 
 When detaching tags, no error will be raised if the entry has been untagged
 from at least one tag (i.e. when this entry had no tags amongst the given
@@ -29,4 +24,7 @@ ones).
 qdb_detach_tags(handle, entry = "key", tags = "tag")
 
 qdb_detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
+}
+\seealso{
+\url{https://doc.quasardb.net/master/concepts/tags.html}
 }

@@ -3,7 +3,10 @@
 #include <Rcpp.h>
 
 //' @backref src/show.cpp
-//' @title List columns of a timeseries.
+//' @title Describe a timeseries.
+//'
+//' @description
+//' List columns, their names and types, of a timeseries.
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name A name of the timeseries.

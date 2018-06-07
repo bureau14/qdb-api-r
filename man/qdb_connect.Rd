@@ -2,11 +2,7 @@
 % Please edit documentation in src/connect.cpp
 \name{qdb_connect}
 \alias{qdb_connect}
-\title{Connect to a quasardb cluster.
-
-Connect to a quasardb cluster described with the given URI and returns a
-  handle to it. The URI must be in a form \code{"qdb://<ip or
-  hostname>:<port>[, ...]"}.}
+\title{Connect to a quasardb cluster.}
 \usage{
 qdb_connect(uri = "qdb://127.0.0.1:2836")
 }
@@ -16,6 +12,11 @@ qdb_connect(uri = "qdb://127.0.0.1:2836")
 }
 \value{
 Handle to the cluster
+}
+\description{
+Connect to a quasardb cluster described with the given URI and returns a
+handle to it.
+The URI must be in a form \code{"qdb://<ip or hostname>:<port>[, ...]"}.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

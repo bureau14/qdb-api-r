@@ -2,7 +2,7 @@
 % Please edit documentation in src/ts_insert.cpp
 \name{qdb_ts_insert.double}
 \alias{qdb_ts_insert.double}
-\title{Insert data into double column of an existing timeseries.}
+\title{Insert floating-point data.}
 \usage{
 qdb_ts_insert.double(handle, name, column)
 }
@@ -12,6 +12,9 @@ qdb_ts_insert.double(handle, name, column)
 \item{name}{Timeseries name.}
 
 \item{column}{Column name.}
+}
+\description{
+Insert floating-point data into double column of an existing timeseries.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

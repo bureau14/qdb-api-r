@@ -2,7 +2,7 @@
 % Please edit documentation in src/get_tagged.cpp
 \name{qdb_get_tagged}
 \alias{qdb_get_tagged}
-\title{Return all entries tagged by a tag.}
+\title{Get tagged entries.}
 \usage{
 qdb_get_tagged(handle, tag)
 }
@@ -13,6 +13,9 @@ qdb_get_tagged(handle, tag)
 }
 \value{
 List of entries.
+}
+\description{
+Return keys of all the entries tagged by the given tag.
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

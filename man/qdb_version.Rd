@@ -2,9 +2,7 @@
 % Please edit documentation in src/version.cpp
 \name{qdb_version}
 \alias{qdb_version}
-\title{Return quasardb API version
-
-Return version of the underlying quasardb C API.}
+\title{Return quasardb API version}
 \usage{
 qdb_version()
 }
@@ -12,6 +10,8 @@ qdb_version()
 API version
 }
 \description{
+Return version of the underlying quasardb C API.
+
 Version information may be useful when a problem or a bug has
 been encountered to precisely describe the version of the API used.
 }
