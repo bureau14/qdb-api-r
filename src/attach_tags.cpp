@@ -7,6 +7,15 @@
 //'
 //' Attach one or many tags to an existing entry.
 //'
+//' @description Tagging is a simple but powerful system that can be used to
+//' make huge quantities of data manageable.
+//' See details, examples and more at
+//' https://doc.quasardb.net/master/concepts/tags.html.
+//'
+//' When attaching tags, no error will be raised if the entry has been tagged
+//' with at least one tag (i.e. when this entry had not already been tagged
+//' with all given tags).
+//'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param entry An alias (key) of an entry.
 //' @param tags A vector of tag names to attach.
@@ -14,7 +23,7 @@
 //' @export
 //'
 //' @examples
-//' qdb_attach_tags(handle, 'key', 'tag')
+//' qdb_attach_tags(handle, "key", "tag")
 // [[Rcpp::export(name = "qdb_attach_tags")]]
 void _qdb_attach_tags(qdb_handle_t handle,
     const std::string & entry,

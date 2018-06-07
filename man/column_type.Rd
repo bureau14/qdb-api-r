@@ -10,4 +10,11 @@ Possible types of a timeseries column.}
 \usage{
 column_type
 }
+\description{
+Currently, a timeseries can have columns of the following types:
+  - double    - column of floating point values.
+  - blob      - column of binary data.
+  - integer   - column of signed 64-bit integer values.
+  - timestamp - column of nanosecond-precision timestamps.
+}
 \keyword{datasets}

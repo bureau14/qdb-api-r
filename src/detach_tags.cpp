@@ -7,6 +7,15 @@
 //'
 //' Detach one or many tags from an existing entry.
 //'
+//' @description Tagging is a simple but powerful system that can be used to
+//' make huge quantities of data manageable.
+//' See details, examples and more at
+//' https://doc.quasardb.net/master/concepts/tags.html.
+//'
+//' When detaching tags, no error will be raised if the entry has been untagged
+//' from at least one tag (i.e. when this entry had no tags amongst the given
+//' ones).
+//'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param entry An alias (key) of an entry.
 //' @param tags A vector of tag names to attach.
@@ -16,7 +25,7 @@
 //' @examples
 //' qdb_detach_tags(handle, entry = "key", tags = "tag")
 //'
-//' qdb_detach_tags(handle, entry = "key", tags = c("tag1', "tag2"))
+//' qdb_detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
 // [[Rcpp::export(name = "qdb_detach_tags")]]
 void _qdb_detach_tags(qdb_handle_t handle,
     const std::string & entry,

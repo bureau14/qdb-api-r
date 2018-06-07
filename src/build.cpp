@@ -6,6 +6,9 @@
 //'
 //' Return build information of the underlying quasardb C API.
 //'
+//' @description Build information may be useful when a problem or a bug has
+//' been encountered to precisely describe the version of the API used.
+//'
 //' @return API build information
 //' @export
 //'

@@ -16,6 +16,11 @@ qdb_query(handle, query)
 \value{
 A data frame with results of the query.
 }
+\description{
+You can find more details about the possible queries,
+the query language syntax, as well as examples and more at
+https://doc.quasardb.net/master/api/queries.html.
+}
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")

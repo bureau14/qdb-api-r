@@ -15,6 +15,16 @@ qdb_attach_tags(handle, entry, tags)
 
 \item{tags}{A vector of tag names to attach.}
 }
+\description{
+Tagging is a simple but powerful system that can be used to
+make huge quantities of data manageable.
+See details, examples and more at
+https://doc.quasardb.net/master/concepts/tags.html.
+
+When attaching tags, no error will be raised if the entry has been tagged
+with at least one tag (i.e. when this entry had not already been tagged
+with all given tags).
+}
 \examples{
-qdb_attach_tags(handle, 'key', 'tag')
+qdb_attach_tags(handle, "key", "tag")
 }

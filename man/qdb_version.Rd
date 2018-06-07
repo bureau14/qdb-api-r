@@ -11,6 +11,10 @@ qdb_version()
 \value{
 API version
 }
+\description{
+Version information may be useful when a problem or a bug has
+been encountered to precisely describe the version of the API used.
+}
 \examples{
 qdb_version()
 }

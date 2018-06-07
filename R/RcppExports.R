@@ -6,6 +6,15 @@
 #'
 #' Attach one or many tags to an existing entry.
 #'
+#' @description Tagging is a simple but powerful system that can be used to
+#' make huge quantities of data manageable.
+#' See details, examples and more at
+#' https://doc.quasardb.net/master/concepts/tags.html.
+#'
+#' When attaching tags, no error will be raised if the entry has been tagged
+#' with at least one tag (i.e. when this entry had not already been tagged
+#' with all given tags).
+#'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param entry An alias (key) of an entry.
 #' @param tags A vector of tag names to attach.
@@ -13,7 +22,7 @@
 #' @export
 #'
 #' @examples
-#' qdb_attach_tags(handle, 'key', 'tag')
+#' qdb_attach_tags(handle, "key", "tag")
 qdb_attach_tags <- function(handle, entry, tags) {
     invisible(.Call('_quasardb__qdb_attach_tags', PACKAGE = 'quasardb', handle, entry, tags))
 }
@@ -22,6 +31,9 @@ qdb_attach_tags <- function(handle, entry, tags) {
 #' @title Return quasardb API build information.
 #'
 #' Return build information of the underlying quasardb C API.
+#'
+#' @description Build information may be useful when a problem or a bug has
+#' been encountered to precisely describe the version of the API used.
 #'
 #' @return API build information
 #' @export
@@ -57,6 +69,15 @@ qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
 #'
 #' Detach one or many tags from an existing entry.
 #'
+#' @description Tagging is a simple but powerful system that can be used to
+#' make huge quantities of data manageable.
+#' See details, examples and more at
+#' https://doc.quasardb.net/master/concepts/tags.html.
+#'
+#' When detaching tags, no error will be raised if the entry has been untagged
+#' from at least one tag (i.e. when this entry had no tags amongst the given
+#' ones).
+#'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param entry An alias (key) of an entry.
 #' @param tags A vector of tag names to attach.
@@ -66,7 +87,7 @@ qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
 #' @examples
 #' qdb_detach_tags(handle, entry = "key", tags = "tag")
 #'
-#' qdb_detach_tags(handle, entry = "key", tags = c("tag1', "tag2"))
+#' qdb_detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
 qdb_detach_tags <- function(handle, entry, tags) {
     invisible(.Call('_quasardb__qdb_detach_tags', PACKAGE = 'quasardb', handle, entry, tags))
 }
@@ -140,7 +161,9 @@ qdb_get_tags <- function(handle, name) {
 #' 
 #' Execute a select query using SQL-like syntax.
 #' 
-#' @see https://doc.quasardb.net/master/api/queries.html
+#' @description You can find more details about the possible queries,
+#' the query language syntax, as well as examples and more at
+#' https://doc.quasardb.net/master/api/queries.html.
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param query A query to execute.
@@ -222,6 +245,9 @@ qdb_ts_insert.double <- function(handle, name, column) {
 #' @title Return quasardb API version
 #'
 #' Return version of the underlying quasardb C API.
+#'
+#' @description Version information may be useful when a problem or a bug has
+#' been encountered to precisely describe the version of the API used.
 #'
 #' @return API version
 #' @export
