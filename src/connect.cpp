@@ -1,4 +1,4 @@
-#include "handle.hpp"
+#include "handle.h"
 #include <Rcpp.h>
 
 //' @backref src/connect.cpp

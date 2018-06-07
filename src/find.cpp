@@ -1,4 +1,4 @@
-#include "handle.hpp"
+#include "handle.h"
 #include <qdb/query.h>
 #include <Rcpp.h>
 

@@ -1,4 +1,4 @@
-#include "handle.hpp"
+#include "handle.h"
 #include <qdb/ts.h>
 #include <Rcpp.h>
 
