@@ -1,4 +1,4 @@
-PKG_CXXFLAGS= --std=c++14 -Werror -I ../inst/include
+PKG_CXXFLAGS= --std=c++14 -I ../inst/include
 PKG_LIBS= -L ../inst/bin -L ../inst/lib -lqdb_api
 
 .PHONY: all
