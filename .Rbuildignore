@@ -1,6 +1,8 @@
-^cran-comments\.md$
+.lintr$
 ^.*\.Rproj$
-^\.Rproj\.user$
-^README\.Rmd$
 ^README-.*\.png$
+^README\.Rmd$
+^\.Rproj\.user$
+^cran-comments\.md$
 ^inst/bin$
+^src/.clang-format$
