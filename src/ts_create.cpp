@@ -7,6 +7,7 @@
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param name A name of the to-be-created timeseries.
+//' @param columns A named vector of `column_type` integers.
 //'
 //' @export
 //'

@@ -6,6 +6,10 @@
 #'
 #' Attach one or many tags to an existing entry.
 #'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param entry An alias (key) of an entry.
+#' @param tags A vector of tag names to attach.
+#'
 #' @export
 #'
 #' @examples
@@ -53,10 +57,16 @@ qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
 #'
 #' Detach one or many tags from an existing entry.
 #'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param entry An alias (key) of an entry.
+#' @param tags A vector of tag names to attach.
+#'
 #' @export
 #'
 #' @examples
-#' qdb_detach_tags(handle, 'key', 'tag')
+#' qdb_detach_tags(handle, entry = "key", tags = "tag")
+#'
+#' qdb_detach_tags(handle, entry = "key", tags = c("tag1', "tag2"))
 qdb_detach_tags <- function(handle, entry, tags) {
     invisible(.Call('_quasardb__qdb_detach_tags', PACKAGE = 'quasardb', handle, entry, tags))
 }
@@ -72,9 +82,9 @@ qdb_detach_tags <- function(handle, entry, tags) {
 #' @export
 #'
 #' @examples
-#' handle <- qdb_error(0)
-qdb_error <- function(ierr) {
-    .Call('_quasardb__qdb_error', PACKAGE = 'quasardb', ierr)
+#' qdb_error(code = 0)
+qdb_error <- function(code) {
+    .Call('_quasardb__qdb_error', PACKAGE = 'quasardb', code)
 }
 
 #' @backref src/find.cpp
@@ -127,6 +137,10 @@ qdb_get_tags <- function(handle, name) {
 
 #' @backref src/query.cpp
 #' @title Execute a query.
+#' 
+#' Execute a select query using SQL-like syntax.
+#' 
+#' @see https://doc.quasardb.net/master/api/queries.html
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param query A query to execute.
@@ -176,6 +190,7 @@ qdb_show <- function(handle, name) {
 #'
 #' @param handle A valid cluster opened using qdb_connect.
 #' @param name A name of the to-be-created timeseries.
+#' @param columns A named vector of `column_type` integers.
 #'
 #' @export
 #'

@@ -8,6 +8,10 @@ Detach one or many tags from an existing entry.}
 \usage{
 qdb_detach_tags(handle, entry, tags)
 }
-\examples{
-qdb_detach_tags(handle, 'key', 'tag')
+\arguments{
+\item{handle}{A valid cluster opened using qdb_connect.}
+
+\item{entry}{An alias (key) of an entry.}
+
+\item{tags}{A vector of tag names to attach.}
 }

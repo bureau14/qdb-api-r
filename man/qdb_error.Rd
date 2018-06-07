@@ -6,7 +6,7 @@
 
 Return error description string for a given error code.}
 \usage{
-qdb_error(ierr)
+qdb_error(code)
 }
 \arguments{
 \item{code}{Error code.}
@@ -15,5 +15,5 @@ qdb_error(ierr)
 Error description string.
 }
 \examples{
-handle <- qdb_error(0)
+qdb_error(code = 0)
 }

@@ -8,6 +8,13 @@ Attach one or many tags to an existing entry.}
 \usage{
 qdb_attach_tags(handle, entry, tags)
 }
+\arguments{
+\item{handle}{A valid cluster opened using qdb_connect.}
+
+\item{entry}{An alias (key) of an entry.}
+
+\item{tags}{A vector of tag names to attach.}
+}
 \examples{
 qdb_attach_tags(handle, 'key', 'tag')
 }

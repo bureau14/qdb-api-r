@@ -7,6 +7,10 @@
 //'
 //' Attach one or many tags to an existing entry.
 //'
+//' @param handle A valid cluster opened using qdb_connect.
+//' @param entry An alias (key) of an entry.
+//' @param tags A vector of tag names to attach.
+//'
 //' @export
 //'
 //' @examples

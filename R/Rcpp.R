@@ -4,6 +4,10 @@
 #' @importFrom Rcpp sourceCpp
 NULL
 
+#' @title Type of a timeseries column.
+#'
+#' Possible types of a timeseries column.
+#'
 #' @export
 column_type <- list(
     double = 0L,   # Column of floating point values.

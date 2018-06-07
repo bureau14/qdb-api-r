@@ -7,10 +7,16 @@
 //'
 //' Detach one or many tags from an existing entry.
 //'
+//' @param handle A valid cluster opened using qdb_connect.
+//' @param entry An alias (key) of an entry.
+//' @param tags A vector of tag names to attach.
+//'
 //' @export
 //'
 //' @examples
-//' qdb_detach_tags(handle, 'key', 'tag')
+//' qdb_detach_tags(handle, entry = "key", tags = "tag")
+//'
+//' qdb_detach_tags(handle, entry = "key", tags = c("tag1', "tag2"))
 // [[Rcpp::export(name = "qdb_detach_tags")]]
 void _qdb_detach_tags(qdb_handle_t handle,
     const std::string & entry,

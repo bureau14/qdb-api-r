@@ -2,7 +2,9 @@
 % Please edit documentation in src/query.cpp
 \name{qdb_query}
 \alias{qdb_query}
-\title{Execute a query.}
+\title{Execute a query.
+
+Execute a select query using SQL-like syntax.}
 \usage{
 qdb_query(handle, query)
 }

@@ -10,6 +10,8 @@ qdb_ts_create(handle, name, columns)
 \item{handle}{A valid cluster opened using qdb_connect.}
 
 \item{name}{A name of the to-be-created timeseries.}
+
+\item{columns}{A named vector of `column_type` integers.}
 }
 \examples{
 handle <- qdb_connect("qdb://127.0.0.1:2836")

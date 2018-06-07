@@ -52,13 +52,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // _qdb_error
-std::string _qdb_error(int ierr);
-RcppExport SEXP _quasardb__qdb_error(SEXP ierrSEXP) {
+std::string _qdb_error(int code);
+RcppExport SEXP _quasardb__qdb_error(SEXP codeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type ierr(ierrSEXP);
-    rcpp_result_gen = Rcpp::wrap(_qdb_error(ierr));
+    Rcpp::traits::input_parameter< int >::type code(codeSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_error(code));
     return rcpp_result_gen;
 END_RCPP
 }

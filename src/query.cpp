@@ -245,6 +245,10 @@ Rcpp::List transform_result(const qdb_query_result_t & result)
 
 //' @backref src/query.cpp
 //' @title Execute a query.
+//' 
+//' Execute a select query using SQL-like syntax.
+//' 
+//' @see https://doc.quasardb.net/master/api/queries.html
 //'
 //' @param handle A valid cluster opened using qdb_connect.
 //' @param query A query to execute.
