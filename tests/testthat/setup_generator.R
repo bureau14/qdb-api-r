@@ -1,13 +1,13 @@
 g_counter <- 0
 
 generate_alias <- function(prefix = "alias") {
-  alias <- paste(prefix, g_counter, sep = "")
-  g_counter <<- g_counter + 1
+  alias <- paste(prefix, g_counter, sep = "") # nolint
+  g_counter <<- g_counter + 1 # nolint
   return(alias)
 }
 
 create_timeseries <- function(handle, prefix = "timeseries") {
-  alias <- generate_alias(prefix)
+  alias <- generate_alias(prefix) # nolint
 
   qdb_ts_create(handle,
                 name = alias,
@@ -17,5 +17,5 @@ create_timeseries <- function(handle, prefix = "timeseries") {
 }
 
 create_entry <- function(handle, prefix = "entry") {
-  create_timeseries(handle, prefix)
+  return(create_timeseries(handle, prefix)) # nolint
 }

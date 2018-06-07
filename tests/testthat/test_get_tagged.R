@@ -4,10 +4,10 @@ test_that("stops when handle is null", {
   expect_error(results <-
                  qdb_get_tagged(NULL, generate_alias("tag"))
                ,
-               regexp = 'type=NULL')
+               regexp = "type=NULL")
 })
 
-test_that("returns empty character(0) vector when entry doesn't exist", {
+test_that("returns empty character(0) vector when entry does not exist", {
   handle <- qdb_connect(qdbd$uri)
 
   results <- qdb_get_tagged(handle, generate_alias("tag"))

@@ -12,9 +12,9 @@ run_qdbd <- function(root) {
   qdbd_path <- normalizePath(qdbd_path)
   print(qdbd_path)
   address <- "127.0.0.1:2836"
-  
+
   args <- c("--transient", "--security=false", "--address", address)
-  
+
   expect(
     file.exists(qdbd_path),
     failure_message = sprintf(
@@ -29,16 +29,16 @@ run_qdbd <- function(root) {
       stdout = "|",
       stderr = "|"
     )
-  
+
   proc$poll_io(5000) # in milliseconds
-  
+
   stderr <- proc$read_error()
   if (length(stderr) > 1) {
     print(length(stderr))
     print(proc)
     print(sprintf("STDERR: %s", stderr))
   }
-  
+
   return(list(
     "process" = proc,
     "address" = address,
@@ -48,6 +48,7 @@ run_qdbd <- function(root) {
 
 qdbd <- run_qdbd(root = file.path(getwd(), "..", ".."))
 
-expect(qdbd$process$is_alive(), failure_message = "qdbd process should still be alive")
+expect(qdbd$process$is_alive(),
+       failure_message = "qdbd process should still be alive")
 
 message("***** Setup done. *****")

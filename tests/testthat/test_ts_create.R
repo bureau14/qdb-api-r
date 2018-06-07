@@ -8,7 +8,7 @@ test_that("stops when handle is null", {
                    columns = c("my_column" = column_type$double)
                  )
                ,
-               regexp = 'type=NULL')
+               regexp = "type=NULL")
 })
 
 test_that("successfully creates a timeseries with one column", {
@@ -41,7 +41,7 @@ test_that("stops when column is not named", {
     generate_alias("timeseries"),
     columns = c(column_type$double)
   )
-  , regexp = 'columns should have all elements named')
+  , regexp = "columns should have all elements named")
   succeed("timeseries created")
 })
 
@@ -52,7 +52,7 @@ test_that("stops when not all columns are named", {
     generate_alias("timeseries"),
     columns = c("my_column" = column_type$double, column_type$blob)
   )
-  , regexp = 'columns should have all elements named')
+  , regexp = "columns should have all elements named")
   succeed("timeseries created")
 })
 
@@ -68,5 +68,5 @@ test_that("returns error when entry already exists", {
     columns = c("my_column" = column_type$double)
   )
   ,
-  regexp = '.*entry.*already exists.*')
+  regexp = ".*entry.*already exists.*")
 })

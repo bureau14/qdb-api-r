@@ -5,7 +5,7 @@ test_that("stops when handle is null", {
                  qdb_remove(NULL,
                             generate_alias("timeseries"))
                ,
-               regexp = 'type=NULL')
+               regexp = "type=NULL")
 })
 
 test_that("correctly removes a timeseries", {

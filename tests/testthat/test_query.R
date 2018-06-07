@@ -4,15 +4,17 @@ test_that("stops when handle is null", {
   expect_error(results <-
                  qdb_query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
                ,
-               regexp = 'type=NULL')
+               regexp = "type=NULL")
 })
 
-test_that("returns alias not found when timeseries doesn't exist", {
+test_that("returns alias not found when timeseries does not exist", {
   handle <- qdb_connect(qdbd$uri)
-  expect_error(results <-
-                 qdb_query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
-               ,
-               regexp = 'An entry matching the provided alias cannot be found')
+  expect_error(
+    results <-
+      qdb_query(handle, query = "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+    ,
+    regexp = "An entry matching the provided alias cannot be found"
+  )
 })
 
 test_that("returns empty result on existing but empty timeseries", {
@@ -51,14 +53,17 @@ test_that("returns count result on empty 1-column timeseries", {
 
   expect(is.list(results), failure_message = "query result should be a list")
 
-  expect("scanned_rows_count" %in% names(results), failure_message = "query result should contain scanned_rows_count")
+  expect("scanned_rows_count" %in% names(results),
+         failure_message = "query result should contain scanned_rows_count")
   expect_equal(results$scanned_rows_count, 0)
 
-  expect("tables_count" %in% names(results), failure_message = "query result should contain tables_count")
+  expect("tables_count" %in% names(results),
+         failure_message = "query result should contain tables_count")
   expect_equal(results$tables_count, 1)
 
   # Check tables
-  expect("tables" %in% names(results), failure_message = "query result should contain tables")
+  expect("tables" %in% names(results),
+         failure_message = "query result should contain tables")
 
   tables <- results$tables
   expect_equal(length(tables), 1)
@@ -108,8 +113,10 @@ test_that("returns count result on empty 1-column timeseries", {
       paste(names(table), collapse = ", ")
     )
   )
+
   actual_columns <- table$columns
-  expect_equal(actual_columns, c("timestamp", sprintf("count(%s)", column_name)))
+  expect_equal(actual_columns,
+               c("timestamp", sprintf("count(%s)", column_name)))
 
   # Check data
   expect(
@@ -122,11 +129,11 @@ test_that("returns count result on empty 1-column timeseries", {
 
   data <- table$data
   expect(is.data.frame(data), failure_message = "data should be a data.frame")
-  expect_equal(colnames(data), c("timestamp", sprintf("count(%s)", column_name)))
+  expect_equal(colnames(data),
+               c("timestamp", sprintf("count(%s)", column_name)))
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 2))
 
-  #expect_equal(attr(data$timestamp, "tzone"), "UTC")
   expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
                "2017-01-01T00:00:00.000000000")
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
@@ -141,10 +148,10 @@ test_that("returns count result on empty multi-column timeseries", {
       column_type$timestamp)
   names(columns) <-
     c(
-      generate_alias('col'),
-      generate_alias('col'),
-      generate_alias('col'),
-      generate_alias('col')
+      generate_alias("col"),
+      generate_alias("col"),
+      generate_alias("col"),
+      generate_alias("col")
     )
   expected_column_names <-
     c("timestamp", sprintf("count(%s)", names(columns)))
@@ -153,9 +160,9 @@ test_that("returns count result on empty multi-column timeseries", {
   qdb_ts_create(handle,
                 name = alias,
                 columns = columns)
-  results <-
-    qdb_query(handle,
-              sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias))
+
+  query <- sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias)
+  results <- qdb_query(handle, query)
 
   expect_equal(results$scanned_rows_count, 0)
   expect_equal(results$tables_count, 1)
@@ -178,5 +185,7 @@ test_that("returns count result on empty multi-column timeseries", {
 
   expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
                "2018-02-03T00:00:00.000000000")
-  expect_equal(unlist(data[, 2:length(data)]), rep(0L, length(columns)), check.names = FALSE)
+  expect_equal(unlist(data[, 2:length(data)]),
+               rep(0L, length(columns)),
+               check.names = FALSE)
 })

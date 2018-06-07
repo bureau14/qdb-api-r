@@ -8,10 +8,10 @@ test_that("stops when handle is null", {
                    generate_alias("column")
                  )
                ,
-               regexp = 'type=NULL')
+               regexp = "type=NULL")
 })
 
-test_that("returns alias not found when timeseries doesn't exist", {
+test_that("returns alias not found when timeseries does not exist", {
   handle <- qdb_connect(qdbd$uri)
   expect_error(
     results <-
@@ -21,7 +21,7 @@ test_that("returns alias not found when timeseries doesn't exist", {
         generate_alias("column")
       )
     ,
-    regexp = 'An entry matching the provided alias cannot be found'
+    regexp = "An entry matching the provided alias cannot be found"
   )
 })
 

@@ -3,9 +3,10 @@ context("detach_tags")
 test_that("stops when handle is null", {
   expect_error(
     results <-
-      qdb_detach_tags(NULL, entry = generate_alias(), tags = generate_alias("tag"))
+      qdb_detach_tags(NULL, entry = generate_alias(),
+                      tags = generate_alias("tag"))
     ,
-    regexp = 'type=NULL'
+    regexp = "type=NULL"
   )
 })
 

@@ -3,9 +3,10 @@ context("attach_tags")
 test_that("stops when handle is null", {
   expect_error(
     results <-
-      qdb_attach_tags(NULL, entry = generate_alias(), tags = generate_alias("tag"))
+      qdb_attach_tags(NULL, entry = generate_alias(),
+                      tags = generate_alias("tag"))
     ,
-    regexp = 'type=NULL'
+    regexp = "type=NULL"
   )
 })
 
@@ -19,7 +20,7 @@ test_that("successfully tags timeseries with a single tag", {
   expect_error(results <-
                  qdb_attach_tags(handle, entry = alias, tag)
                ,
-               regexp = 'qdb_attach_tag:.*already.*tag')
+               regexp = "qdb_attach_tag:.*already.*tag")
 })
 
 test_that("successfully tags timeseries with many tags", {
@@ -33,6 +34,6 @@ test_that("successfully tags timeseries with many tags", {
     expect_error(results <-
                    qdb_attach_tags(handle, entry = alias, tags = tag)
                  ,
-                 regexp = 'qdb_attach_tag:.*already.*tag')
+                 regexp = "qdb_attach_tag:.*already.*tag")
   })
 })
