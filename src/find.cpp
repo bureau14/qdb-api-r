@@ -14,16 +14,18 @@
 //' Logical operations `and` and `or` as well as negation `not` may be used as
 //' well.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param query A query to execute.
 //'
 //' @return List of matching entry aliases/keys.
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_find(handle, "find(tag='my_tag' and type=ts)")
-// [[Rcpp::export(name = "qdb_find")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' find(handle, "find(tag='my_tag' and type=ts)")
+// [[Rcpp::export(name = "find")]]
 Rcpp::StringVector _qdb_query_find(
     qdb_handle_t handle, const std::string & query)
 {
@@ -52,7 +54,3 @@ Rcpp::StringVector _qdb_query_find(
 
     return r_aliases;
 }
-
-/*** R
-# TODO
-*/

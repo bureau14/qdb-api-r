@@ -9,7 +9,7 @@ generate_alias <- function(prefix = "alias") {
 create_timeseries <- function(handle, prefix = "timeseries") {
   alias <- generate_alias(prefix) # nolint
 
-  qdb_ts_create(handle,
+  ts_create(handle,
                 name = alias,
                 columns = c("column1" = column_type$double))
 

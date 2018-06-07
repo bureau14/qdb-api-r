@@ -9,16 +9,18 @@
 //' @description
 //' Insert floating-point data into double column of an existing timeseries.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param name Timeseries name.
 //' @param column Column name.
 //'
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_ts_insert.double(handle, "timeseries", "column", points)
-// [[Rcpp::export(name = "qdb_ts_insert.double")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' ts_insert.double(handle, "timeseries", "column", points)
+// [[Rcpp::export(name = "ts_insert.double")]]
 void _qdb_ts_double_insert(qdb_handle_t handle, const std::string & name, const std::string & column)
 {
     if (!handle)
@@ -36,7 +38,3 @@ void _qdb_ts_double_insert(qdb_handle_t handle, const std::string & name, const 
         Rcpp::stop("qdb_ts_double_insert: %s (code: %x)", qdb_error(err), err);
     }
 }
-
-/*** R
-# TODO
-*/

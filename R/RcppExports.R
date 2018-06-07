@@ -12,16 +12,18 @@
 #' with all given tags).
 #'
 #' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
+#' @seealso \code{\link{connect}}
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @param handle A valid cluster opened using `connect`.
 #' @param entry An alias (key) of an entry.
 #' @param tags A vector of tag names to attach.
 #'
 #' @export
 #'
 #' @examples
-#' qdb_attach_tags(handle, "key", "tag")
-qdb_attach_tags <- function(handle, entry, tags) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' attach_tags(handle, "key", "tag")
+attach_tags <- function(handle, entry, tags) {
     invisible(.Call('_quasardb__qdb_attach_tags', PACKAGE = 'quasardb', handle, entry, tags))
 }
 
@@ -38,8 +40,8 @@ qdb_attach_tags <- function(handle, entry, tags) {
 #' @export
 #'
 #' @examples
-#' qdb_build()
-qdb_build <- function() {
+#' build()
+build <- function() {
     .Call('_quasardb__qdb_build', PACKAGE = 'quasardb')
 }
 
@@ -59,8 +61,8 @@ qdb_build <- function() {
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
+#' handle <- connect("qdb://127.0.0.1:2836")
+connect <- function(uri = "qdb://127.0.0.1:2836") {
     .Call('_quasardb__qdb_connect', PACKAGE = 'quasardb', uri)
 }
 
@@ -68,26 +70,28 @@ qdb_connect <- function(uri = "qdb://127.0.0.1:2836") {
 #'
 #' @title Detach tags from an entry.
 #'
-#' @description 
+#' @description
 #' Detach one or many tags from an existing entry.
 #'
 #' When detaching tags, no error will be raised if the entry has been untagged
 #' from at least one tag (i.e. when this entry had no tags amongst the given
 #' ones).
-#' 
-#' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param entry An alias (key) of an entry.
 #' @param tags A vector of tag names to attach.
 #'
 #' @export
 #'
 #' @examples
-#' qdb_detach_tags(handle, entry = "key", tags = "tag")
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' detach_tags(handle, entry = "key", tags = "tag")
 #'
-#' qdb_detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
-qdb_detach_tags <- function(handle, entry, tags) {
+#' detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
+detach_tags <- function(handle, entry, tags) {
     invisible(.Call('_quasardb__qdb_detach_tags', PACKAGE = 'quasardb', handle, entry, tags))
 }
 
@@ -103,8 +107,8 @@ qdb_detach_tags <- function(handle, entry, tags) {
 #' @export
 #'
 #' @examples
-#' qdb_error(code = 0)
-qdb_error <- function(code) {
+#' error(code = 0)
+error <- function(code) {
     .Call('_quasardb__qdb_error', PACKAGE = 'quasardb', code)
 }
 
@@ -120,16 +124,18 @@ qdb_error <- function(code) {
 #' Logical operations `and` and `or` as well as negation `not` may be used as
 #' well.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param query A query to execute.
 #'
 #' @return List of matching entry aliases/keys.
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_find(handle, "find(tag='my_tag' and type=ts)")
-qdb_find <- function(handle, query) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' find(handle, "find(tag='my_tag' and type=ts)")
+find <- function(handle, query) {
     .Call('_quasardb__qdb_query_find', PACKAGE = 'quasardb', handle, query)
 }
 
@@ -139,16 +145,18 @@ qdb_find <- function(handle, query) {
 #' @description
 #' Return keys of all the entries tagged by the given tag.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param tag An alias (key) of a tag.
 #'
 #' @return List of entries.
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_get_tagged(handle, tag = "tag")
-qdb_get_tagged <- function(handle, tag) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' get_tagged(handle, tag = "tag")
+get_tagged <- function(handle, tag) {
     .Call('_quasardb__qdb_get_tagged', PACKAGE = 'quasardb', handle, tag)
 }
 
@@ -158,16 +166,18 @@ qdb_get_tagged <- function(handle, tag) {
 #' @description
 #' Return all tags of an entry.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param name An alias (key) of an entry.
 #'
 #' @return List of tags.
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_get_tags(handle, name = "key")
-qdb_get_tags <- function(handle, name) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' get_tags(handle, name = "key")
+get_tags <- function(handle, name) {
     .Call('_quasardb__qdb_get_tags', PACKAGE = 'quasardb', handle, name)
 }
 
@@ -176,37 +186,40 @@ qdb_get_tags <- function(handle, name) {
 #'
 #' @description
 #' Execute a select query using SQL-like syntax.
-#' 
-#' @seealso \url{https://doc.quasardb.net/master/api/queries.html.}
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \url{https://doc.quasardb.net/master/api/queries.html.}
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param query A query to execute.
 #'
 #' @return A data frame with results of the query.
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
-qdb_query <- function(handle, query) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+query <- function(handle, query) {
     .Call('_quasardb__qdb_query', PACKAGE = 'quasardb', handle, query)
 }
 
 #' @backref src/remove.cpp
 #' @title Remove an entry.
-#' 
+#'
 #' @description
 #' Remove an existing entry from the database.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param name Timeseries name.
 #'
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_remove(handle, "timeseries")
-qdb_remove <- function(handle, name) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' remove(handle, "timeseries")
+remove <- function(handle, name) {
     invisible(.Call('_quasardb__qdb_remove', PACKAGE = 'quasardb', handle, name))
 }
 
@@ -216,35 +229,39 @@ qdb_remove <- function(handle, name) {
 #' @description
 #' List columns, their names and types, of a timeseries.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param name A name of the timeseries.
 #'
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' columns <- qdb_show(handle, name = "ts")
-qdb_show <- function(handle, name) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' columns <- show(handle, name = "ts")
+show <- function(handle, name) {
     .Call('_quasardb__qdb_show', PACKAGE = 'quasardb', handle, name)
 }
 
 #' @backref src/ts_create.cpp
 #' @title Create a timeseries.
-#' 
+#'
 #' @description
 #' Create a timeseries with given columns.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param name A name of the to-be-created timeseries.
 #' @param columns A named vector of `column_type` integers.
 #'
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_ts_create(handle, name = "ts",
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' ts_create(handle, name = "ts",
 #'     columns = c("col1" = column_type$blob, "col2" = column_type$double))
-qdb_ts_create <- function(handle, name, columns) {
+ts_create <- function(handle, name, columns) {
     invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name, columns))
 }
 
@@ -255,16 +272,18 @@ qdb_ts_create <- function(handle, name, columns) {
 #' @description
 #' Insert floating-point data into double column of an existing timeseries.
 #'
-#' @param handle A valid cluster opened using qdb_connect.
+#' @seealso \code{\link{connect}}
+#'
+#' @param handle A valid cluster opened using `connect`.
 #' @param name Timeseries name.
 #' @param column Column name.
 #'
 #' @export
 #'
 #' @examples
-#' handle <- qdb_connect("qdb://127.0.0.1:2836")
-#' qdb_ts_insert.double(handle, "timeseries", "column", points)
-qdb_ts_insert.double <- function(handle, name, column) {
+#' handle <- connect("qdb://127.0.0.1:2836")
+#' ts_insert.double(handle, "timeseries", "column", points)
+ts_insert.double <- function(handle, name, column) {
     invisible(.Call('_quasardb__qdb_ts_double_insert', PACKAGE = 'quasardb', handle, name, column))
 }
 
@@ -281,8 +300,8 @@ qdb_ts_insert.double <- function(handle, name, column) {
 #' @export
 #'
 #' @examples
-#' qdb_version()
-qdb_version <- function() {
+#' version()
+version <- function() {
     .Call('_quasardb__qdb_version', PACKAGE = 'quasardb')
 }
 

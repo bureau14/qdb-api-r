@@ -17,8 +17,8 @@
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-// [[Rcpp::export(name = "qdb_connect")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+// [[Rcpp::export(name = "connect")]]
 qdb_handle_t _qdb_connect(const std::string & uri = "qdb://127.0.0.1:2836")
 {
     qdb_handle_t handle = ::qdb_open_tcp();
@@ -36,7 +36,3 @@ qdb_handle_t _qdb_connect(const std::string & uri = "qdb://127.0.0.1:2836")
 
     return handle;
 }
-
-/*** R
-# TODO
-*/

@@ -8,15 +8,17 @@
 //' @description
 //' List columns, their names and types, of a timeseries.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param name A name of the timeseries.
 //'
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' columns <- qdb_show(handle, name = "ts")
-// [[Rcpp::export(name = "qdb_show")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' columns <- show(handle, name = "ts")
+// [[Rcpp::export(name = "show")]]
 Rcpp::IntegerVector _qdb_show(qdb_handle_t handle, const std::string & name)
 {
     if (!handle)
@@ -52,7 +54,3 @@ Rcpp::IntegerVector _qdb_show(qdb_handle_t handle, const std::string & name)
 
     return types;
 }
-
-/*** R
-# TODO
-*/

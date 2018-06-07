@@ -6,26 +6,28 @@
 //'
 //' @title Detach tags from an entry.
 //'
-//' @description 
+//' @description
 //' Detach one or many tags from an existing entry.
 //'
 //' When detaching tags, no error will be raised if the entry has been untagged
 //' from at least one tag (i.e. when this entry had no tags amongst the given
 //' ones).
-//' 
-//' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \url{https://doc.quasardb.net/master/concepts/tags.html}
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param entry An alias (key) of an entry.
 //' @param tags A vector of tag names to attach.
 //'
 //' @export
 //'
 //' @examples
-//' qdb_detach_tags(handle, entry = "key", tags = "tag")
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' detach_tags(handle, entry = "key", tags = "tag")
 //'
-//' qdb_detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
-// [[Rcpp::export(name = "qdb_detach_tags")]]
+//' detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
+// [[Rcpp::export(name = "detach_tags")]]
 void _qdb_detach_tags(qdb_handle_t handle,
     const std::string & entry,
     const std::vector<std::string> & tags)
@@ -60,7 +62,3 @@ void _qdb_detach_tags(qdb_handle_t handle,
         Rcpp::stop("qdb_detach_tags: %s (code: %x)", qdb_error(err), err);
     }
 }
-
-/*** R
-qdb_build()
-*/

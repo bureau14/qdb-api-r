@@ -2,16 +2,16 @@ context("query")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 qdb_query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+                 query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
                ,
                regexp = "type=NULL")
 })
 
 test_that("returns alias not found when timeseries does not exist", {
-  handle <- qdb_connect(qdbd$uri)
+  handle <- connect(qdbd$uri)
   expect_error(
     results <-
-      qdb_query(handle, query = "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+      query(handle, query = "SELECT * FROM timeseries IN RANGE(2017, +1y)")
     ,
     regexp = "An entry matching the provided alias cannot be found"
   )
@@ -23,12 +23,12 @@ test_that("returns empty result on existing but empty timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
                 name = alias,
                 columns = columns)
   results <-
-    qdb_query(handle, sprintf("SELECT * FROM %s IN RANGE(2017, +1y)", alias))
+    query(handle, sprintf("SELECT * FROM %s IN RANGE(2017, +1y)", alias))
 
   expect(is.list(results), failure_message = "query result should be a list")
   expect_named(results, c("scanned_rows_count", "tables_count"))
@@ -43,12 +43,12 @@ test_that("returns count result on empty 1-column timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
                 name = alias,
                 columns = columns)
   results <-
-    qdb_query(handle,
+    query(handle,
               sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017, +1y)", alias))
 
   expect(is.list(results), failure_message = "query result should be a list")
@@ -156,13 +156,13 @@ test_that("returns count result on empty multi-column timeseries", {
   expected_column_names <-
     c("timestamp", sprintf("count(%s)", names(columns)))
 
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
                 name = alias,
                 columns = columns)
 
   query <- sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias)
-  results <- qdb_query(handle, query)
+  results <- query(handle, query)
 
   expect_equal(results$scanned_rows_count, 0)
   expect_equal(results$tables_count, 1)

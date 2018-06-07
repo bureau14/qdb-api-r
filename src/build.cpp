@@ -14,13 +14,9 @@
 //' @export
 //'
 //' @examples
-//' qdb_build()
-// [[Rcpp::export(name = "qdb_build")]]
+//' build()
+// [[Rcpp::export(name = "build")]]
 std::string _qdb_build()
 {
     return ::qdb_build();
 }
-
-/*** R
-qdb_build()
-*/

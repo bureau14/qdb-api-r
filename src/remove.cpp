@@ -3,19 +3,21 @@
 
 //' @backref src/remove.cpp
 //' @title Remove an entry.
-//' 
+//'
 //' @description
 //' Remove an existing entry from the database.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param name Timeseries name.
 //'
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_remove(handle, "timeseries")
-// [[Rcpp::export(name = "qdb_remove")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' remove(handle, "timeseries")
+// [[Rcpp::export(name = "remove")]]
 void _qdb_remove(qdb_handle_t handle, const std::string & name)
 {
     if (!handle)
@@ -29,7 +31,3 @@ void _qdb_remove(qdb_handle_t handle, const std::string & name)
         Rcpp::stop("qdb_remove: %s (code: %x)", qdb_error(err), err);
     }
 }
-
-/*** R
-# TODO
-*/

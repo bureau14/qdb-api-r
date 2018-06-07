@@ -248,19 +248,20 @@ Rcpp::List transform_result(const qdb_query_result_t & result)
 //'
 //' @description
 //' Execute a select query using SQL-like syntax.
-//' 
-//' @seealso \url{https://doc.quasardb.net/master/api/queries.html.}
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \url{https://doc.quasardb.net/master/api/queries.html.}
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param query A query to execute.
 //'
 //' @return A data frame with results of the query.
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
-// [[Rcpp::export(name = "qdb_query")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
+// [[Rcpp::export(name = "query")]]
 Rcpp::List _qdb_query(qdb_handle_t handle, const std::string & query)
 {
     if (!handle)
@@ -285,7 +286,3 @@ Rcpp::List _qdb_query(qdb_handle_t handle, const std::string & query)
 
     return r_result;
 }
-
-/*** R
-# TODO
-*/

@@ -96,48 +96,48 @@ library(quasardb)
 Get underlying C API version:
 
 ```{r example-version}
-qdb_version()
+version()
 ```
 
 Get underlying C API build id and date:
 ```{r example-build,}
-qdb_build()
+build()
 ```
 
 Connect to a quasardb cluster at a default URI `qdb://127.0.0.1:2836`:
 ```{r example-connect-default}
-handle <- qdb_connect()
+handle <- connect()
 ```
 
 Connect to a quasardb cluster at a user-provided URI:
 ```{r example-connect}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 ```
 
 ```{r example-remove-if-exists, include=FALSE}
 # Remove the example entry, but ignore any error.
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-tryCatch(qdb_remove(handle, name = "timeseries1"), error = function (err) {})
-tryCatch(qdb_remove(handle, name = "timeseries2"), error = function (err) {})
+handle <- connect("qdb://127.0.0.1:2836")
+tryCatch(remove(handle, name = "timeseries1"), error = function (err) {})
+tryCatch(remove(handle, name = "timeseries2"), error = function (err) {})
 ```
 
 Create a timeseries:
 ```{r example-ts_create}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_ts_create(handle, name = "timeseries1",
+handle <- connect("qdb://127.0.0.1:2836")
+ts_create(handle, name = "timeseries1",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 ```{r example-ts_create2, include = FALSE}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_ts_create(handle, name = "timeseries2",
+handle <- connect("qdb://127.0.0.1:2836")
+ts_create(handle, name = "timeseries2",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 Show information about the columns of a timeseries:
 ```{r example-show}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-columns <- qdb_show(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+columns <- show(handle, name = "timeseries1")
 columns
 sapply(columns, function(ct) {
   names(which(ct == column_type))
@@ -146,73 +146,73 @@ sapply(columns, function(ct) {
 
 Add a tag to an entry:
 ```{r example-attach_tags-single}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_attach_tags(handle, entry = "timeseries1", tags = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+attach_tags(handle, entry = "timeseries1", tags = "my_tag")
 ```
 
 ```{r example-attach_tags-single2, include = FALSE}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_attach_tags(handle, entry = "timeseries2", tags = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+attach_tags(handle, entry = "timeseries2", tags = "my_tag")
 ```
 
 Add many tags at once:
 ```{r example-attach_tags-many}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_attach_tags(handle,
+handle <- connect("qdb://127.0.0.1:2836")
+attach_tags(handle,
                 entry = "timeseries1",
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
 ```
 
 Get tags of an entry:
 ```{r example-get_tags}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-tags <- qdb_get_tags(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+tags <- get_tags(handle, name = "timeseries1")
 tags
 ```
 
 Get all entries marked with a tag:
 ```{r example-get_tagged}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-entries <- qdb_get_tagged(handle, tag = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+entries <- get_tagged(handle, tag = "my_tag")
 entries
 ```
 
 
 Get all entry keys matching given find query:
 ```{r example-find}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
-keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys <- find(handle, "find(tag='my_tag' and type=ts)")
 keys
 ```
 
 Untag an entry:
 ```{r example-detach_tags}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_detach_tags(handle, entry = "timeseries2", tag = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
-keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys <- find(handle, "find(tag='my_tag' and type=ts)")
 keys
 ```
 
 Execute a select query:
 ```{r example-query}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
-  qdb_query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
+  query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
 result$scanned_rows_count
 result$tables[["timeseries1"]]$data
 ```
 
 Remove an entry:
 ```{r example-remove}
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_remove(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+remove(handle, name = "timeseries1")
 ```
 
 ## TODO
 
- - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`.
+ - Add `ts_insert` (only stub is currently implemented), `has_tag`.
  - Make compliant with other OSes: Linux, FreeBSD.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

@@ -86,42 +86,42 @@ library(quasardb)
 Get underlying C API version:
 
 ``` r
-qdb_version()
+version()
 #> [1] "2.6.0"
 ```
 
 Get underlying C API build id and date:
 
 ``` r
-qdb_build()
+build()
 #> [1] "1b437b2 2018-06-01 07:14:42 +0000"
 ```
 
 Connect to a quasardb cluster at a default URI `qdb://127.0.0.1:2836`:
 
 ``` r
-handle <- qdb_connect()
+handle <- connect()
 ```
 
 Connect to a quasardb cluster at a user-provided URI:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 ```
 
 Create a timeseries:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_ts_create(handle, name = "timeseries1",
+handle <- connect("qdb://127.0.0.1:2836")
+ts_create(handle, name = "timeseries1",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 Show information about the columns of a timeseries:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-columns <- qdb_show(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+columns <- show(handle, name = "timeseries1")
 columns
 #> column1 column2 
 #>       1       0
@@ -135,15 +135,15 @@ sapply(columns, function(ct) {
 Add a tag to an entry:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_attach_tags(handle, entry = "timeseries1", tags = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+attach_tags(handle, entry = "timeseries1", tags = "my_tag")
 ```
 
 Add many tags at once:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_attach_tags(handle,
+handle <- connect("qdb://127.0.0.1:2836")
+attach_tags(handle,
                 entry = "timeseries1",
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
 ```
@@ -151,8 +151,8 @@ qdb_attach_tags(handle,
 Get tags of an entry:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-tags <- qdb_get_tags(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+tags <- get_tags(handle, name = "timeseries1")
 tags
 #> [1] "my_tag3" "my_tag1" "my_tag"  "my_tag2"
 ```
@@ -160,8 +160,8 @@ tags
 Get all entries marked with a tag:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-entries <- qdb_get_tagged(handle, tag = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+entries <- get_tagged(handle, tag = "my_tag")
 entries
 #> [1] "timeseries2" "timeseries1"
 ```
@@ -169,9 +169,9 @@ entries
 Get all entry keys matching given find query:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
-keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys <- find(handle, "find(tag='my_tag' and type=ts)")
 keys
 #> [1] "timeseries2" "timeseries1"
 ```
@@ -179,10 +179,10 @@ keys
 Untag an entry:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_detach_tags(handle, entry = "timeseries2", tag = "my_tag")
+handle <- connect("qdb://127.0.0.1:2836")
+detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
-keys <- qdb_find(handle, "find(tag='my_tag' and type=ts)")
+keys <- find(handle, "find(tag='my_tag' and type=ts)")
 keys
 #> [1] "timeseries1"
 ```
@@ -190,10 +190,10 @@ keys
 Execute a select query:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
+handle <- connect("qdb://127.0.0.1:2836")
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
-  qdb_query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
+  query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
 result$scanned_rows_count
 #> [1] 0
 result$tables[["timeseries1"]]$data
@@ -204,13 +204,13 @@ result$tables[["timeseries1"]]$data
 Remove an entry:
 
 ``` r
-handle <- qdb_connect("qdb://127.0.0.1:2836")
-qdb_remove(handle, name = "timeseries1")
+handle <- connect("qdb://127.0.0.1:2836")
+remove(handle, name = "timeseries1")
 ```
 
 TODO
 ----
 
--   Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`.
+-   Add `ts_insert` (only stub is currently implemented), `has_tag`.
 -   Make compliant with other OSes: Linux, FreeBSD.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

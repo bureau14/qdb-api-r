@@ -13,13 +13,9 @@
 //' @export
 //'
 //' @examples
-//' qdb_error(code = 0)
-// [[Rcpp::export(name = "qdb_error")]]
+//' error(code = 0)
+// [[Rcpp::export(name = "error")]]
 std::string _qdb_error(int code) {
   const qdb_error_t err = static_cast<qdb_error_t>(code);
   return ::qdb_error(err);
 }
-
-/*** R
-# TODO
-*/

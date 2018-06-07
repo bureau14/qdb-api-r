@@ -4,21 +4,23 @@
 
 //' @backref src/ts_create.cpp
 //' @title Create a timeseries.
-//' 
+//'
 //' @description
 //' Create a timeseries with given columns.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param name A name of the to-be-created timeseries.
 //' @param columns A named vector of `column_type` integers.
 //'
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_ts_create(handle, name = "ts",
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' ts_create(handle, name = "ts",
 //'     columns = c("col1" = column_type$blob, "col2" = column_type$double))
-// [[Rcpp::export(name = "qdb_ts_create")]]
+// [[Rcpp::export(name = "ts_create")]]
 void _qdb_ts_create(qdb_handle_t handle,
     const std::string & name,
     const Rcpp::IntegerVector & columns)
@@ -64,7 +66,3 @@ void _qdb_ts_create(qdb_handle_t handle,
         Rcpp::stop("qdb_ts_create: %s (code: %x)", qdb_error(err), err);
     }
 }
-
-/*** R
-# TODO
-*/

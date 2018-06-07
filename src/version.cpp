@@ -14,13 +14,9 @@
 //' @export
 //'
 //' @examples
-//' qdb_version()
-// [[Rcpp::export(name = "qdb_version")]]
+//' version()
+// [[Rcpp::export(name = "version")]]
 std::string _qdb_version()
 {
     return ::qdb_version();
 }
-
-/*** R
-qdb_version()
-*/

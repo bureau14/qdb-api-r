@@ -2,7 +2,7 @@ context("ts_insert")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 qdb_ts_insert.double(
+                 ts_insert.double(
                    NULL,
                    generate_alias("timeseries"),
                    generate_alias("column")
@@ -12,10 +12,10 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns alias not found when timeseries does not exist", {
-  handle <- qdb_connect(qdbd$uri)
+  handle <- connect(qdbd$uri)
   expect_error(
     results <-
-      qdb_ts_insert.double(
+      ts_insert.double(
         handle,
         generate_alias("timeseries"),
         generate_alias("column")
@@ -31,17 +31,17 @@ test_that("returns empty result on existing but empty timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
                 name = alias,
                 columns = columns)
 
-  qdb_ts_insert.double(handle,
+  ts_insert.double(handle,
                        name = alias,
                        column = column_name)
 
   results <-
-    qdb_query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
+    query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
 
   expect_equal(results$scanned_rows_count, 1)
 

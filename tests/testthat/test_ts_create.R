@@ -2,7 +2,7 @@ context("ts_create")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 qdb_ts_create(
+                 ts_create(
                    NULL,
                    generate_alias("timeseries"),
                    columns = c("my_column" = column_type$double)
@@ -12,16 +12,16 @@ test_that("stops when handle is null", {
 })
 
 test_that("successfully creates a timeseries with one column", {
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
                 generate_alias("timeseries"),
                 columns = c("my_column" = column_type$double))
   succeed("timeseries created")
 })
 
 test_that("successfully creates a timeseries with many columns", {
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(
+  handle <- connect(qdbd$uri)
+  ts_create(
     handle,
     generate_alias("timeseries"),
     columns = c(
@@ -35,8 +35,8 @@ test_that("successfully creates a timeseries with many columns", {
 })
 
 test_that("stops when column is not named", {
-  handle <- qdb_connect(qdbd$uri)
-  expect_error(qdb_ts_create(
+  handle <- connect(qdbd$uri)
+  expect_error(ts_create(
     handle,
     generate_alias("timeseries"),
     columns = c(column_type$double)
@@ -46,8 +46,8 @@ test_that("stops when column is not named", {
 })
 
 test_that("stops when not all columns are named", {
-  handle <- qdb_connect(qdbd$uri)
-  expect_error(qdb_ts_create(
+  handle <- connect(qdbd$uri)
+  expect_error(ts_create(
     handle,
     generate_alias("timeseries"),
     columns = c("my_column" = column_type$double, column_type$blob)
@@ -57,12 +57,12 @@ test_that("stops when not all columns are named", {
 })
 
 test_that("returns error when entry already exists", {
-  handle <- qdb_connect(qdbd$uri)
+  handle <- connect(qdbd$uri)
   name <- generate_alias("timeseries")
-  qdb_ts_create(handle,
+  ts_create(handle,
                 name = name,
                 columns = c("my_column" = column_type$double))
-  expect_error(qdb_ts_create(
+  expect_error(ts_create(
     handle,
     name = name,
     columns = c("my_column" = column_type$double)

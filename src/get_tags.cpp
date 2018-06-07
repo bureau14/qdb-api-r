@@ -8,16 +8,18 @@
 //' @description
 //' Return all tags of an entry.
 //'
-//' @param handle A valid cluster opened using qdb_connect.
+//' @seealso \code{\link{connect}}
+//'
+//' @param handle A valid cluster opened using `connect`.
 //' @param name An alias (key) of an entry.
 //'
 //' @return List of tags.
 //' @export
 //'
 //' @examples
-//' handle <- qdb_connect("qdb://127.0.0.1:2836")
-//' qdb_get_tags(handle, name = "key")
-// [[Rcpp::export(name = "qdb_get_tags")]]
+//' handle <- connect("qdb://127.0.0.1:2836")
+//' get_tags(handle, name = "key")
+// [[Rcpp::export(name = "get_tags")]]
 Rcpp::StringVector _qdb_get_tags(qdb_handle_t handle, const std::string & name)
 {
     if (!handle)
@@ -45,7 +47,3 @@ Rcpp::StringVector _qdb_get_tags(qdb_handle_t handle, const std::string & name)
 
     return r_aliases;
 }
-
-/*** R
-# TODO
-*/
