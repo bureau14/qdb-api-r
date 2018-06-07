@@ -118,6 +118,7 @@ handle <- qdb_connect("qdb://127.0.0.1:2836")
 # Remove the example entry, but ignore any error.
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 tryCatch(qdb_remove(handle, name = "timeseries1"), error = function (err) {})
+tryCatch(qdb_remove(handle, name = "timeseries2"), error = function (err) {})
 ```
 
 Create a timeseries:
@@ -134,7 +135,7 @@ qdb_ts_create(handle, name = "timeseries2",
 ```
 
 Show information about the columns of a timeseries:
-```{r show}
+```{r example-show}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 columns <- qdb_show(handle, name = "timeseries1")
 columns
@@ -144,23 +145,38 @@ sapply(columns, function(ct) {
 ```
 
 Add a tag to an entry:
-```{r attach_tags-single}
+```{r example-attach_tags-single}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_attach_tags(handle, entry = "timeseries1", tags = "my_tag")
 ```
 
-```{r attach_tags-single2, include = FALSE}
+```{r example-attach_tags-single2, include = FALSE}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_attach_tags(handle, entry = "timeseries2", tags = "my_tag")
 ```
 
 Add many tags at once:
-```{r attach_tags-many}
+```{r example-attach_tags-many}
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_attach_tags(handle,
                 entry = "timeseries1",
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
 ```
+
+Get tags of an entry:
+```{r example-get_tags}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+tags <- qdb_get_tags(handle, name = "timeseries1")
+tags
+```
+
+Get all entries marked with a tag:
+```{r example-get_tagged}
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+entries <- qdb_get_tagged(handle, tag = "my_tag")
+entries
+```
+
 
 Get all entry keys matching given find query:
 ```{r example-find}
@@ -197,6 +213,6 @@ qdb_remove(handle, name = "timeseries1")
 
 ## TODO
 
- - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`, `qdb_get_tags`, `qdb_get_tagged`.
+ - Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`.
  - Make compliant with other OSes: Linux, FreeBSD.
  - Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).

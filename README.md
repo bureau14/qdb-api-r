@@ -148,6 +148,24 @@ qdb_attach_tags(handle,
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
 ```
 
+Get tags of an entry:
+
+``` r
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+tags <- qdb_get_tags(handle, name = "timeseries1")
+tags
+#> [1] "my_tag3" "my_tag1" "my_tag"  "my_tag2"
+```
+
+Get all entries marked with a tag:
+
+``` r
+handle <- qdb_connect("qdb://127.0.0.1:2836")
+entries <- qdb_get_tagged(handle, tag = "my_tag")
+entries
+#> [1] "timeseries2" "timeseries1"
+```
+
 Get all entry keys matching given find query:
 
 ``` r
@@ -193,6 +211,6 @@ qdb_remove(handle, name = "timeseries1")
 TODO
 ----
 
--   Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`, `qdb_get_tags`, `qdb_get_tagged`.
+-   Add `qdb_ts_insert` (only stub is currently implemented), `qdb_has_tag`.
 -   Make compliant with other OSes: Linux, FreeBSD.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
