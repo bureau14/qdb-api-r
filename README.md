@@ -114,7 +114,7 @@ Create a timeseries:
 ``` r
 handle <- qdb_connect("qdb://127.0.0.1:2836")
 qdb_ts_create(handle, name = "timeseries1",
-     columns = c("column1" = ColumnType$Blob, "column2" = ColumnType$Double))
+     columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 Show information about the columns of a timeseries:
@@ -126,10 +126,10 @@ columns
 #> column1 column2 
 #>       1       0
 sapply(columns, function(ct) {
-  names(which(ct == ColumnType))
+  names(which(ct == column_type))
 })
 #>  column1  column2 
-#>   "Blob" "Double"
+#>   "blob" "double"
 ```
 
 Add a tag to an entry:

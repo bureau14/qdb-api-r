@@ -17,16 +17,22 @@ test_that("returns empty results when no tagged entries", {
 
 test_that("returns key of a single tagged entry", {
   handle <- qdb_connect(qdbd$uri)
-  alias <- generate_alias()
-  
-  handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
-                name = alias,
-                columns = c("column1" = ColumnType$Double))
-  
+  alias <- create_entry(handle)
+
   tag <- generate_alias("tag")
   qdb_attach_tags(handle, entry = alias, tags = tag)
-  
+
+  results <- qdb_find(handle, sprintf("find(tag='%s')", tag))
+  expect_equal(results, alias)
+})
+
+test_that("returns key of a single tagged timeseries", {
+  handle <- qdb_connect(qdbd$uri)
+  alias <- create_timeseries(handle)
+
+  tag <- generate_alias("tag")
+  qdb_attach_tags(handle, entry = alias, tags = tag)
+
   results <-
     qdb_find(handle, sprintf("find(tag='%s' and type=ts)", tag))
   expect_equal(results, alias)

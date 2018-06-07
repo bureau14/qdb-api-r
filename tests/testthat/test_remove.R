@@ -10,13 +10,12 @@ test_that("stops when handle is null", {
 
 test_that("correctly removes a timeseries", {
   handle <- qdb_connect(qdbd$uri)
-  name <- generate_alias("timeseries")
+  alias <- create_timeseries(handle)
+
+  qdb_remove(handle, name = alias)
+
   qdb_ts_create(handle,
-                name = name,
-                columns = c("my_column" = ColumnType$Double))
-  qdb_remove(handle, name = name)
-  qdb_ts_create(handle,
-                name = name,
-                columns = c("my_column" = ColumnType$Double))
+                name = alias,
+                columns = c("my_column" = column_type$double))
   succeed("timeseries removed")
 })

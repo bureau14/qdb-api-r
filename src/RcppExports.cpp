@@ -74,6 +74,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// _qdb_get_tagged
+Rcpp::StringVector _qdb_get_tagged(qdb_handle_t handle, const std::string& tag);
+RcppExport SEXP _quasardb__qdb_get_tagged(SEXP handleSEXP, SEXP tagSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type tag(tagSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_get_tagged(handle, tag));
+    return rcpp_result_gen;
+END_RCPP
+}
+// _qdb_get_tags
+Rcpp::StringVector _qdb_get_tags(qdb_handle_t handle, const std::string& name);
+RcppExport SEXP _quasardb__qdb_get_tags(SEXP handleSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< qdb_handle_t >::type handle(handleSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(_qdb_get_tags(handle, name));
+    return rcpp_result_gen;
+END_RCPP
+}
 // _qdb_query
 Rcpp::List _qdb_query(qdb_handle_t handle, const std::string& query);
 RcppExport SEXP _quasardb__qdb_query(SEXP handleSEXP, SEXP querySEXP) {
@@ -151,6 +175,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_quasardb__qdb_detach_tags", (DL_FUNC) &_quasardb__qdb_detach_tags, 3},
     {"_quasardb__qdb_error", (DL_FUNC) &_quasardb__qdb_error, 1},
     {"_quasardb__qdb_query_find", (DL_FUNC) &_quasardb__qdb_query_find, 2},
+    {"_quasardb__qdb_get_tagged", (DL_FUNC) &_quasardb__qdb_get_tagged, 2},
+    {"_quasardb__qdb_get_tags", (DL_FUNC) &_quasardb__qdb_get_tags, 2},
     {"_quasardb__qdb_query", (DL_FUNC) &_quasardb__qdb_query, 2},
     {"_quasardb__qdb_remove", (DL_FUNC) &_quasardb__qdb_remove, 2},
     {"_quasardb__qdb_show", (DL_FUNC) &_quasardb__qdb_show, 2},

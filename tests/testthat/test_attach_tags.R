@@ -10,12 +10,8 @@ test_that("stops when handle is null", {
 })
 
 test_that("successfully tags timeseries with a single tag", {
-  alias <- generate_alias()
-
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
-                name = alias,
-                columns = c("column1" = ColumnType$Double))
+  alias <- create_entry(handle)
 
   tag <- generate_alias("tag")
   qdb_attach_tags(handle, entry = alias, tags = tag)
@@ -27,12 +23,8 @@ test_that("successfully tags timeseries with a single tag", {
 })
 
 test_that("successfully tags timeseries with many tags", {
-  alias <- generate_alias()
-
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
-                name = alias,
-                columns = c("column1" = ColumnType$Double))
+  alias <- create_entry(handle)
 
   tags <- c(generate_alias("tag"), generate_alias("tag"))
   qdb_attach_tags(handle, entry = alias, tags = tags)

@@ -18,10 +18,10 @@ test_that("returns alias not found when timeseries doesn't exist", {
 test_that("returns info of multi-column timeseries", {
   alias <- generate_alias("timeseries")
   columns <-
-    c(ColumnType$Blob,
-      ColumnType$Double,
-      ColumnType$Integer,
-      ColumnType$Timestamp)
+    c(column_type$blob,
+      column_type$double,
+      column_type$integer,
+      column_type$timestamp)
   names(columns) <-
     c(
       generate_alias('col'),

@@ -13,7 +13,7 @@
 //' @examples
 //' handle <- qdb_connect("qdb://127.0.0.1:2836")
 //' qdb_ts_create(handle, name = "ts",
-//'     columns = c("col1" = ColumnType$Blob, "col2" = ColumnType$Double))
+//'     columns = c("col1" = column_type$blob, "col2" = column_type$double))
 // [[Rcpp::export(name = "qdb_ts_create")]]
 void _qdb_ts_create(qdb_handle_t handle,
     const std::string & name,

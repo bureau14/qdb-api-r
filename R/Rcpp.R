@@ -5,9 +5,9 @@
 NULL
 
 #' @export
-ColumnType <- list(
-    Double = 0L,   # Column of floating point values.
-    Blob = 1L,     # Column of binary data.
-    Integer = 2L,  # Column of signed 64-bit integer values.
-    Timestamp = 3L # Column of nanosecond-precision timestamps.
+column_type <- list(
+    double = 0L,   # Column of floating point values.
+    blob = 1L,     # Column of binary data.
+    integer = 2L,  # Column of signed 64-bit integer values.
+    timestamp = 3L # Column of nanosecond-precision timestamps.
 )

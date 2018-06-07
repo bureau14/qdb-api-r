@@ -18,7 +18,7 @@ test_that("returns alias not found when timeseries doesn't exist", {
 test_that("returns empty result on existing but empty timeseries", {
   alias <- generate_alias("timeseries")
   column_name <- generate_alias("column")
-  columns <- c(ColumnType$Double)
+  columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
   handle <- qdb_connect(qdbd$uri)
@@ -38,7 +38,7 @@ test_that("returns empty result on existing but empty timeseries", {
 test_that("returns count result on empty 1-column timeseries", {
   alias <- generate_alias("timeseries")
   column_name <- generate_alias("column")
-  columns <- c(ColumnType$Double)
+  columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
   handle <- qdb_connect(qdbd$uri)
@@ -135,10 +135,10 @@ test_that("returns count result on empty 1-column timeseries", {
 test_that("returns count result on empty multi-column timeseries", {
   alias <- generate_alias("timeseries")
   columns <-
-    c(ColumnType$Blob,
-      ColumnType$Double,
-      ColumnType$Integer,
-      ColumnType$Timestamp)
+    c(column_type$blob,
+      column_type$double,
+      column_type$integer,
+      column_type$timestamp)
   names(columns) <-
     c(
       generate_alias('col'),

@@ -28,7 +28,7 @@ test_that("returns alias not found when timeseries doesn't exist", {
 test_that("returns empty result on existing but empty timeseries", {
   alias <- generate_alias("timeseries")
   column_name <- generate_alias("column")
-  columns <- c(ColumnType$Double)
+  columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
   handle <- qdb_connect(qdbd$uri)

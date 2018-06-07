@@ -9,13 +9,9 @@ test_that("stops when handle is null", {
   )
 })
 
-test_that("successfully untags timeseries with a single tag", {
-  alias <- generate_alias()
-
+test_that("successfully untags entry with a single tag", {
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
-                name = alias,
-                columns = c("column1" = ColumnType$Double))
+  alias <- create_entry(handle)
 
   tag <- generate_alias("tag")
   qdb_attach_tags(handle, entry = alias, tags = tag)
@@ -24,17 +20,13 @@ test_that("successfully untags timeseries with a single tag", {
   succeed("detached single tag")
 })
 
-test_that("successfully untags timeseries with many tags", {
-  alias <- generate_alias()
-
+test_that("successfully untags entry with many tags", {
   handle <- qdb_connect(qdbd$uri)
-  qdb_ts_create(handle,
-                name = alias,
-                columns = c("column1" = ColumnType$Double))
+  alias <- create_entry(handle)
 
   tags <- c(generate_alias("tag"), generate_alias("tag"))
   qdb_attach_tags(handle, entry = alias, tags = tags)
   qdb_detach_tags(handle, entry = alias, tags = tags)
   qdb_attach_tags(handle, entry = alias, tags = tags)
-  succeed("detached many tag")
+  succeed("detached many tags")
 })

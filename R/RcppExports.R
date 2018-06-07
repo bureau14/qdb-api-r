@@ -93,6 +93,38 @@ qdb_find <- function(handle, query) {
     .Call('_quasardb__qdb_query_find', PACKAGE = 'quasardb', handle, query)
 }
 
+#' @backref src/get_tagged.cpp
+#' @title Return all entries tagged by a tag.
+#'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param tag An alias (key) of a tag.
+#'
+#' @return List of entries.
+#' @export
+#'
+#' @examples
+#' handle <- qdb_connect("qdb://127.0.0.1:2836")
+#' qdb_get_tagged(handle, tag = "tag")
+qdb_get_tagged <- function(handle, tag) {
+    .Call('_quasardb__qdb_get_tagged', PACKAGE = 'quasardb', handle, tag)
+}
+
+#' @backref src/get_tags.cpp
+#' @title Return all tags of an entry.
+#'
+#' @param handle A valid cluster opened using qdb_connect.
+#' @param name An alias (key) of an entry.
+#'
+#' @return List of tags.
+#' @export
+#'
+#' @examples
+#' handle <- qdb_connect("qdb://127.0.0.1:2836")
+#' qdb_get_tags(handle, name = "key")
+qdb_get_tags <- function(handle, name) {
+    .Call('_quasardb__qdb_get_tags', PACKAGE = 'quasardb', handle, name)
+}
+
 #' @backref src/query.cpp
 #' @title Execute a query.
 #'
@@ -150,7 +182,7 @@ qdb_show <- function(handle, name) {
 #' @examples
 #' handle <- qdb_connect("qdb://127.0.0.1:2836")
 #' qdb_ts_create(handle, name = "ts",
-#'     columns = c("col1" = ColumnType$Blob, "col2" = ColumnType$Double))
+#'     columns = c("col1" = column_type$blob, "col2" = column_type$double))
 qdb_ts_create <- function(handle, name, columns) {
     invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name, columns))
 }
