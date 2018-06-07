@@ -7,9 +7,9 @@
   R API for quasardb database
 }
 \description{
-  The 'quasardb' package provides R API for quasardb timeseries database.
-  See doc.quasardb.net for documentation.
-  TODO: A length of about one to five lines is recommended.
+  The 'quasardb' package provides R API for quasardb timeseries database
+  (\url{https://www.quasardb.net}).
+  See \url{https://doc.quasardb.net} for documentation.
 }
 \details{
   TODO: This section should provide a more detailed overview of how to use the
@@ -24,13 +24,12 @@ Maintainer: Marek Kurdej <marek@quasardb.net>
   This optional section can contain literature or other references for
   background information.
 }
-\keyword{databse}
+\keyword{timeseries,nosql,database}
 \seealso{
-  TODO: Optional links to other man pages
 }
 \examples{
-  \dontrun{
-     ## Optional simple examples of the most important functions
-     ## These can be in \dontrun{} and \donttest{} blocks.   
-  }
+\dontrun{
+handle <- connect("qdb://127.0.0.1:2836")
+query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
+}
 }
