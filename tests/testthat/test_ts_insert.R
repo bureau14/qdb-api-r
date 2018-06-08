@@ -25,6 +25,24 @@ test_that("returns alias not found when timeseries does not exist", {
   )
 })
 
+test_that("returns column not found when column does not exist", {
+  alias <- generate_alias("timeseries")
+  column_name <- generate_alias("column")
+  columns <- c(column_type$double)
+  names(columns) <- c(column_name)
+
+  handle <- connect(qdbd$uri)
+  ts_create(handle,
+            name = alias,
+            columns = columns)
+
+  expect_error(ts_insert.double(handle,
+                                name = alias,
+                                column = generate_alias("column"))
+               ,
+               regexp = "The timeseries does not contain this column")
+})
+
 test_that("returns empty result on existing but empty timeseries", {
   alias <- generate_alias("timeseries")
   column_name <- generate_alias("column")
