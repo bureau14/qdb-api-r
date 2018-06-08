@@ -189,3 +189,31 @@ test_that("returns count result on empty multi-column timeseries", {
                rep(0L, length(columns)),
                check.names = FALSE)
 })
+
+test_that("returns count result on multiple timeseries", {
+  alias1 <- generate_alias("timeseries")
+  alias2 <- generate_alias("timeseries")
+  column_name <- generate_alias("column")
+  columns <- c(column_type$double)
+  names(columns) <- c(column_name)
+
+  handle <- connect(qdbd$uri)
+  ts_create(handle, name = alias1, columns = columns)
+  ts_create(handle, name = alias2, columns = columns)
+
+  query <-
+    sprintf("SELECT COUNT(*) FROM %s, %s IN RANGE(2017, +1y)", alias1, alias2)
+  results <- query(handle, query)
+
+  expect_equal(results$scanned_rows_count, 0)
+  expect_equal(results$tables_count, 2)
+
+  sapply(results$tables, function(table) {
+    data <- table$data
+    expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
+                 "2017-01-01T00:00:00.000000000")
+    expect_equal(unlist(data[, 2:length(data)]),
+                 rep(0L, length(columns)),
+                 check.names = FALSE)
+  })
+})
