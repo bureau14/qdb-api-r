@@ -6,12 +6,13 @@ PKG_LIBS= -L ../inst/bin -L ../inst/lib -lqdb_api
 # Add to RPATH only if RPATH is not set yet.
 all: $(SHLIB)
 	case `uname -s` in \
-	MINGW*) \
+	MINGW*|MSYS*) \
 		echo "You need to add the directory with qdb_api.dll to PATH env. var." ;\
 		export PATH="`pwd`/../inst/bin":"$$PATH" ;\
 		echo "PATH = $$PATH" ;\
 		;; \
-	*) \
+	\
+	Darwin) \
 		if command -v otool ; then \
 			if ! otool -l -v $(SHLIB) | grep -A 2 LC_RPATH ; then \
 				if command -v install_name_tool ; then \
@@ -23,5 +24,11 @@ all: $(SHLIB)
 			otool -L -v $(SHLIB) ;\
 			fi ;\
 		fi ;\
+		;; \
+	\
+	FreeBSD|Linux) \
+		;; \
+	*) \
+		1>&2 echo "Unknown platform: '`uname -s`'!" ;\
 		;; \
 	esac
