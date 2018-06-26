@@ -1,8 +1,8 @@
-context("remove")
+context("entry_remove")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 remove(NULL,
+                 entry_remove(NULL,
                             generate_alias("timeseries"))
                ,
                regexp = "type=NULL")
@@ -12,7 +12,7 @@ test_that("correctly removes a timeseries", {
   handle <- connect(qdbd$uri)
   alias <- create_timeseries(handle)
 
-  remove(handle, name = alias)
+  entry_remove(handle, name = alias)
 
   ts_create(handle,
                 name = alias,

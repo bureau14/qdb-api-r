@@ -1,8 +1,8 @@
-context("show")
+context("ts_show")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 show(NULL, generate_alias("timeseries"))
+                 ts_show(NULL, generate_alias("timeseries"))
                ,
                regexp = "type=NULL")
 })
@@ -10,7 +10,7 @@ test_that("stops when handle is null", {
 test_that("returns alias not found when timeseries does not exist", {
   handle <- connect(qdbd$uri)
   expect_error(results <-
-                 show(handle, generate_alias("timeseries"))
+                 ts_show(handle, generate_alias("timeseries"))
                ,
                regexp = "An entry matching the provided alias cannot be found")
 })
@@ -35,7 +35,7 @@ test_that("returns info of multi-column timeseries", {
                 name = alias,
                 columns = columns)
 
-  results <- show(handle, alias)
+  results <- ts_show(handle, alias)
 
   expect_equal(class(results), "integer")
   expect_equal(length(results), 4)

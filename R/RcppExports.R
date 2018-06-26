@@ -134,8 +134,8 @@ error <- function(code) {
 #'
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
-#' find(handle, "find(tag='my_tag' and type=ts)")
-find <- function(handle, query) {
+#' query_find(handle, "find(tag='my_tag' and type=ts)")
+query_find <- function(handle, query) {
     .Call('_quasardb__qdb_query_find', PACKAGE = 'quasardb', handle, query)
 }
 
@@ -218,8 +218,8 @@ query <- function(handle, query) {
 #'
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
-#' remove(handle, "timeseries")
-remove <- function(handle, name) {
+#' entry_remove(handle, "timeseries")
+entry_remove <- function(handle, name) {
     invisible(.Call('_quasardb__qdb_remove', PACKAGE = 'quasardb', handle, name))
 }
 
@@ -238,8 +238,8 @@ remove <- function(handle, name) {
 #'
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
-#' columns <- show(handle, name = "ts")
-show <- function(handle, name) {
+#' columns <- ts_show(handle, name = "ts")
+ts_show <- function(handle, name) {
     .Call('_quasardb__qdb_show', PACKAGE = 'quasardb', handle, name)
 }
 

@@ -24,8 +24,8 @@
 //'
 //' @examples
 //' handle <- connect("qdb://127.0.0.1:2836")
-//' find(handle, "find(tag='my_tag' and type=ts)")
-// [[Rcpp::export(name = "find")]]
+//' query_find(handle, "find(tag='my_tag' and type=ts)")
+// [[Rcpp::export(name = "query_find")]]
 Rcpp::StringVector _qdb_query_find(
     qdb_handle_t handle, const std::string & query)
 {

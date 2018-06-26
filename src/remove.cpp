@@ -16,8 +16,8 @@
 //'
 //' @examples
 //' handle <- connect("qdb://127.0.0.1:2836")
-//' remove(handle, "timeseries")
-// [[Rcpp::export(name = "remove")]]
+//' entry_remove(handle, "timeseries")
+// [[Rcpp::export(name = "entry_remove")]]
 void _qdb_remove(qdb_handle_t handle, const std::string & name)
 {
     if (!handle)

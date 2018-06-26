@@ -17,8 +17,8 @@
 //'
 //' @examples
 //' handle <- connect("qdb://127.0.0.1:2836")
-//' columns <- show(handle, name = "ts")
-// [[Rcpp::export(name = "show")]]
+//' columns <- ts_show(handle, name = "ts")
+// [[Rcpp::export(name = "ts_show")]]
 Rcpp::IntegerVector _qdb_show(qdb_handle_t handle, const std::string & name)
 {
     if (!handle)
