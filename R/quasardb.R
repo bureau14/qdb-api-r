@@ -2,4 +2,5 @@
 #' @useDynLib quasardb
 #' @exportPattern "^[[:alpha:]]+"
 #' @importFrom Rcpp sourceCpp
+#' @import nanotime
 NULL
