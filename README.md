@@ -202,5 +202,4 @@ TODO
 ----
 
 -   Add `ts_insert` (only stub is currently implemented), `has_tag`.
--   Make compliant with other OSes: Linux, FreeBSD.
 -   Make a quasardb driver compliant with [DBI package](https://www.rdocumentation.org/packages/DBI/).
