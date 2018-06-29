@@ -112,7 +112,6 @@ handle <- connect("qdb://127.0.0.1:2836")
 Create a timeseries:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 ts_create(handle, name = "timeseries1",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
@@ -120,7 +119,6 @@ ts_create(handle, name = "timeseries1",
 Show information about the columns of a timeseries:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 columns <- ts_show(handle, name = "timeseries1")
 columns
 #> column1 column2 
@@ -135,14 +133,12 @@ sapply(columns, function(ct) {
 Add a tag to an entry:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 attach_tags(handle, entry = "timeseries1", tags = "my_tag")
 ```
 
 Add many tags at once:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 attach_tags(handle,
                 entry = "timeseries1",
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
@@ -151,7 +147,6 @@ attach_tags(handle,
 Get tags of an entry:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 tags <- get_tags(handle, name = "timeseries1")
 tags
 #> [1] "my_tag3" "my_tag1" "my_tag"  "my_tag2"
@@ -160,7 +155,6 @@ tags
 Get all entries marked with a tag:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 entries <- get_tagged(handle, tag = "my_tag")
 entries
 #> [1] "timeseries2" "timeseries1"
@@ -169,7 +163,6 @@ entries
 Get all entry keys matching given find query:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
@@ -179,7 +172,6 @@ keys
 Untag an entry:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
 keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
@@ -190,7 +182,6 @@ keys
 Execute a select query:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
   query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
@@ -204,7 +195,6 @@ result$tables[["timeseries1"]]$data
 Remove an entry:
 
 ``` r
-handle <- connect("qdb://127.0.0.1:2836")
 entry_remove(handle, name = "timeseries1")
 ```
 
