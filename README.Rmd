@@ -114,11 +114,26 @@ Connect to a quasardb cluster at a user-provided URI:
 handle <- connect("qdb://127.0.0.1:2836")
 ```
 
-```{r example-remove-if-exists, include=FALSE}
+```{r example-entry_remove-if-exists, include = FALSE}
 # Remove the example entry, but ignore any error.
 handle <- connect("qdb://127.0.0.1:2836")
-tryCatch(remove(handle, name = "timeseries1"), error = function (err) {})
-tryCatch(remove(handle, name = "timeseries2"), error = function (err) {})
+
+skip_alias_not_found <- function (e) {
+  if (!grepl(pattern = "b1000008", x = e, fixed = TRUE)) {
+    stop("Unexpected error: ", e)
+  }
+}
+
+tryCatch(
+  entry_remove(handle, name = "timeseries1"),
+  error = skip_alias_not_found,
+  warning = skip_alias_not_found
+)
+tryCatch(
+  entry_remove(handle, name = "timeseries2"),
+  error = skip_alias_not_found,
+  warning = skip_alias_not_found
+)
 ```
 
 Create a timeseries:
@@ -135,9 +150,9 @@ ts_create(handle, name = "timeseries2",
 ```
 
 Show information about the columns of a timeseries:
-```{r example-show}
+```{r example-ts_show}
 handle <- connect("qdb://127.0.0.1:2836")
-columns <- show(handle, name = "timeseries1")
+columns <- ts_show(handle, name = "timeseries1")
 columns
 sapply(columns, function(ct) {
   names(which(ct == column_type))
@@ -179,10 +194,10 @@ entries
 
 
 Get all entry keys matching given find query:
-```{r example-find}
+```{r example-query_find}
 handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
-keys <- find(handle, "find(tag='my_tag' and type=ts)")
+keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
 ```
 
@@ -191,7 +206,7 @@ Untag an entry:
 handle <- connect("qdb://127.0.0.1:2836")
 detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
-keys <- find(handle, "find(tag='my_tag' and type=ts)")
+keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
 ```
 
@@ -206,9 +221,9 @@ result$tables[["timeseries1"]]$data
 ```
 
 Remove an entry:
-```{r example-remove}
+```{r example-entry_remove}
 handle <- connect("qdb://127.0.0.1:2836")
-remove(handle, name = "timeseries1")
+entry_remove(handle, name = "timeseries1")
 ```
 
 ## TODO
