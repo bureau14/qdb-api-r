@@ -143,20 +143,17 @@ tryCatch(
 
 Create a timeseries:
 ```{r example-ts_create}
-handle <- connect("qdb://127.0.0.1:2836")
 ts_create(handle, name = "timeseries1",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 ```{r example-ts_create2, include = FALSE}
-handle <- connect("qdb://127.0.0.1:2836")
 ts_create(handle, name = "timeseries2",
      columns = c("column1" = column_type$blob, "column2" = column_type$double))
 ```
 
 Show information about the columns of a timeseries:
 ```{r example-ts_show}
-handle <- connect("qdb://127.0.0.1:2836")
 columns <- ts_show(handle, name = "timeseries1")
 columns
 sapply(columns, function(ct) {
@@ -166,18 +163,15 @@ sapply(columns, function(ct) {
 
 Add a tag to an entry:
 ```{r example-attach_tags-single}
-handle <- connect("qdb://127.0.0.1:2836")
 attach_tags(handle, entry = "timeseries1", tags = "my_tag")
 ```
 
 ```{r example-attach_tags-single2, include = FALSE}
-handle <- connect("qdb://127.0.0.1:2836")
 attach_tags(handle, entry = "timeseries2", tags = "my_tag")
 ```
 
 Add many tags at once:
 ```{r example-attach_tags-many}
-handle <- connect("qdb://127.0.0.1:2836")
 attach_tags(handle,
                 entry = "timeseries1",
                 tags = c("my_tag1", "my_tag2", "my_tag3"))
@@ -185,14 +179,12 @@ attach_tags(handle,
 
 Get tags of an entry:
 ```{r example-get_tags}
-handle <- connect("qdb://127.0.0.1:2836")
 tags <- get_tags(handle, name = "timeseries1")
 tags
 ```
 
 Get all entries marked with a tag:
 ```{r example-get_tagged}
-handle <- connect("qdb://127.0.0.1:2836")
 entries <- get_tagged(handle, tag = "my_tag")
 entries
 ```
@@ -200,7 +192,6 @@ entries
 
 Get all entry keys matching given find query:
 ```{r example-query_find}
-handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
 keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
@@ -208,7 +199,6 @@ keys
 
 Untag an entry:
 ```{r example-detach_tags}
-handle <- connect("qdb://127.0.0.1:2836")
 detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
 keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
@@ -217,7 +207,6 @@ keys
 
 Execute a select query:
 ```{r example-query}
-handle <- connect("qdb://127.0.0.1:2836")
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
   query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
@@ -227,7 +216,6 @@ result$tables[["timeseries1"]]$data
 
 Remove an entry:
 ```{r example-entry_remove}
-handle <- connect("qdb://127.0.0.1:2836")
 entry_remove(handle, name = "timeseries1")
 ```
 
