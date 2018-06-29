@@ -121,7 +121,7 @@ Show information about the columns of a timeseries:
 
 ``` r
 handle <- connect("qdb://127.0.0.1:2836")
-columns <- show(handle, name = "timeseries1")
+columns <- ts_show(handle, name = "timeseries1")
 columns
 #> column1 column2 
 #>       1       0
@@ -171,7 +171,7 @@ Get all entry keys matching given find query:
 ``` r
 handle <- connect("qdb://127.0.0.1:2836")
 # Get all entries (precisely: their keys) tagged with 'my-tag' being timeseries.
-keys <- find(handle, "find(tag='my_tag' and type=ts)")
+keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
 #> [1] "timeseries2" "timeseries1"
 ```
@@ -182,7 +182,7 @@ Untag an entry:
 handle <- connect("qdb://127.0.0.1:2836")
 detach_tags(handle, entry = "timeseries2", tag = "my_tag")
 # Now, timeseries2 is no more on the list.
-keys <- find(handle, "find(tag='my_tag' and type=ts)")
+keys <- query_find(handle, "find(tag='my_tag' and type=ts)")
 keys
 #> [1] "timeseries1"
 ```
@@ -205,7 +205,7 @@ Remove an entry:
 
 ``` r
 handle <- connect("qdb://127.0.0.1:2836")
-remove(handle, name = "timeseries1")
+entry_remove(handle, name = "timeseries1")
 ```
 
 TODO
