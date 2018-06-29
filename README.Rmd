@@ -104,6 +104,10 @@ Get underlying C API build id and date:
 build()
 ```
 
+```{r example-run-qdbd, include = FALSE}
+qdbd <- run_database(root = getwd())
+```
+
 Connect to a quasardb cluster at a default URI `qdb://127.0.0.1:2836`:
 ```{r example-connect-default}
 handle <- connect()
