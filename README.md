@@ -19,7 +19,7 @@ You can install the released version from CRAN with:
 install.packages("quasardb")
 ```
 -->
-On Unix-like systems, if you have quasardb C API installed system-wide, you can install quasardb from [GitHub](https://github.com/bureau14/qdb-api-r) using the following snippet:
+On Unix-like systems, if you have quasardb C API installed system-wide, you can install quasardb R API directly from [GitHub](https://github.com/bureau14/qdb-api-r) as follows:
 
 ``` r
 if (!requireNamespace("devtools", quietly = TRUE)) {
