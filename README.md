@@ -87,14 +87,14 @@ Get underlying C API version:
 
 ``` r
 version()
-#> [1] "2.6.0"
+#> [1] "2.7.0"
 ```
 
 Get underlying C API build id and date:
 
 ``` r
 build()
-#> [1] "1b437b2 2018-06-01 07:14:42 +0000"
+#> [1] "e09741b 2018-06-27 16:40:20 +0000"
 ```
 
 Connect to a quasardb cluster at a default URI `qdb://127.0.0.1:2836`:
