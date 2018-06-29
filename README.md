@@ -5,7 +5,7 @@ quasardb
 
 :warning:**WARNING**: Early stage development version. Use at your own risk.
 
-:information\_source:**NOTE**: Only :apple:macOS and Windows are currently supported.
+:information\_source:**NOTE**: Supported systems: FreeBSD, Linux, :apple:macOS, Windows.
 
 The quasardb package is the official R API for [quasardb](https://www.quasardb.net) timeseries database.
 
@@ -19,18 +19,20 @@ You can install the released version from CRAN with:
 install.packages("quasardb")
 ```
 -->
-You can install quasardb from [GitHub](https://github.com/bureau14/qdb-api-r) with:
+On Unix-like systems, if you have quasardb C API installed system-wide, you can install quasardb from [GitHub](https://github.com/bureau14/qdb-api-r) using the following snippet:
 
 ``` r
-# install.packages("devtools")
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
 devtools::install_github("bureau14/qdb-api-r")
 ```
 
 ### quasardb C API
 
-To build the R API, you will need the C API. It can either be installed on the machine system-wide (e.g. on UNIX in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` directory. On Windows, you need to verify additionally that the `qdb_api.dll` is in the `PATH` environment variable.
+To build the R API, you will need the C API. You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
 
-You can get the C API as well as other tools from [our download page](https://www.quasardb.net/-Get-).
+It can either be installed on the machine system-wide (e.g. on Unix in `/usr/lib` or `/usr/local/lib`) or you can unpack the C API archive in `inst` subdirectory of this R API source. On Windows, you need to verify additionally that the `qdb_api.dll` is in the `PATH` environment variable.
 
 ### Building the extension from source
 
@@ -73,10 +75,8 @@ devtools::test()
 Usage
 -----
 
-<!-- TODO:
-To regenerate the readme with knitr, run `qdbd --transient --security=false`.
-Let automatise this!
--->
+:warning:**WARNING**: Most of these snippets require a running `qdbd` cluster running. You can get it from [our download page](https://www.quasardb.net/-Get-).
+
 Load library:
 
 ``` r
