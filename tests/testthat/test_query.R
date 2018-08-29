@@ -1,5 +1,22 @@
 context("query")
 
+expect_member <- function(object, member_name) {
+  act <- quasi_label(rlang::enquo(object))
+
+  expect(
+    member_name %in% names(object),
+    failure_message =
+      sprintf(
+        "object %s should contain `%s`, but contains: [%s]",
+        act$lab,
+        member_name,
+        paste(names(act$val), collapse = ", ")
+      )
+  )
+
+  invisible(act$val)
+}
+
 expect_na <- function(object) {
   act <- quasi_label(rlang::enquo(object))
 
@@ -66,21 +83,19 @@ test_that("returns count result on empty 1-column timeseries", {
 
   expect(is.list(results), failure_message = "query result should be a list")
 
-  expect("scanned_rows_count" %in% names(results),
-         failure_message = "query result should contain scanned_rows_count")
+  expect_member(results, "scanned_rows_count")
   expect_equal(results$scanned_rows_count, 0)
 
-  expect("tables_count" %in% names(results),
-         failure_message = "query result should contain tables_count")
+  expect_member(results, "tables_count")
   expect_equal(results$tables_count, 1)
 
   # Check tables
-  expect("tables" %in% names(results),
-         failure_message = "query result should contain tables")
+  expect_member(results, "tables")
 
   tables <- results$tables
   expect_equal(length(tables), 1)
 
+  expect_member(tables, alias)
   expect(
     alias %in% names(tables),
     failure_message = sprintf(
@@ -92,53 +107,21 @@ test_that("returns count result on empty 1-column timeseries", {
   # Check table
   table <- tables[[alias]]
 
-  expect(
-    "columns_count" %in% names(table),
-    failure_message = sprintf(
-      "table should contain columns_count: [%s]",
-      paste(names(table), collapse = ", ")
-    )
-  )
+  expect_member(table, "columns_count")
   expect_equal(table$columns_count, 2)
 
-  expect(
-    "rows_count" %in% names(table),
-    failure_message = sprintf(
-      "table should contain rows_count: [%s]",
-      paste(names(table), collapse = ", ")
-    )
-  )
+  expect_member(table, "rows_count")
   expect_equal(table$rows_count, 1)
 
   # Check columns
-  expect(
-    "columns" %in% names(table),
-    failure_message = sprintf(
-      "table should contain columns: [%s]",
-      paste(names(table), collapse = ", ")
-    )
-  )
-
-  expect(
-    "columns" %in% names(table),
-    failure_message = sprintf(
-      "table should contain columns:\nActual fields: [%s]",
-      paste(names(table), collapse = ", ")
-    )
-  )
+  expect_member(table, "columns")
 
   actual_columns <- table$columns
   expect_equal(actual_columns,
                c("timestamp", sprintf("count(%s)", column_name)))
 
   # Check data
-  expect(
-    "data" %in% names(table),
-    failure_message = sprintf(
-      "table should contain data:\nActual fields: [%s]",
-      paste(names(table), collapse = ", ")
-    )
-  )
+  expect_member(table, "data")
 
   data <- table$data
   expect(is.data.frame(data), failure_message = "data should be a data.frame")
