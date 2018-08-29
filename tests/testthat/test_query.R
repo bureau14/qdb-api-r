@@ -134,8 +134,13 @@ test_that("returns count result on empty 1-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 2))
 
-  expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-               "2017-01-01T00:00:00.000000000")
+  expect(is.na(data$timestamp),
+         failure_message = paste(
+           "got",
+           format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
+           "instead of NA",
+           sep = " "
+         ))
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
 })
 
@@ -183,8 +188,13 @@ test_that("returns count result on empty multi-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 5))
 
-  expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-               "2018-02-03T00:00:00.000000000")
+  expect(is.na(data$timestamp),
+         failure_message = paste(
+           "got",
+           format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
+           "instead of NA",
+           sep = " "
+         ))
   expect_equal(unlist(data[, 2:length(data)]),
                rep(0L, length(columns)),
                check.names = FALSE)
@@ -210,8 +220,13 @@ test_that("returns count result on multiple timeseries", {
 
   sapply(results$tables, function(table) {
     data <- table$data
-    expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-                 "2017-01-01T00:00:00.000000000")
+    expect(is.na(data$timestamp),
+           failure_message = paste(
+             "got",
+             format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
+             "instead of NA",
+             sep = " "
+           ))
     expect_equal(unlist(data[, 2:length(data)]),
                  rep(0L, length(columns)),
                  check.names = FALSE)
