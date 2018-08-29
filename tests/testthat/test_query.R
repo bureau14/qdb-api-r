@@ -1,5 +1,18 @@
 context("query")
 
+expect_na <- function(object) {
+  act <- quasi_label(rlang::enquo(object))
+
+  expect(is.na(act$val),
+         sprintf(
+           "got %s of type %s instead of NA.",
+           format(act$val),
+           typeof(act$val)
+         ))
+
+  invisible(act$val)
+}
+
 test_that("stops when handle is null", {
   expect_error(results <-
                  query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
@@ -134,13 +147,7 @@ test_that("returns count result on empty 1-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 2))
 
-  expect(is.na(data$timestamp),
-         failure_message = paste(
-           "got",
-           format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-           "instead of NA",
-           sep = " "
-         ))
+  expect_na(data$timestamp)
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
 })
 
@@ -188,13 +195,7 @@ test_that("returns count result on empty multi-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 5))
 
-  expect(is.na(data$timestamp),
-         failure_message = paste(
-           "got",
-           format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-           "instead of NA",
-           sep = " "
-         ))
+  expect_na(data$timestamp)
   expect_equal(unlist(data[, 2:length(data)]),
                rep(0L, length(columns)),
                check.names = FALSE)
@@ -220,13 +221,7 @@ test_that("returns count result on multiple timeseries", {
 
   sapply(results$tables, function(table) {
     data <- table$data
-    expect(is.na(data$timestamp),
-           failure_message = paste(
-             "got",
-             format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
-             "instead of NA",
-             sep = " "
-           ))
+    expect_na(data$timestamp)
     expect_equal(unlist(data[, 2:length(data)]),
                  rep(0L, length(columns)),
                  check.names = FALSE)
