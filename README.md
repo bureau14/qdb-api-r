@@ -57,13 +57,13 @@ roxygen2::roxygenize()
 To check the extension:
 
 ``` r
-devtools::check(check_version = TRUE)
+devtools::check()
 ```
 
 You may wish to skip tests using:
 
 ``` r
-devtools::check(check_version = TRUE, args = "--no-tests")
+devtools::check(args = "--no-tests")
 ```
 
 To test the extension:
