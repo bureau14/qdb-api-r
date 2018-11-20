@@ -233,13 +233,13 @@ Rcpp::List transform_result(const qdb_query_result_t & result)
             transform_tables(result.tables, result.tables_count);
 
         return Rcpp::List::create( //
-            Rcpp::Named("scanned_rows_count", result.scanned_rows_count),
+            Rcpp::Named("scanned_point_count", result.scanned_point_count),
             Rcpp::Named("tables_count", result.tables_count),
             Rcpp::Named("tables", r_tables));
     }
 
     return Rcpp::List::create( //
-        Rcpp::Named("scanned_rows_count", result.scanned_rows_count),
+        Rcpp::Named("scanned_point_count", result.scanned_point_count),
         Rcpp::Named("tables_count", result.tables_count));
 }
 
@@ -270,14 +270,14 @@ Rcpp::List _qdb_query(qdb_handle_t handle, const std::string & query)
     }
 
     qdb_query_result_t * result = nullptr;
-    qdb_error_t err = ::qdb_exp_query(handle, query.c_str(), &result);
+    qdb_error_t err = ::qdb_query(handle, query.c_str(), &result);
     if (err)
     {
-        Rcpp::stop("qdb_exp_query: %s (code: %x)", qdb_error(err), err);
+        Rcpp::stop("qdb_query: %s (code: %x)", qdb_error(err), err);
     }
     if (!result)
     {
-        Rcpp::stop("qdb_exp_query: returned null result");
+        Rcpp::stop("qdb_query: returned null result");
     }
 
     auto r_result = transform_result(*result);

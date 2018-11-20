@@ -210,7 +210,7 @@ Execute a select query:
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
   query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
-result$scanned_rows_count
+result$scanned_point_count
 result$tables[["timeseries1"]]$data
 ```
 

@@ -61,7 +61,7 @@ test_that("returns empty result on existing but empty timeseries", {
   results <-
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
 
-  expect_equal(results$scanned_rows_count, 1)
+  expect_equal(results$scanned_point_count, 1)
 
   tables <- results$tables
   table <- tables[[alias]]

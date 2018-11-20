@@ -61,9 +61,9 @@ test_that("returns empty result on existing but empty timeseries", {
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2017, +1y)", alias))
 
   expect(is.list(results), failure_message = "query result should be a list")
-  expect_named(results, c("scanned_rows_count", "tables_count"))
+  expect_named(results, c("scanned_point_count", "tables_count"))
 
-  expect_equal(results$scanned_rows_count, 0)
+  expect_equal(results$scanned_point_count, 0)
   expect_equal(results$tables_count, 0)
 })
 
@@ -83,8 +83,8 @@ test_that("returns count result on empty 1-column timeseries", {
 
   expect(is.list(results), failure_message = "query result should be a list")
 
-  expect_member(results, "scanned_rows_count")
-  expect_equal(results$scanned_rows_count, 0)
+  expect_member(results, "scanned_point_count")
+  expect_equal(results$scanned_point_count, 0)
 
   expect_member(results, "tables_count")
   expect_equal(results$tables_count, 1)
@@ -159,7 +159,7 @@ test_that("returns count result on empty multi-column timeseries", {
   query <- sprintf("SELECT COUNT(*) FROM %s IN RANGE(2018-02-03, +1y)", alias)
   results <- query(handle, query)
 
-  expect_equal(results$scanned_rows_count, 0)
+  expect_equal(results$scanned_point_count, 0)
   expect_equal(results$tables_count, 1)
 
   tables <- results$tables
@@ -199,7 +199,7 @@ test_that("returns count result on multiple timeseries", {
     sprintf("SELECT COUNT(*) FROM %s, %s IN RANGE(2017, +1y)", alias1, alias2)
   results <- query(handle, query)
 
-  expect_equal(results$scanned_rows_count, 0)
+  expect_equal(results$scanned_point_count, 0)
   expect_equal(results$tables_count, 2)
 
   sapply(results$tables, function(table) {

@@ -121,12 +121,12 @@ Show information about the columns of a timeseries:
 ``` r
 columns <- ts_show(handle, name = "timeseries1")
 columns
-#> column1 column2 
+#> column1 column2
 #>       1       0
 sapply(columns, function(ct) {
   names(which(ct == column_type))
 })
-#>  column1  column2 
+#>  column1  column2
 #>   "blob" "double"
 ```
 
@@ -185,7 +185,7 @@ Execute a select query:
 # Get number of elements in each column of the timeseries in year 2017.
 result <-
   query(handle, "select count(*) from timeseries1 in range(2017, +1y)")
-result$scanned_rows_count
+result$scanned_point_count
 #> [1] 0
 result$tables[["timeseries1"]]$data
 #>                             timestamp count(column1) count(column2)
