@@ -1,3 +1,11 @@
+#' @title Helper to run quasardb database server (node).
+#'
+#' @description
+#' Run quasardb executable (qdbd) searched for in the given root directory.
+#' Used for testing purposes.
+#'
+#' @param root Root directory in which the executable should be found.
+#' @param address Daemon listening endpoint.
 run_database <- function(root, address = "127.0.0.1:2836") {
   qdbd_filename <- "qdbd"
   if (.Platform[["OS.type"]] == "windows") {
