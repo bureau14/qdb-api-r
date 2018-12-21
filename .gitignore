@@ -1,6 +1,8 @@
 .Rproj.user
 .Rhistory
 .RData
+artifacts/
+*.Rcheck/
 quasardb_*.tar.gz
 *.log
 *.out
