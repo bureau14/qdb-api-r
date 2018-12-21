@@ -25,8 +25,7 @@ Maintainer: Marek Kurdej <marek@quasardb.net>
   background information.
 }
 \keyword{timeseries,nosql,database}
-\seealso{
-}
+%\seealso{}
 \examples{
 \dontrun{
 handle <- connect("qdb://127.0.0.1:2836")
