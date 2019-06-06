@@ -118,7 +118,7 @@ test_that("returns count result on empty 1-column timeseries", {
 
   actual_columns <- table$columns
   expect_equal(actual_columns,
-               c("timestamp", sprintf("count(%s)", column_name)))
+               c("$timestamp", sprintf("count(%s)", column_name)))
 
   # Check data
   expect_member(table, "data")
@@ -126,11 +126,11 @@ test_that("returns count result on empty 1-column timeseries", {
   data <- table$data
   expect(is.data.frame(data), failure_message = "data should be a data.frame")
   expect_equal(colnames(data),
-               c("timestamp", sprintf("count(%s)", column_name)))
+               c("$timestamp", sprintf("count(%s)", column_name)))
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 2))
 
-  expect_na(data$timestamp)
+  expect_na(data[["$timestamp"]])
   expect_equal(data[[sprintf("count(%s)", column_name)]], 0)
 })
 
@@ -149,7 +149,7 @@ test_that("returns count result on empty multi-column timeseries", {
       generate_alias("col")
     )
   expected_column_names <-
-    c("timestamp", sprintf("count(%s)", names(columns)))
+    c("$timestamp", sprintf("count(%s)", names(columns)))
 
   handle <- connect(qdbd$uri)
   ts_create(handle,
@@ -178,7 +178,7 @@ test_that("returns count result on empty multi-column timeseries", {
   expect_equal(rownames(data), c("1"))
   expect_equal(dim(data), c(1, 5))
 
-  expect_na(data$timestamp)
+  expect_na(data[["$timestamp"]])
   expect_equal(unlist(data[, 2:length(data)]),
                rep(0L, length(columns)),
                check.names = FALSE)
@@ -204,7 +204,7 @@ test_that("returns count result on multiple timeseries", {
 
   sapply(results$tables, function(table) {
     data <- table$data
-    expect_na(data$timestamp)
+    expect_na(data[["$timestamp"]])
     expect_equal(unlist(data[, 2:length(data)]),
                  rep(0L, length(columns)),
                  check.names = FALSE)

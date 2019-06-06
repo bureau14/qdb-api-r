@@ -68,10 +68,10 @@ test_that("returns empty result on existing but empty timeseries", {
   expect_equal(table$columns_count, 2)
   expect_equal(table$rows_count, 1)
   actual_columns <- table$columns
-  expect_equal(actual_columns, c("timestamp", column_name))
+  expect_equal(actual_columns, c("$timestamp", column_name))
 
   data <- table$data
-  expect_equal(format(data$timestamp, "%Y-%m-%dT%H:%M:%E9S"),
+  expect_equal(format(data[["$timestamp"]], "%Y-%m-%dT%H:%M:%E9S"),
                "2018-04-05T06:07:08.123456789")
   expect_equal(data[[column_name]], 1.2345)
 })
