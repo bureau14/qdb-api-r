@@ -18,6 +18,6 @@ SystemRequirements: quasardb libraries (qdb_api) version 2.6.0 or later;
 BugReports: https://support.quasardb.net/
 MailingList: Please send questions and comments regard quasardb to bugs@quasardb.net
 RoxygenNote: 6.1.1
-Suggests: testthat, processx, lintr
+Suggests: testthat, processx, lintr, rlang
 NeedsCompilation: yes
 Encoding: UTF-8
