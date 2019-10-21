@@ -50,28 +50,15 @@ test_that("returns empty result on existing but empty timeseries", {
   names(columns) <- c(column_name)
 
   handle <- connect(qdbd$uri)
-  ts_create(handle,
-                name = alias,
-                columns = columns)
+  ts_create(handle, name = alias, columns = columns)
 
-  ts_insert.double(handle,
-                       name = alias,
-                       column = column_name)
+  # ts_insert.double(handle, name = alias, column = column_name)
 
   results <-
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
 
-  expect_equal(results$scanned_point_count, 1)
+  expect_equal(results$scanned_point_count, 0)
 
-  tables <- results$tables
-  table <- tables[[alias]]
-  expect_equal(table$columns_count, 2)
-  expect_equal(table$rows_count, 1)
-  actual_columns <- table$columns
-  expect_equal(actual_columns, c("$timestamp", column_name))
-
-  data <- table$data
-  expect_equal(format(data[["$timestamp"]], "%Y-%m-%dT%H:%M:%E9S"),
-               "2018-04-05T06:07:08.123456789")
-  expect_equal(data[[column_name]], 1.2345)
+  expect_equal(results$column_count, 0)
+  expect_equal(results$row_count, 0)
 })
