@@ -2,20 +2,21 @@ context("ts_create")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 ts_create(
-                   NULL,
-                   generate_alias("timeseries"),
-                   columns = c("my_column" = column_type$double)
-                 )
-               ,
-               regexp = "type=NULL")
+    ts_create(
+      NULL,
+      generate_alias("timeseries"),
+      columns = c("my_column" = column_type$double)
+    ),
+  regexp = "type=NULL"
+  )
 })
 
 test_that("successfully creates a timeseries with one column", {
   handle <- connect(qdbd$uri)
   ts_create(handle,
-                generate_alias("timeseries"),
-                columns = c("my_column" = column_type$double))
+    generate_alias("timeseries"),
+    columns = c("my_column" = column_type$double)
+  )
   succeed("timeseries created")
 })
 
@@ -40,8 +41,9 @@ test_that("stops when column is not named", {
     handle,
     generate_alias("timeseries"),
     columns = c(column_type$double)
+  ),
+  regexp = "columns should have all elements named"
   )
-  , regexp = "columns should have all elements named")
   succeed("timeseries created")
 })
 
@@ -51,8 +53,9 @@ test_that("stops when not all columns are named", {
     handle,
     generate_alias("timeseries"),
     columns = c("my_column" = column_type$double, column_type$blob)
+  ),
+  regexp = "columns should have all elements named"
   )
-  , regexp = "columns should have all elements named")
   succeed("timeseries created")
 })
 
@@ -60,13 +63,14 @@ test_that("returns error when entry already exists", {
   handle <- connect(qdbd$uri)
   name <- generate_alias("timeseries")
   ts_create(handle,
-                name = name,
-                columns = c("my_column" = column_type$double))
+    name = name,
+    columns = c("my_column" = column_type$double)
+  )
   expect_error(ts_create(
     handle,
     name = name,
     columns = c("my_column" = column_type$double)
+  ),
+  regexp = ".*entry.*already exists.*"
   )
-  ,
-  regexp = ".*entry.*already exists.*")
 })

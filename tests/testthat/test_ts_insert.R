@@ -2,25 +2,24 @@ context("ts_insert")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 ts_insert.double(
-                   NULL,
-                   generate_alias("timeseries"),
-                   generate_alias("column")
-                 )
-               ,
-               regexp = "type=NULL")
+    ts_double_insert(
+      NULL,
+      generate_alias("timeseries"),
+      generate_alias("column")
+    ),
+  regexp = "type=NULL"
+  )
 })
 
 test_that("returns alias not found when timeseries does not exist", {
   handle <- connect(qdbd$uri)
   expect_error(
     results <-
-      ts_insert.double(
+      ts_double_insert(
         handle,
         generate_alias("timeseries"),
         generate_alias("column")
-      )
-    ,
+      ),
     regexp = "An entry matching the provided alias cannot be found"
   )
 })
@@ -33,14 +32,16 @@ test_that("returns column not found when column does not exist", {
 
   handle <- connect(qdbd$uri)
   ts_create(handle,
-            name = alias,
-            columns = columns)
+    name = alias,
+    columns = columns
+  )
 
-  expect_error(ts_insert.double(handle,
-                                name = alias,
-                                column = generate_alias("column"))
-               ,
-               regexp = "The timeseries does not contain this column")
+  expect_error(ts_double_insert(handle,
+    name = alias,
+    column = generate_alias("column")
+  ),
+  regexp = "The timeseries does not contain this column"
+  )
 })
 
 test_that("returns empty result on existing but empty timeseries", {
@@ -50,28 +51,13 @@ test_that("returns empty result on existing but empty timeseries", {
   names(columns) <- c(column_name)
 
   handle <- connect(qdbd$uri)
-  ts_create(handle,
-                name = alias,
-                columns = columns)
-
-  ts_insert.double(handle,
-                       name = alias,
-                       column = column_name)
+  ts_create(handle, name = alias, columns = columns)
 
   results <-
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
 
-  expect_equal(results$scanned_point_count, 1)
+  expect_equal(results$scanned_point_count, 0)
 
-  tables <- results$tables
-  table <- tables[[alias]]
-  expect_equal(table$columns_count, 2)
-  expect_equal(table$rows_count, 1)
-  actual_columns <- table$columns
-  expect_equal(actual_columns, c("$timestamp", column_name))
-
-  data <- table$data
-  expect_equal(format(data[["$timestamp"]], "%Y-%m-%dT%H:%M:%E9S"),
-               "2018-04-05T06:07:08.123456789")
-  expect_equal(data[[column_name]], 1.2345)
+  expect_equal(results$column_count, 3)
+  expect_equal(results$row_count, 0)
 })

@@ -18,10 +18,12 @@ run_database <- function(root, address = "127.0.0.1:2836") {
   }
   qdbd_path <- normalizePath(qdbd_path)
 
-  args <- c("--storage-engine=transient",
-            "--security=false",
-            "--address",
-            address)
+  args <- c(
+    "--storage-engine=transient",
+    "--security=false",
+    "--address",
+    address
+  )
 
   proc <-
     processx::process$new(

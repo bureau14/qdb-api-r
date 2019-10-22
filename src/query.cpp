@@ -14,28 +14,28 @@ static inline std::string transform_blob(const T & blob)
 }
 
 Rcpp::StringVector transform_columns(
-    const qdb_string_t * columns_names, qdb_size_t columns_count)
+    const qdb_string_t * column_names, qdb_size_t column_count)
 {
-    assert(columns_names);
+    assert(column_names);
 
-    Rcpp::StringVector r_columns{columns_count};
+    Rcpp::StringVector r_columns{column_count};
 
     qdb_size_t i = 0u;
     for (auto & column : r_columns)
     {
-        column = transform_qdb_string(columns_names[i++]);
+        column = transform_qdb_string(column_names[i++]);
     }
 
     return r_columns;
 }
 
 Rcpp::StringVector transform_blob_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::StringVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
+    Rcpp::StringVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_blob);
@@ -46,12 +46,12 @@ Rcpp::StringVector transform_blob_points(
 }
 
 Rcpp::IntegerVector transform_count_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::IntegerVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
+    Rcpp::IntegerVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_count);
@@ -62,12 +62,12 @@ Rcpp::IntegerVector transform_count_points(
 }
 
 Rcpp::DoubleVector transform_double_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::DoubleVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
+    Rcpp::DoubleVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_double);
@@ -78,12 +78,12 @@ Rcpp::DoubleVector transform_double_points(
 }
 
 Rcpp::IntegerVector transform_int64_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::IntegerVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
+    Rcpp::IntegerVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_int64);
@@ -96,12 +96,12 @@ Rcpp::IntegerVector transform_int64_points(
 // See:
 // http://gallery.rcpp.org/articles/creating-integer64-and-nanotime-vectors/
 Rcpp::NumericVector transform_timestamp_points(
-    qdb_point_result_t ** rows, qdb_size_t rows_count, qdb_size_t column_index)
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
 {
     assert(rows);
 
-    Rcpp::NumericVector column(rows_count);
-    for (qdb_size_t row_index = 0u; row_index < rows_count; ++row_index)
+    Rcpp::NumericVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_timestamp);
@@ -132,115 +132,92 @@ Rcpp::NumericVector transform_timestamp_points(
 }
 
 Rcpp::DataFrame transform_rows(qdb_point_result_t ** rows,
-    qdb_size_t rows_count,
-    qdb_size_t columns_count,
+    qdb_size_t row_count,
+    qdb_size_t column_count,
     const Rcpp::StringVector & columns)
 {
     assert(rows);
-    assert(rows_count > 0);
-    assert(columns_count > 0);
+    assert(column_count > 0);
 
-    Rcpp::List df; // {rows_count * columns_count};
+    Rcpp::DataFrame df; // {row_count * column_count};
 
-    for (qdb_size_t column_index = 0u; column_index < columns_count;
+    if (!row_count)
+    {
+        // For some reason I need to redo these steps in the other case
+        df.attr("row.names") = Rcpp::IntegerVector{};
+        df.attr("class")     = "data.frame";
+        return df;
+    }
+
+    for (qdb_size_t column_index = 0u; column_index < column_count;
          ++column_index)
     {
+        std::string column_name = Rcpp::as<std::string>(columns[column_index]);
         switch (rows[0][column_index].type)
         {
         case qdb_query_result_blob:
-            df.push_back(transform_blob_points(rows, rows_count, column_index));
+            df.push_back(transform_blob_points(rows, row_count, column_index),
+                std::move(column_name));
             break;
 
         case qdb_query_result_count:
-            df.push_back(
-                transform_count_points(rows, rows_count, column_index));
+            df.push_back(transform_count_points(rows, row_count, column_index),
+                std::move(column_name));
             break;
 
         case qdb_query_result_double:
-            df.push_back(
-                transform_double_points(rows, rows_count, column_index));
+            df.push_back(transform_double_points(rows, row_count, column_index),
+                std::move(column_name));
             break;
 
         case qdb_query_result_int64:
-            df.push_back(
-                transform_int64_points(rows, rows_count, column_index));
+            df.push_back(transform_int64_points(rows, row_count, column_index),
+                std::move(column_name));
             break;
 
         case qdb_query_result_timestamp:
             df.push_back(
-                transform_timestamp_points(rows, rows_count, column_index));
+                transform_timestamp_points(rows, row_count, column_index),
+                std::move(column_name));
             break;
 
         default:
             assert(!"unknown data type");
-            df.push_back(Rcpp::GenericVector(rows_count));
+            df.push_back(
+                Rcpp::GenericVector(row_count), std::move(column_name));
             break;
         }
     }
 
-    // Set row.names (FIXME: optional?)
-    Rcpp::StringVector row_names(rows_count);
-    for (qdb_size_t i = 0u; i < rows_count; ++i)
+    // dataframe rows start count at 1
+    Rcpp::IntegerVector row_names(row_count);
+    for (qdb_size_t i = 0u; i < row_count; ++i)
     {
-        row_names[i] = std::to_string(i + 1);
+        row_names[i] = i + 1;
     }
+    // if not set dim(rows) for one row will be (0, x) instead of (1, x)
     df.attr("row.names") = row_names;
 
-    df.names() = columns;
     df.attr("class") = "data.frame";
 
     return df;
 }
 
-Rcpp::List transform_table(const qdb_table_result_t & table)
-{
-    auto r_columns =
-        transform_columns(table.columns_names, table.columns_count);
-
-    auto rows = transform_rows(
-        table.rows, table.rows_count, table.columns_count, r_columns);
-
-    return Rcpp::List::create( //
-        Rcpp::Named("columns_count", table.columns_count),
-        Rcpp::Named("rows_count", table.rows_count),
-        Rcpp::Named("columns", r_columns), Rcpp::Named("data", rows));
-}
-
-Rcpp::List transform_tables(
-    const qdb_table_result_t * tables, qdb_size_t tables_count)
-{
-    assert(tables);
-
-    Rcpp::List r_tables; // {Rcpp::no_init(tables_count)};
-
-    for (qdb_size_t i = 0u; i < tables_count; ++i)
-    {
-        const qdb_table_result_t & table = tables[i];
-
-        r_tables.push_back(
-            /*object=*/transform_table(table),
-            /*name=*/transform_qdb_string(table.table_name));
-    }
-
-    return r_tables;
-}
-
 Rcpp::List transform_result(const qdb_query_result_t & result)
 {
-    if (result.tables_count > 0)
-    {
-        Rcpp::List r_tables =
-            transform_tables(result.tables, result.tables_count);
+    auto r_columns =
+        transform_columns(result.column_names, result.column_count);
 
-        return Rcpp::List::create( //
-            Rcpp::Named("scanned_point_count", result.scanned_point_count),
-            Rcpp::Named("tables_count", result.tables_count),
-            Rcpp::Named("tables", r_tables));
-    }
+    auto rows = transform_rows(
+        result.rows, result.row_count, result.column_count, r_columns);
 
-    return Rcpp::List::create( //
-        Rcpp::Named("scanned_point_count", result.scanned_point_count),
-        Rcpp::Named("tables_count", result.tables_count));
+    return Rcpp::List::create(
+        Rcpp::Named("scanned_point_count", result.scanned_point_count), //
+        Rcpp::Named("column_count", result.column_count),               //
+        Rcpp::Named("columns", r_columns),                              //
+        Rcpp::Named("row_count", result.row_count),                     //
+        Rcpp::Named("rows", rows)                                       //
+    );
 }
 
 //' @backref src/query.cpp
@@ -270,7 +247,7 @@ Rcpp::List _qdb_query(qdb_handle_t handle, const std::string & query)
     }
 
     qdb_query_result_t * result = nullptr;
-    qdb_error_t err = ::qdb_query(handle, query.c_str(), &result);
+    qdb_error_t err             = ::qdb_query(handle, query.c_str(), &result);
     if (err)
     {
         Rcpp::stop("qdb_query: %s (code: %x)", qdb_error(err), err);

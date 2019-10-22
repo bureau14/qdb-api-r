@@ -10,8 +10,8 @@
 #'
 #' @export
 column_type <- list(
-    double = 0L,
-    blob = 1L,
-    integer = 2L,
-    timestamp = 3L
+  double = 0L,
+  blob = 1L,
+  integer = 2L,
+  timestamp = 3L
 )
