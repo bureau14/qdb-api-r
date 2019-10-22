@@ -8,6 +8,7 @@
 //'
 //' @description
 //' Insert floating-point data into double column of an existing timeseries.
+//' This function is for test purposes only
 //'
 //' @seealso \code{\link{connect}}
 //'
@@ -19,7 +20,7 @@
 //'
 //' @examples
 //' handle <- connect("qdb://127.0.0.1:2836")
-//' ts_double_insert(handle, "timeseries", "column", points)
+//' ts_double_insert(handle, "timeseries", "column")
 // [[Rcpp::export(name = "ts_double_insert")]]
 void _qdb_ts_double_insert(
     qdb_handle_t handle, const std::string & name, const std::string & column)
@@ -28,6 +29,9 @@ void _qdb_ts_double_insert(
     {
         Rcpp::stop("invalid handle");
     }
+
+    // This function is for test purposes only
+    // it was not implemented for production use
     const std::vector<qdb_ts_double_point> values{
         qdb_ts_double_point{
             qdb_timespec_t{1483228800, 0}, 1.1}, // 2017-01-01T00:00:01
