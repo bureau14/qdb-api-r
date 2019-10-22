@@ -135,57 +135,68 @@ Rcpp::DataFrame transform_rows(qdb_point_result_t ** rows,
     qdb_size_t row_count,
     qdb_size_t column_count,
     const Rcpp::StringVector & columns)
-         {
+{
     assert(rows);
-    assert(row_count > 0);
     assert(column_count > 0);
 
-    Rcpp::List df; // {row_count * column_count};
+    Rcpp::DataFrame df; // {row_count * column_count};
 
-    for (qdb_size_t column_index = 0u; column_index < column_count;
-         ++column_index)
+    if (row_count)
     {
-        switch (rows[0][column_index].type)
+        for (qdb_size_t column_index = 0u; column_index < column_count;
+             ++column_index)
         {
-        case qdb_query_result_blob:
-            df.push_back(transform_blob_points(rows, row_count, column_index));
-            break;
+            const std::string column_name =
+                Rcpp::as<std::string>(columns[column_index]);
+            switch (rows[0][column_index].type)
+            {
+            case qdb_query_result_blob:
+                df.push_back(
+                    transform_blob_points(rows, row_count, column_index),
+                    column_name);
+                break;
 
-        case qdb_query_result_count:
-            df.push_back(transform_count_points(rows, row_count, column_index));
-            break;
+            case qdb_query_result_count:
+                df.push_back(
+                    transform_count_points(rows, row_count, column_index),
+                    column_name);
+                break;
 
-        case qdb_query_result_double:
-            df.push_back(
-                transform_double_points(rows, row_count, column_index));
-            break;
+            case qdb_query_result_double:
+                df.push_back(
+                    transform_double_points(rows, row_count, column_index),
+                    column_name);
+                break;
 
-        case qdb_query_result_int64:
-            df.push_back(transform_int64_points(rows, row_count, column_index));
-            break;
+            case qdb_query_result_int64:
+                df.push_back(
+                    transform_int64_points(rows, row_count, column_index),
+                    column_name);
+                break;
 
-        case qdb_query_result_timestamp:
-            df.push_back(
-                transform_timestamp_points(rows, row_count, column_index));
-            break;
+            case qdb_query_result_timestamp:
+                df.push_back(
+                    transform_timestamp_points(rows, row_count, column_index),
+                    column_name);
+                break;
 
-        default:
-            assert(!"unknown data type");
-            df.push_back(Rcpp::GenericVector(row_count));
-            break;
+            default:
+                assert(!"unknown data type");
+                df.push_back(Rcpp::GenericVector(row_count), column_name);
+                break;
+            }
         }
     }
 
-    // Set row.names (FIXME: optional?)
-    Rcpp::StringVector row_names(row_count);
+    // dataframe rows start count at 1
+    Rcpp::IntegerVector row_names(row_count);
     for (qdb_size_t i = 0u; i < row_count; ++i)
     {
-        row_names[i] = std::to_string(i + 1);
+        row_names[i] = i + 1;
     }
+    // if not set dim(rows) for one row will be (0, x) instead of (1, x)
     df.attr("row.names") = row_names;
-
-    df.names()       = columns;
-    df.attr("class") = "data.frame";
+    df.attr("class")     = "data.frame";
 
     return df;
 }

@@ -52,13 +52,11 @@ test_that("returns empty result on existing but empty timeseries", {
   handle <- connect(qdbd$uri)
   ts_create(handle, name = alias, columns = columns)
 
-  # ts_insert.double(handle, name = alias, column = column_name)
-
   results <-
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2018, +1y)", alias))
 
   expect_equal(results$scanned_point_count, 0)
 
-  expect_equal(results$column_count, 0)
+  expect_equal(results$column_count, 3)
   expect_equal(results$row_count, 0)
 })
