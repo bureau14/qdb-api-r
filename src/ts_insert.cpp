@@ -28,7 +28,7 @@ void _qdb_ts_double_insert(
     {
         Rcpp::stop("invalid handle");
     }
-    const std::array<qdb_ts_double_point, 3> values{
+    const std::vector<qdb_ts_double_point> values{
         qdb_ts_double_point{
             qdb_timespec_t{1483228800, 0}, 1.1}, // 2017-01-01T00:00:01
         qdb_ts_double_point{
