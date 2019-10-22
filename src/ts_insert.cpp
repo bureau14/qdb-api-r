@@ -19,8 +19,8 @@
 //'
 //' @examples
 //' handle <- connect("qdb://127.0.0.1:2836")
-//' ts_insert.double(handle, "timeseries", "column", points)
-// [[Rcpp::export(name = "ts_insert.double")]]
+//' ts_double_insert(handle, "timeseries", "column", points)
+// [[Rcpp::export(name = "ts_double_insert")]]
 void _qdb_ts_double_insert(
     qdb_handle_t handle, const std::string & name, const std::string & column)
 {

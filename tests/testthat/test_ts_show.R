@@ -2,26 +2,28 @@ context("ts_show")
 
 test_that("stops when handle is null", {
   expect_error(results <-
-                 ts_show(NULL, generate_alias("timeseries"))
-               ,
-               regexp = "type=NULL")
+    ts_show(NULL, generate_alias("timeseries")),
+  regexp = "type=NULL"
+  )
 })
 
 test_that("returns alias not found when timeseries does not exist", {
   handle <- connect(qdbd$uri)
   expect_error(results <-
-                 ts_show(handle, generate_alias("timeseries"))
-               ,
-               regexp = "An entry matching the provided alias cannot be found")
+    ts_show(handle, generate_alias("timeseries")),
+  regexp = "An entry matching the provided alias cannot be found"
+  )
 })
 
 test_that("returns info of multi-column timeseries", {
   alias <- generate_alias("timeseries")
   columns <-
-    c(column_type$blob,
+    c(
+      column_type$blob,
       column_type$double,
       column_type$integer,
-      column_type$timestamp)
+      column_type$timestamp
+    )
   names(columns) <-
     c(
       generate_alias("col"),
@@ -32,8 +34,9 @@ test_that("returns info of multi-column timeseries", {
 
   handle <- connect(qdbd$uri)
   ts_create(handle,
-                name = alias,
-                columns = columns)
+    name = alias,
+    columns = columns
+  )
 
   results <- ts_show(handle, alias)
 

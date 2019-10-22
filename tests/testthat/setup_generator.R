@@ -10,8 +10,9 @@ create_timeseries <- function(handle, prefix = "timeseries") {
   alias <- generate_alias(prefix) # nolint
 
   ts_create(handle,
-                name = alias,
-                columns = c("column1" = column_type$double))
+    name = alias,
+    columns = c("column1" = column_type$double)
+  )
 
   return(alias)
 }

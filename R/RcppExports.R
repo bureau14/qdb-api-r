@@ -24,7 +24,8 @@
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' attach_tags(handle, "key", "tag")
 attach_tags <- function(handle, entry, tags) {
-    invisible(.Call('_quasardb__qdb_attach_tags', PACKAGE = 'quasardb', handle, entry, tags))
+  invisible(.Call("_quasardb__qdb_attach_tags"
+                  , PACKAGE = "quasardb", handle, entry, tags))
 }
 
 #' @backref src/build.cpp
@@ -42,7 +43,7 @@ attach_tags <- function(handle, entry, tags) {
 #' @examples
 #' build()
 build <- function() {
-    .Call('_quasardb__qdb_build', PACKAGE = 'quasardb')
+  .Call("_quasardb__qdb_build", PACKAGE = "quasardb")
 }
 
 #' @backref src/connect.cpp
@@ -63,7 +64,7 @@ build <- function() {
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
 connect <- function(uri = "qdb://127.0.0.1:2836") {
-    .Call('_quasardb__qdb_connect', PACKAGE = 'quasardb', uri)
+  .Call("_quasardb__qdb_connect", PACKAGE = "quasardb", uri)
 }
 
 #' @backref src/Detach_tags.cpp
@@ -92,7 +93,8 @@ connect <- function(uri = "qdb://127.0.0.1:2836") {
 #'
 #' detach_tags(handle, entry = "key", tags = c("tag1", "tag2"))
 detach_tags <- function(handle, entry, tags) {
-    invisible(.Call('_quasardb__qdb_detach_tags', PACKAGE = 'quasardb', handle, entry, tags))
+  invisible(.Call("_quasardb__qdb_detach_tags"
+                  , PACKAGE = "quasardb", handle, entry, tags))
 }
 
 #' @backref src/error.cpp
@@ -109,7 +111,7 @@ detach_tags <- function(handle, entry, tags) {
 #' @examples
 #' error(code = 0)
 error <- function(code) {
-    .Call('_quasardb__qdb_error', PACKAGE = 'quasardb', code)
+  .Call("_quasardb__qdb_error", PACKAGE = "quasardb", code)
 }
 
 #' @backref src/find.cpp
@@ -136,7 +138,7 @@ error <- function(code) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' query_find(handle, "find(tag='my_tag' and type=ts)")
 query_find <- function(handle, query) {
-    .Call('_quasardb__qdb_query_find', PACKAGE = 'quasardb', handle, query)
+  .Call("_quasardb__qdb_query_find", PACKAGE = "quasardb", handle, query)
 }
 
 #' @backref src/get_tagged.cpp
@@ -157,7 +159,7 @@ query_find <- function(handle, query) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' get_tagged(handle, tag = "tag")
 get_tagged <- function(handle, tag) {
-    .Call('_quasardb__qdb_get_tagged', PACKAGE = 'quasardb', handle, tag)
+  .Call("_quasardb__qdb_get_tagged", PACKAGE = "quasardb", handle, tag)
 }
 
 #' @backref src/get_tags.cpp
@@ -178,7 +180,7 @@ get_tagged <- function(handle, tag) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' get_tags(handle, name = "key")
 get_tags <- function(handle, name) {
-    .Call('_quasardb__qdb_get_tags', PACKAGE = 'quasardb', handle, name)
+  .Call("_quasardb__qdb_get_tags", PACKAGE = "quasardb", handle, name)
 }
 
 #' @backref src/query.cpp
@@ -200,7 +202,7 @@ get_tags <- function(handle, name) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' query(handle, "SELECT * FROM timeseries IN RANGE(2017, +1y)")
 query <- function(handle, query) {
-    .Call('_quasardb__qdb_query', PACKAGE = 'quasardb', handle, query)
+  .Call("_quasardb__qdb_query", PACKAGE = "quasardb", handle, query)
 }
 
 #' @backref src/remove.cpp
@@ -220,7 +222,7 @@ query <- function(handle, query) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' entry_remove(handle, "timeseries")
 entry_remove <- function(handle, name) {
-    invisible(.Call('_quasardb__qdb_remove', PACKAGE = 'quasardb', handle, name))
+  invisible(.Call("_quasardb__qdb_remove", PACKAGE = "quasardb", handle, name))
 }
 
 #' @backref src/show.cpp
@@ -240,7 +242,7 @@ entry_remove <- function(handle, name) {
 #' handle <- connect("qdb://127.0.0.1:2836")
 #' columns <- ts_show(handle, name = "ts")
 ts_show <- function(handle, name) {
-    .Call('_quasardb__qdb_show', PACKAGE = 'quasardb', handle, name)
+  .Call("_quasardb__qdb_show", PACKAGE = "quasardb", handle, name)
 }
 
 #' @backref src/ts_create.cpp
@@ -259,10 +261,13 @@ ts_show <- function(handle, name) {
 #'
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
-#' ts_create(handle, name = "ts",
-#'     columns = c("col1" = column_type$blob, "col2" = column_type$double))
+#' ts_create(handle,
+#'   name = "ts",
+#'   columns = c("col1" = column_type$blob, "col2" = column_type$double)
+#' )
 ts_create <- function(handle, name, columns) {
-    invisible(.Call('_quasardb__qdb_ts_create', PACKAGE = 'quasardb', handle, name, columns))
+  invisible(.Call("_quasardb__qdb_ts_create"
+                  , PACKAGE = "quasardb", handle, name, columns))
 }
 
 #' @backref src/ts_insert.cpp
@@ -282,9 +287,10 @@ ts_create <- function(handle, name, columns) {
 #'
 #' @examples
 #' handle <- connect("qdb://127.0.0.1:2836")
-#' ts_insert.double(handle, "timeseries", "column", points)
-ts_insert.double <- function(handle, name, column) {
-    invisible(.Call('_quasardb__qdb_ts_double_insert', PACKAGE = 'quasardb', handle, name, column))
+#' ts_double_insert(handle, "timeseries", "column", points)
+ts_double_insert <- function(handle, name, column) {
+  invisible(.Call("_quasardb__qdb_ts_double_insert"
+                  , PACKAGE = "quasardb", handle, name, column))
 }
 
 #' @backref src/version.cpp
@@ -302,6 +308,5 @@ ts_insert.double <- function(handle, name, column) {
 #' @examples
 #' version()
 version <- function() {
-    .Call('_quasardb__qdb_version', PACKAGE = 'quasardb')
+  .Call("_quasardb__qdb_version", PACKAGE = "quasardb")
 }
-
