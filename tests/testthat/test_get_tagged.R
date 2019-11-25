@@ -8,7 +8,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns empty character(0) vector when entry does not exist", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
 
   results <- get_tagged(handle, generate_alias("tag"))
 
@@ -17,7 +17,7 @@ test_that("returns empty character(0) vector when entry does not exist", {
 })
 
 test_that("returns tags of a timeseries", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   tags <-

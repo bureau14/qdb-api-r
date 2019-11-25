@@ -40,7 +40,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns alias not found when timeseries does not exist", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(
     results <-
       query(handle, query = "SELECT * FROM timeseries IN RANGE(2017, +1y)"),
@@ -54,7 +54,7 @@ test_that("returns empty result on existing but empty timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
 
   ts_create(handle, name = alias, columns = columns)
 
@@ -78,7 +78,7 @@ test_that("returns count result on empty 1-column timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle, name = alias, columns = columns)
   ts_double_insert(handle, name = alias, column = column_name)
   results <-
@@ -127,7 +127,7 @@ test_that("returns count result on empty multi-column timeseries", {
   expected_column_names <-
     c(sprintf("count(%s)", names(columns)))
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle, name = alias, columns = columns)
   sapply(names(columns), function(column_name) {
     ts_double_insert(handle, name = alias, column = column_name)
@@ -169,7 +169,7 @@ test_that("returns count result on multiple timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle, name = alias1, columns = columns)
   ts_create(handle, name = alias2, columns = columns)
 

@@ -12,7 +12,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("successfully creates a timeseries with one column", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle,
     generate_alias("timeseries"),
     columns = c("my_column" = column_type$double)
@@ -21,7 +21,7 @@ test_that("successfully creates a timeseries with one column", {
 })
 
 test_that("successfully creates a timeseries with many columns", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(
     handle,
     generate_alias("timeseries"),
@@ -36,7 +36,7 @@ test_that("successfully creates a timeseries with many columns", {
 })
 
 test_that("stops when column is not named", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(ts_create(
     handle,
     generate_alias("timeseries"),
@@ -48,7 +48,7 @@ test_that("stops when column is not named", {
 })
 
 test_that("stops when not all columns are named", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(ts_create(
     handle,
     generate_alias("timeseries"),
@@ -60,7 +60,7 @@ test_that("stops when not all columns are named", {
 })
 
 test_that("returns error when entry already exists", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   name <- generate_alias("timeseries")
   ts_create(handle,
     name = name,

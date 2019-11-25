@@ -12,7 +12,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns alias not found when timeseries does not exist", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(
     results <-
       ts_double_insert(
@@ -30,7 +30,7 @@ test_that("returns column not found when column does not exist", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle,
     name = alias,
     columns = columns
@@ -50,7 +50,7 @@ test_that("returns empty result on existing but empty timeseries", {
   columns <- c(column_type$double)
   names(columns) <- c(column_name)
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle, name = alias, columns = columns)
 
   results <-

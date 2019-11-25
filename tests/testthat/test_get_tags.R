@@ -8,7 +8,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns alias not found when the entry does not exist", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(results <-
     get_tags(handle, generate_alias("timeseries")),
   regexp = "An entry matching the provided alias cannot be found"
@@ -16,7 +16,7 @@ test_that("returns alias not found when the entry does not exist", {
 })
 
 test_that("returns empty character(0) vector when the entry has no tags", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   results <- get_tags(handle, alias)
@@ -26,7 +26,7 @@ test_that("returns empty character(0) vector when the entry has no tags", {
 })
 
 test_that("returns all tags of the entry", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   tags <-

@@ -8,7 +8,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns alias not found when timeseries does not exist", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   expect_error(results <-
     ts_show(handle, generate_alias("timeseries")),
   regexp = "An entry matching the provided alias cannot be found"
@@ -32,7 +32,7 @@ test_that("returns info of multi-column timeseries", {
       generate_alias("col")
     )
 
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle,
     name = alias,
     columns = columns

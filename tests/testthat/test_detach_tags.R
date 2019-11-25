@@ -12,7 +12,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("successfully untags entry with a single tag", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   tag <- generate_alias("tag")
@@ -23,7 +23,7 @@ test_that("successfully untags entry with a single tag", {
 })
 
 test_that("successfully untags entry with many tags", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   tags <- c(generate_alias("tag"), generate_alias("tag"))

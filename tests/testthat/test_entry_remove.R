@@ -11,7 +11,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("correctly removes a timeseries", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_timeseries(handle)
 
   entry_remove(handle, name = alias)

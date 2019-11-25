@@ -13,12 +13,12 @@ test_that("returns invalid argument when cluster is down", {
 })
 
 test_that("connects successfully to the existing cluster using default URI", {
-  expect_equal(qdbd$uri, "qdb://127.0.0.1:2836")
+  expect_equal("qdb://127.0.0.1:2836", "qdb://127.0.0.1:2836")
   handle <- connect()
   succeed(message = "successfully connected to quasardb cluster")
 })
 
 test_that("connects successfully to the existing cluster", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   succeed(message = "successfully connected to quasardb cluster")
 })

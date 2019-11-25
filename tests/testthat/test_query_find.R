@@ -8,7 +8,7 @@ test_that("stops when handle is null", {
 })
 
 test_that("returns empty results when no tagged entries", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   results <-
     query_find(
       handle,
@@ -18,7 +18,7 @@ test_that("returns empty results when no tagged entries", {
 })
 
 test_that("returns key of a single tagged entry", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_entry(handle)
 
   tag <- generate_alias("tag")
@@ -29,7 +29,7 @@ test_that("returns key of a single tagged entry", {
 })
 
 test_that("returns key of a single tagged timeseries", {
-  handle <- connect(qdbd$uri)
+  handle <- connect("qdb://127.0.0.1:2836")
   alias <- create_timeseries(handle)
 
   tag <- generate_alias("tag")
