@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu -o pipefail
+set -eux -o pipefail
 IFS=$'\n\t'
 
 if [[ $# -ne 1 ]] ; then
@@ -13,12 +13,13 @@ IFS='.-' read -ra VERSION_PARTS <<< "${INPUT_VERSION}"
 XYZ_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
     
 IFS='-' read -ra DASH_PARTS <<< "${INPUT_VERSION}"
-AFTER_DASH="${DASH_PARTS[1]}"
-IFS='.' read -ra TAG_PARTS <<< "${AFTER_DASH}"
-
-if [[ "${TAG_PARTS[0]}" == "nightly" ]] ; then
-    TAGS_VERSION=$((9000 + ${TAG_PARTS[1]}))
-    FULL_XYZB_VERSION="${XYZ_VERSION}.${TAGS_VERSION}"
+if [[ ${#DASH_PARTS[@]} != 1 ]]; then
+    AFTER_DASH="${DASH_PARTS[1]}"
+    IFS='.' read -ra TAG_PARTS <<< "${AFTER_DASH}"
+    if [[ "${TAG_PARTS[0]}" == "nightly" ]] ; then
+        TAGS_VERSION=$((9000 + ${TAG_PARTS[1]}))
+        FULL_XYZB_VERSION="${XYZ_VERSION}.${TAGS_VERSION}"
+    fi
 else
     FULL_XYZB_VERSION="${INPUT_VERSION%%-*}"
 fi
