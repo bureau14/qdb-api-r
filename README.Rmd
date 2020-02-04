@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # quasardb
 
-:warning:**WARNING**: Early stage development version. Use at your own risk.
+:warning:**WARNING**: Early-stage development version. Use at your own risk.
 
 :information_source:**NOTE**: Supported systems: FreeBSD, Linux, :apple:macOS, Windows.
 
@@ -31,12 +31,21 @@ install.packages("quasardb")
 ```
 -->
 
+<!-- For development:
+```{r dev-installation, eval = FALSE}
+install.packages(c("devtools", "knitr", "lintr", "roxygen2"))
+```
+-->
+
 On Unix-like systems, if you have quasardb C API installed system-wide,
 you can install quasardb R API directly from [GitHub](https://github.com/bureau14/qdb-api-r)
 as follows:
 ```{r gh-installation, eval = FALSE}
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
+}
+if (!requireNamespace("nanotime", quietly = TRUE)) {
+  install.packages("nanotime")
 }
 devtools::install_github("bureau14/qdb-api-r")
 ```

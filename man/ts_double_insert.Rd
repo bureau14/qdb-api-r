@@ -15,10 +15,11 @@ ts_double_insert(handle, name, column)
 }
 \description{
 Insert floating-point data into double column of an existing timeseries.
+This function is for test purposes only
 }
 \examples{
 handle <- connect("qdb://127.0.0.1:2836")
-ts_double_insert(handle, "timeseries", "column", points)
+ts_double_insert(handle, "timeseries", "column")
 }
 \seealso{
 \code{\link{connect}}
