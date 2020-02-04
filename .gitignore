@@ -14,3 +14,12 @@ quasardb_*.tar.gz
 *.lib
 *.so
 .Rprofile
+
+# Ignore test cluster files
+insecure/
+secure/
+qdb/
+*.cfg
+*.key
+*.err.txt
+*.out.txt
