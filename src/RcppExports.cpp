@@ -62,6 +62,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// _qdb_get_last_error
+std::string _qdb_get_last_error();
+RcppExport SEXP _quasardb__qdb_get_last_error() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(_qdb_get_last_error());
+    return rcpp_result_gen;
+END_RCPP
+}
 // _qdb_query_find
 Rcpp::StringVector _qdb_query_find(qdb_handle_t handle, const std::string& query);
 RcppExport SEXP _quasardb__qdb_query_find(SEXP handleSEXP, SEXP querySEXP) {
@@ -174,6 +184,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_quasardb__qdb_connect", (DL_FUNC) &_quasardb__qdb_connect, 1},
     {"_quasardb__qdb_detach_tags", (DL_FUNC) &_quasardb__qdb_detach_tags, 3},
     {"_quasardb__qdb_error", (DL_FUNC) &_quasardb__qdb_error, 1},
+    {"_quasardb__qdb_get_last_error", (DL_FUNC) &_quasardb__qdb_get_last_error, 0},
     {"_quasardb__qdb_query_find", (DL_FUNC) &_quasardb__qdb_query_find, 2},
     {"_quasardb__qdb_get_tagged", (DL_FUNC) &_quasardb__qdb_get_tagged, 2},
     {"_quasardb__qdb_get_tags", (DL_FUNC) &_quasardb__qdb_get_tags, 2},
