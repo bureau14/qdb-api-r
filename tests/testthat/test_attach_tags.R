@@ -2,11 +2,9 @@ context("attach_tags")
 
 test_that("stops when handle is null", {
   expect_error(
-    results <-
-      attach_tags(NULL,
-        entry = generate_alias(),
-        tags = generate_alias("tag")
-      ),
+    attach_tags(NULL,
+                entry = generate_alias(),
+                tags = generate_alias("tag")),
     regexp = "type=NULL"
   )
 })
@@ -18,10 +16,8 @@ test_that("successfully tags timeseries with a single tag", {
   tag <- generate_alias("tag")
   attach_tags(handle, entry = alias, tags = tag)
 
-  expect_error(results <-
-    attach_tags(handle, entry = alias, tag),
-  regexp = "attach_tag:.*already.*tag"
-  )
+  expect_error(attach_tags(handle, entry = alias, tag),
+               regexp = "attach_tag:.*already.*tag")
 })
 
 test_that("successfully tags timeseries with many tags", {
@@ -32,9 +28,7 @@ test_that("successfully tags timeseries with many tags", {
   attach_tags(handle, entry = alias, tags = tags)
 
   sapply(tags, function(tag) {
-    expect_error(results <-
-      attach_tags(handle, entry = alias, tags = tag),
-    regexp = "attach_tag:.*already.*tag"
-    )
+    expect_error(attach_tags(handle, entry = alias, tags = tag),
+                 regexp = "attach_tag:.*already.*tag")
   })
 })

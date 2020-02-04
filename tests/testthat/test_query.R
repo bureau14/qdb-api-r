@@ -20,32 +20,26 @@ expect_member <- function(object, member_name) {
 expect_na <- function(object) {
   act <- quasi_label(rlang::enquo(object))
 
-  expect(
-    is.na(act$val),
-    sprintf(
-      "got %s of type %s instead of NA.",
-      format(act$val),
-      typeof(act$val)
-    )
-  )
+  expect(is.na(act$val),
+         sprintf(
+           "got %s of type %s instead of NA.",
+           format(act$val),
+           typeof(act$val)
+         ))
 
   invisible(act$val)
 }
 
 test_that("stops when handle is null", {
-  expect_error(results <-
-    query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)"),
-  regexp = "type=NULL"
-  )
+  expect_error(query(NULL, "SELECT * FROM timeseries IN RANGE(2017, +1y)"),
+               regexp = "type=NULL")
 })
 
 test_that("returns alias not found when timeseries does not exist", {
   handle <- connect("qdb://127.0.0.1:2836")
-  expect_error(
-    results <-
-      query(handle, query = "SELECT * FROM timeseries IN RANGE(2017, +1y)"),
-    regexp = "An entry matching the provided alias cannot be found"
-  )
+  expect_error(query(handle,
+                     query = "SELECT * FROM timeseries IN RANGE(2017, +1y)"),
+               regexp = "An entry matching the provided alias cannot be found")
 })
 
 test_that("returns empty result on existing but empty timeseries", {
@@ -62,10 +56,14 @@ test_that("returns empty result on existing but empty timeseries", {
     query(handle, sprintf("SELECT * FROM %s IN RANGE(2017, +1y)", alias))
 
   expect(is.list(results), failure_message = "query result should be a list")
-  expect_named(
-    results,
-    c("scanned_point_count", "column_count", "columns", "row_count", "rows")
-  )
+  expect_named(results,
+               c(
+                 "scanned_point_count",
+                 "column_count",
+                 "columns",
+                 "row_count",
+                 "rows"
+               ))
 
   expect_equal(results$scanned_point_count, 0)
   expect_equal(results$column_count, 3)
@@ -82,13 +80,18 @@ test_that("returns count result on empty 1-column timeseries", {
   ts_create(handle, name = alias, columns = columns)
   ts_double_insert(handle, name = alias, column = column_name)
   results <-
-    query(handle, sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017, +1y)", alias))
+    query(handle,
+          sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017, +1y)", alias))
 
   expect(is.list(results), failure_message = "query result should be a list")
-  expect_named(
-    results,
-    c("scanned_point_count", "column_count", "columns", "row_count", "rows")
-  )
+  expect_named(results,
+               c(
+                 "scanned_point_count",
+                 "column_count",
+                 "columns",
+                 "row_count",
+                 "rows"
+               ))
 
   expect_equal(results$scanned_point_count, 3)
   expect_equal(results$column_count, 1)
@@ -111,12 +114,10 @@ test_that("returns count result on empty 1-column timeseries", {
 test_that("returns count result on empty multi-column timeseries", {
   alias <- generate_alias("timeseries")
   columns <-
-    c(
+    c(column_type$double,
       column_type$double,
       column_type$double,
-      column_type$double,
-      column_type$double
-    )
+      column_type$double)
   names(columns) <-
     c(
       generate_alias("col"),
@@ -133,7 +134,8 @@ test_that("returns count result on empty multi-column timeseries", {
     ts_double_insert(handle, name = alias, column = column_name)
   })
 
-  query <- sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017-01-01, +1y)", alias)
+  query <-
+    sprintf("SELECT COUNT(*) FROM %s IN RANGE(2017-01-01, +1y)", alias)
   results <- query(handle, query)
 
   expect_equal(results$scanned_point_count, 12)
@@ -151,12 +153,10 @@ test_that("returns count result on empty multi-column timeseries", {
   expect_equal(colnames(rows), expected_column_names)
   expect_equal(dim(rows), c(1, 4))
 
-  expected_result <- data.frame(
-    c(3),
-    c(3),
-    c(3),
-    c(3)
-  )
+  expected_result <- data.frame(c(3),
+                                c(3),
+                                c(3),
+                                c(3))
   names(expected_result) <- expected_column_names
   expect_equal(dim(rows), dim(expected_result))
   expect_equal(rows, expected_result)

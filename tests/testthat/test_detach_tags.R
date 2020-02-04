@@ -2,11 +2,9 @@ context("detach_tags")
 
 test_that("stops when handle is null", {
   expect_error(
-    results <-
-      detach_tags(NULL,
-        entry = generate_alias(),
-        tags = generate_alias("tag")
-      ),
+    detach_tags(NULL,
+                entry = generate_alias(),
+                tags = generate_alias("tag")),
     regexp = "type=NULL"
   )
 })

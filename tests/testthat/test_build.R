@@ -1,7 +1,7 @@
 context("build")
 
 test_that("return non-empty string", {
-  expect(nchar(build()) > 0)
+  expect(nchar(build()) > 0, failure_message = "Got empty error message")
 })
 
 test_that("return string in correct format", {

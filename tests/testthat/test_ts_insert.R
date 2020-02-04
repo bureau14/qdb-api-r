@@ -1,27 +1,24 @@
 context("ts_insert")
 
 test_that("stops when handle is null", {
-  expect_error(results <-
+  expect_error(
     ts_double_insert(
       NULL,
       generate_alias("timeseries"),
       generate_alias("column")
     ),
-  regexp = "type=NULL"
+    regexp = "type=NULL"
   )
 })
 
 test_that("returns alias not found when timeseries does not exist", {
   handle <- connect("qdb://127.0.0.1:2836")
-  expect_error(
-    results <-
-      ts_double_insert(
-        handle,
-        generate_alias("timeseries"),
-        generate_alias("column")
-      ),
-    regexp = "An entry matching the provided alias cannot be found"
-  )
+  expect_error(ts_double_insert(
+    handle,
+    generate_alias("timeseries"),
+    generate_alias("column")
+  ),
+  regexp = "An entry matching the provided alias cannot be found")
 })
 
 test_that("returns column not found when column does not exist", {
@@ -32,16 +29,13 @@ test_that("returns column not found when column does not exist", {
 
   handle <- connect("qdb://127.0.0.1:2836")
   ts_create(handle,
-    name = alias,
-    columns = columns
-  )
+            name = alias,
+            columns = columns)
 
   expect_error(ts_double_insert(handle,
-    name = alias,
-    column = generate_alias("column")
-  ),
-  regexp = "The timeseries does not contain this column"
-  )
+                                name = alias,
+                                column = generate_alias("column")),
+               regexp = "The timeseries does not contain this column")
 })
 
 test_that("returns empty result on existing but empty timeseries", {
