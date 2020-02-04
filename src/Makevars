@@ -1,4 +1,5 @@
-PKG_CXXFLAGS= --std=c++14 -I ../inst/include
+PKG_CPPFLAGS= -I ../inst/include
+PKG_CXXFLAGS= --std=c++14
 PKG_LIBS= -L ../inst/bin -L ../inst/lib -lqdb_api
 
 .PHONY: all
