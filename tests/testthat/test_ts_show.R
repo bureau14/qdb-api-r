@@ -18,10 +18,12 @@ test_that("returns info of multi-column timeseries", {
       column_type$blob,
       column_type$double,
       column_type$integer,
+      column_type$string,
       column_type$timestamp
     )
   names(columns) <-
     c(
+      generate_alias("col"),
       generate_alias("col"),
       generate_alias("col"),
       generate_alias("col"),
@@ -36,6 +38,6 @@ test_that("returns info of multi-column timeseries", {
   results <- ts_show(handle, alias)
 
   expect_equal(class(results), "integer")
-  expect_equal(length(results), 4)
+  expect_equal(length(results), 5)
   expect_equal(results, columns)
 })

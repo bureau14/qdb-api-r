@@ -8,9 +8,9 @@ static inline std::string transform_qdb_string(const qdb_string_t s)
 }
 
 template <typename T>
-static inline std::string transform_blob(const T & blob)
+static inline std::string transform_string_like(const T & data)
 {
-    return {static_cast<const char *>(blob.content), blob.content_length};
+    return {static_cast<const char *>(data.content), data.content_length};
 }
 
 Rcpp::StringVector transform_columns(
@@ -39,7 +39,7 @@ Rcpp::StringVector transform_blob_points(
     {
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_blob);
-        column[row_index] = transform_blob(point.payload.blob);
+        column[row_index] = transform_string_like(point.payload.blob);
     }
 
     return column;
@@ -88,6 +88,22 @@ Rcpp::IntegerVector transform_int64_points(
         const auto & point = rows[row_index][column_index];
         assert(point.type == qdb_query_result_int64);
         column[row_index] = point.payload.int64_.value;
+    }
+
+    return column;
+}
+
+Rcpp::StringVector transform_string_points(
+    qdb_point_result_t ** rows, qdb_size_t row_count, qdb_size_t column_index)
+{
+    assert(rows);
+
+    Rcpp::StringVector column(row_count);
+    for (qdb_size_t row_index = 0u; row_index < row_count; ++row_index)
+    {
+        const auto & point = rows[row_index][column_index];
+        assert(point.type == qdb_query_result_string);
+        column[row_index] = transform_string_like(point.payload.string);
     }
 
     return column;
@@ -172,6 +188,11 @@ Rcpp::DataFrame transform_rows(qdb_point_result_t ** rows,
 
         case qdb_query_result_int64:
             df.push_back(transform_int64_points(rows, row_count, column_index),
+                std::move(column_name));
+            break;
+
+        case qdb_query_result_string:
+            df.push_back(transform_string_points(rows, row_count, column_index),
                 std::move(column_name));
             break;
 
