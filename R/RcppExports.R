@@ -130,13 +130,15 @@ error <- function(code) {
 #' @description
 #' Return error description of the last error occurred when calling the API.
 #'
+#' @param handle A valid cluster opened using `connect`.
+#'
 #' @return Last error description.
 #' @export
 #'
 #' @examples
 #' get_last_error()
-get_last_error <- function() {
-    .Call("_quasardb__qdb_get_last_error", PACKAGE = "quasardb")
+get_last_error <- function(handle) {
+    .Call("_quasardb__qdb_get_last_error", PACKAGE = "quasardb", handle)
 }
 
 #' @backref src/find.cpp

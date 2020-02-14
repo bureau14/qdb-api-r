@@ -4,7 +4,10 @@
 \alias{get_last_error}
 \title{Return last error.}
 \usage{
-get_last_error()
+get_last_error(handle)
+}
+\arguments{
+\item{handle}{A valid cluster opened using `connect`.}
 }
 \value{
 Last error description.

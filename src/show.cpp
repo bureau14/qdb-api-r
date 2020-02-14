@@ -38,7 +38,7 @@ Rcpp::IntegerVector _qdb_show(qdb_handle_t handle, const std::string & name)
     Rcpp::StringVector names(column_count);
     Rcpp::IntegerVector types(column_count);
 
-    assert(names.size() == column_count);
+    assert(static_cast<qdb_size_t>(names.size()) == column_count);
     assert(names.size() == types.size());
 
     for (R_xlen_t i = 0; i < names.size(); ++i)

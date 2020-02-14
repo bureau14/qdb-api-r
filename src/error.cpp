@@ -26,16 +26,23 @@ std::string _qdb_error(int code) {
 //' @description
 //' Return error description of the last error occurred when calling the API.
 //'
+//' @param handle A valid cluster opened using `connect`.
+//'
 //' @return Last error description.
 //' @export
 //'
 //' @examples
 //' get_last_error()
 // [[Rcpp::export(name = "get_last_error")]]
-std::string _qdb_get_last_error() {
+std::string _qdb_get_last_error(qdb_handle_t handle) {
+  if (!handle)
+  {
+      Rcpp::stop("invalid handle");
+  }
+
   qdb_error_t err;
   qdb_string_t message;
-  ::qdb_get_last_error(&err, &message);
+  ::qdb_get_last_error(handle, &err, &message);
   if (!message.data || !message.length) {
     return {};
   }
