@@ -1,8 +1,8 @@
 Package: quasardb
 Type: Package
 Title: R Interface for QuasarDB Timeseries Database
-Version: 3.6.0.9000
-Date: 2020-01-20
+Version: 3.7.0.9001
+Date: 2020-02-17
 Author: quasardb SAS, Marek Kurdej
 Maintainer: Marek Kurdej <marek@quasardb.net>
 Description: The 'quasardb' package provides R API for quasardb timeseries database.
